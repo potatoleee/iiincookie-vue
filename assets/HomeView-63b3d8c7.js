@@ -1,0 +1,1 @@
+import{_ as e,o as t,c as o,d as s}from"./index-deebbf1e.js";const c={},n=s("h1",null,"這是第六週首頁",-1),_=s("button",{class:"btn btn-primary"},"home",-1),a=s("p",{class:"fs-2"},"123",-1),r=s("p",{class:"fs-3 fs-md-6"},"123",-1),d=[n,_,a,r];function i(l,f){return t(),o("main",null,d)}const h=e(c,[["render",i]]);export{h as default};

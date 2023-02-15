@@ -1,1 +1,0 @@
-import{_ as t,o,c as s,d as e}from"./index-f3a8e4bf.js";const n={},c=e("h1",null,"這是第六週首頁",-1),_=e("button",{class:"btn btn-primary"},"fsf",-1),a=[c,_];function r(i,l){return o(),s("main",null,a)}const f=t(n,[["render",r]]);export{f as default};
