@@ -1,0 +1,1 @@
+import{_ as e,o as t,c,b as o}from"./index-b687e0c4.js";const s={},n={class:"d-flex justify-content-center align-items-center h-100vh"},_=o("h1",null,"404 此頁找不到 請確認網址",-1),r=[_];function a(d,i){return t(),c("div",n,r)}const f=e(s,[["render",a]]);export{f as default};
