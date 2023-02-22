@@ -1,0 +1,86 @@
+// 不要去改node bootstrap.utilities
+$utilities: map-merge(
+  $utilities,
+  (
+    "font-size":
+      map-merge(
+        map-get($utilities, "font-size"),
+        (
+          responsive: true,
+          rfs: false
+        )
+      ),
+      "font-weight": (
+        responsive: true,
+        property: font-weight,
+        class: fw,
+        values: $weightValue
+      ),
+    "object-fit": (
+      property: object-fit,
+      class: object,
+      values: cover
+    ),
+
+    "height": (
+      property: height,
+      responsive: true,
+      class: h,
+      values: (
+        1:  1px,
+        2n: 8px,
+        3n: 12px,
+        4n: 16px,
+        5n: 20px,
+        8n: 32px,
+        12n: 48px,
+        25: 25%,
+        60: 60%,
+        50: 50%,
+        75: 75%,
+        100: 100%,
+        100vh: 100vh,
+        auto: auto
+      )
+  ),
+  "width": map-merge(
+    map-get($utilities,"width"),
+    (
+       class: w,
+       responsive: true,
+       values: map-merge(
+       map-get(map-get($utilities, "width"), "values"),
+       ( 
+         1 :1px,
+         2n: 8px,
+         3n: 12px,
+         4n: 16px,
+         8n: 32px,
+         10n :40px,
+         12n: 48px,
+         17n: 68px,
+         20n: 80px,
+         22n: 88px,
+         80n: 320px,
+         20: 20%,
+         25: 25%,
+         30: 30%,
+         35: 35%,
+         40: 40%,
+         45: 45%,
+         55: 55%,
+         60: 60%,
+         65: 65%,
+         70: 70%,
+         80: 80%,
+         85: 85%,
+         90: 90%,
+         95: 95%,
+         100: 100%,
+         auto: auto
+       ),
+     )
+     )
+   ),
+  )
+);

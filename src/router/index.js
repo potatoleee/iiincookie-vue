@@ -29,6 +29,11 @@ const router = createRouter({
           component: () => import("../views/front/ProductView.vue"),
         },
         {
+          path: "/articles",
+          name: "articles",
+          component: () => import("../views/front/ArticlesView.vue"),
+        },
+        {
           path: "/cart",
           name: "cart",
           component: () => import("../views/front/CartView.vue"),
@@ -56,6 +61,14 @@ const router = createRouter({
         {
           path: "orders",
           component: () => import("../views/admin/AdminOrders.vue"),
+        },
+        {
+          path: "coupons",
+          component: () => import("../views/admin/AdminCoupons.vue"),
+        },
+        {
+          path: "articles",
+          component: () => import("../views/admin/AdminArticles.vue"),
         },
       ],
     },

@@ -10,6 +10,9 @@ import { Field, Form, ErrorMessage, defineRule, configure } from "vee-validate";
 import { localize, setLocale } from "@vee-validate/i18n";
 import zhTW from "@vee-validate/i18n/dist/locale/zh_TW.json";
 import AllRules from "@vee-validate/rules";
+import CKEditor from "@ckeditor/ckeditor5-vue";
+import { gsap, ScrollTrigger, Draggable, MotionPathPlugin } from "gsap/all";
+gsap.registerPlugin(ScrollTrigger, Draggable, MotionPathPlugin);
 
 //載入驗證規則
 Object.keys(AllRules).forEach((rule) => {
@@ -25,6 +28,7 @@ configure({
 setLocale("zh_TW");
 
 const app = createApp(App);
+app.use(CKEditor);
 app.use(createPinia());
 app.use(router);
 app.use(VueAxios, axios);

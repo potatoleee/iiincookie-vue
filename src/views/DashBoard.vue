@@ -1,12 +1,23 @@
 <template>
-  <nav class="d-flex align-items-center justify-content-center">
-    <h1>後台儀表板</h1>
-    <RouterLink to="/admin/products">產品管理</RouterLink>|
-    <RouterLink to="/admin/orders">訂單管理</RouterLink>|
-    <RouterLink to="/">回到前台首頁</RouterLink>|
-    <a href="#" @click.prevent="logout">登出</a>
-  </nav>
-  <RouterView></RouterView>
+  <div class="d-flex">
+    <!-- 左側導覽列 -->
+    <div class="bg-secondary h-100vh p-7 dashboard-nav">
+      <nav class="d-flex flex-column align-items-start gap-9">
+        <img src="../assets/images/logo.svg" alt="" />
+        <RouterLink to="/admin/products" class="fs-1">產品管理</RouterLink>
+        <RouterLink to="/admin/orders">訂單管理</RouterLink>
+        <RouterLink to="/admin/coupons">優惠券管理</RouterLink>
+        <RouterLink to="/admin/articles">文章管理</RouterLink>
+        <a href="#" @click.prevent="logout">登出</a>
+      </nav>
+    </div>
+    <!-- 左側導覽列 -->
+    <!-- 主要內榮-->
+    <div class="dashboard-content p-7 px-10">
+      <RouterView></RouterView>
+    </div>
+    <!-- 主要內榮-->
+  </div>
 </template>
 <style lang="scss"></style>
 <script>

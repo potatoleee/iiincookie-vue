@@ -1,6 +1,6 @@
 <template>
-  <div class="container mt-4">
-    <h2>圖片上傳區</h2>
+  <div class="mt-4">
+    <h2 class="fs-xl">圖片上傳區</h2>
     <label for="file" class="mb-2"
       >圖片檔案僅接受 jpg、png 格式，感謝配合～</label
     >
@@ -11,10 +11,9 @@
       placeholder="請輸入圖片連結"
       @change="upload"
     />
-    <a :href="uploadImages" target="_blank">上傳的圖片連結</a>
-    <p class="break-word">
-      {{ uploadImages }}
-    </p>
+    <a v-if="imageUrl" :href="imageUrl" target="_blank"
+      >上傳的圖片連結(右鍵可複製網址)</a
+    >
   </div>
 </template>
 
@@ -23,7 +22,7 @@ const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
 export default {
   data() {
     return {
-      uploadImages: "",
+      imageUrl: "",
     };
   },
   methods: {
@@ -44,7 +43,7 @@ export default {
       this.$http
         .post(`${VITE_APP_URL}/api/${VITE_APP_PATH}/admin/upload`, formData)
         .then((res) => {
-          this.uploadImages = res.data.imageUrl;
+          this.imageUrl = res.data.imageUrl;
           alert("圖片上傳成功");
         })
         .catch((err) => {

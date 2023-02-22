@@ -23,7 +23,7 @@ git commit -m 'deploy'
 # if you are deploying to https://potatoleee.github.io
 # git push -f git@github.com:potatoleee/potatoleee.github.io.git main
 
-# if you are deploying to https://potatoleee.github.io/vue-week6
-git push -f git@github.com:potatoleee/vue-week6.git main:gh-pages
+# if you are deploying to https://potatoleee.github.io/iiincookie-vue
+git push -f git@github.com:potatoleee/iiincookie-vue.git main:gh-pages
 
 cd -

@@ -1,12 +1,12 @@
 <template>
-  <nav aria-label="Page navigation example">
-    <ul class="pagination">
+  <div>
+    <ul class="pagination justify-content-center">
       <li class="page-item" :class="{ disabled: pageIn.has_pre === false }">
         <a
           class="page-link"
           href="#"
           aria-label="Previous"
-          @click.prevent="getProductList(pageIn.current_page - 1)"
+          @click.prevent="getPages(pageIn.current_page - 1)"
         >
           <span aria-hidden="true">&laquo;</span>
         </a>
@@ -17,7 +17,7 @@
         v-for="pages in pageIn.total_pages"
         :key="pages + 'pages'"
       >
-        <a class="page-link" href="#" @click.prevent="getProductList(pages)">{{
+        <a class="page-link" href="#" @click.prevent="getPages(pages)">{{
           pages
         }}</a>
       </li>
@@ -27,25 +27,24 @@
           class="page-link"
           href="#"
           aria-label="Next"
-          @click.prevent="getProductList(pageIn.current_page + 1)"
+          @click.prevent="getPages(pageIn.current_page + 1)"
         >
           <span aria-hidden="true">&raquo;</span>
         </a>
       </li>
     </ul>
-  </nav>
+  </div>
 </template>
 
 <script>
 // import productsStore from "../stores/productsStore.js";
 // import { mapState, mapActions } from "pinia";
 export default {
-  props: ["pageIn", "getProductList"],
-  // methods: {
-  //   ...mapActions(productsStore, ["getProductList"]),
-  // },
-  // computed: {
-  //   ...mapState(productsStore, ["pageIn"]),
-  // },
+  props: ["pageIn"],
+  methods: {
+    getPages(page) {
+      this.$emit("getPages", page);
+    },
+  },
 };
 </script>

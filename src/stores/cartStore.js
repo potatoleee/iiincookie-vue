@@ -16,7 +16,6 @@ export default defineStore("cartStore", {
       };
       this.loadingItem = product_id;
       // loading.isLoading = true;
-      //   this.$http 不能用這種方式？
       axios
         .post(`${VITE_APP_URL}/api/${VITE_APP_PATH}/cart`, { data }) //{data:data}同名可以縮寫
         .then(() => {

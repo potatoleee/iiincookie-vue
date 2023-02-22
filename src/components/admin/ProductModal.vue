@@ -25,6 +25,7 @@
           <div class="row">
             <div class="col-sm-4">
               <!-- 主要圖片 start-->
+              <UploadImages></UploadImages>
               <div class="mb-3">
                 <label for="imageUrl" class="form-label">主要圖片</label>
                 <input
@@ -217,6 +218,7 @@
 </template>
 
 <script>
+import UploadImages from "../../components/admin/UploadImages.vue";
 import { Modal } from "bootstrap";
 import Swal from "sweetalert2";
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
@@ -273,6 +275,9 @@ export default {
     innerTempData() {
       this.tempData = this.innerTempData;
     },
+  },
+  components: {
+    UploadImages,
   },
   mounted() {
     this.editProductModal = new Modal(this.$refs.editProductModal);

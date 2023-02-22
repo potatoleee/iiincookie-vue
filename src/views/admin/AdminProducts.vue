@@ -1,6 +1,6 @@
 <template>
-  <UploadImages></UploadImages>
-  <div class="container">
+  <h1 class="fs-2xl border-bottom border-secondary pb-2">產品管理</h1>
+  <div>
     <div class="text-end mt-4">
       <button
         type="button"
@@ -52,6 +52,10 @@
         </tr>
       </tbody>
     </table>
+    <PaginationComponent
+      :page-in="pagination"
+      @getPages="getProductList"
+    ></PaginationComponent>
   </div>
 
   <!-- 新增or編輯 Modal start-->
@@ -63,24 +67,19 @@
   >
   </ProductModal>
 
-  <PaginationComponent
-    :page-in="page"
-    :get-product-list="getProductList"
-  ></PaginationComponent>
-
   <!-- 新增or編輯 Modal end-->
 
   <!-- 刪除 Modal start-->
   <DeleteModal
-    :temp-data="tempData"
+    :deleteItem="tempData"
     @update="getProductList"
-    ref="deleteProductModal"
+    @del-item="deleteProduct"
+    ref="deleteModal"
   ></DeleteModal>
   <!-- 刪除 Modal end-->
 </template>
 
 <script>
-import UploadImages from "../../components/admin/UploadImages.vue";
 import DeleteModal from "../../components/admin/DeleteModal.vue";
 import ProductModal from "../../components/admin/ProductModal.vue";
 import PaginationComponent from "../../components/PaginationComponent.vue";
@@ -91,7 +90,7 @@ export default {
     return {
       //產品資料
       products: [],
-      page: {},
+      pagination: {},
       isNew: false, //判斷是否為新增or編輯
       tempData: {
         //暫存各產品modal的資料
@@ -103,14 +102,14 @@ export default {
   },
   methods: {
     //取得後台產品列表
-    getProductList(page = 1) {
+    getProductList(currentPage = 1) {
       this.$http
         .get(
-          `${VITE_APP_URL}/api/${VITE_APP_PATH}/admin/products/?page=${page}`
+          `${VITE_APP_URL}/api/${VITE_APP_PATH}/admin/products/?page=${currentPage}`
         )
         .then((res) => {
           console.log(res.data);
-          this.page = res.data.pagination;
+          this.pagination = res.data.pagination;
           this.products = res.data.products;
         })
         .catch((error) => {
@@ -131,10 +130,24 @@ export default {
         this.tempData = { ...product };
         this.isNew = false;
       } else if (state === "delete") {
-        this.$refs.deleteProductModal.show();
+        this.$refs.deleteModal.show();
         this.tempData = { ...product };
         this.isNew = false;
       }
+    },
+    deleteProduct() {
+      this.$http
+        .delete(
+          `${VITE_APP_URL}/api/${VITE_APP_PATH}/admin/product/${this.tempData.id}`
+        )
+        .then((res) => {
+          alert(res.data.message);
+          this.$refs.deleteModal.hide();
+          this.getProductList();
+        })
+        .catch((error) => {
+          alert(error.response.data.message);
+        });
     },
   },
   //區域註冊
@@ -142,7 +155,6 @@ export default {
     ProductModal,
     DeleteModal,
     PaginationComponent,
-    UploadImages,
   },
   mounted() {
     //取出Token
