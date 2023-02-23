@@ -1,0 +1,1 @@
+import{_ as o,o as e,c,b as s}from"./index-66d68702.js";const t={},n={class:"container"},_=s("h1",{class:"font-serifTc fw-bold"},"這是第六週首頁",-1),a=s("p",{class:"font-cormorant"},"hello",-1),r=s("p",{class:"fs-2"},"123",-1),d=s("p",{class:"fs-3 fs-md-6"},"123",-1),f=[_,a,r,d];function i(l,h){return e(),c("div",n,f)}const m=o(t,[["render",i]]);export{m as default};
