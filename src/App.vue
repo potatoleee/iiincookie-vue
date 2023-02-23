@@ -1,10 +1,8 @@
 <style lang="scss">
-@import "./assets//style/all.scss";
+@import "./assets/style/all.scss";
 </style>
 <template>
-  <div>
-    <RouterView></RouterView>
-  </div>
+  <RouterView></RouterView>
 </template>
 <script>
 import { RouterView } from "vue-router";

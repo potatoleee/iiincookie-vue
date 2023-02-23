@@ -1,9 +1,9 @@
 // 使footer置底 start
-html,body{
+#app{
     height: 100%;
     margin: 0;
 }
-body {
+#app {
     display: flex; /*使物件依序排列*/
     flex-direction: column; /*使物件垂直排列*/
   }
@@ -62,14 +62,6 @@ input[type="radio"]{
     appearance: radio;
 }
 
-
-.material-symbols-outlined {
-  font-variation-settings:
-  'FILL' 0,
-  'wght' 400,
-  'GRAD' 0,
-  'opsz' 48
-}
 
 
 

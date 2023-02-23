@@ -33,8 +33,10 @@
         </RouterLink>
         <RouterLink to="/products" class="menu-item-2">
           <li @mouseenter="showBg2" @mouseleave="hideBg2">
-            <p class="menu-title fs-8xl font-english">PRODUCTS</p>
-            <p class="menu-title fs-2xl">產品ㄧ覽</p>
+            <p class="menu-title fs-8xl font-english" @click="toggleMenu">
+              PRODUCTS
+            </p>
+            <p class="menu-title fs-2xl" @click="toggleMenu">產品ㄧ覽</p>
           </li>
         </RouterLink>
         <RouterLink to="/articles" class="menu-item-3">
@@ -47,7 +49,14 @@
     </div>
   </div>
   <!-- 導覽列展開內容 -->
-  <RouterView></RouterView>
+  <!-- 主要內容 -->
+  <main>
+    <RouterView></RouterView>
+  </main>
+  <!-- 主要內容 -->
+  <!-- footer -->
+  <div class="footer">這是底部</div>
+  <!-- footer -->
 </template>
 
 <style lang="scss">
@@ -93,7 +102,7 @@
 // 漢堡end
 
 .menu {
-  position: absolute;
+  position: fixed;
   width: 0%;
   height: 100vh;
   top: 0;
@@ -119,7 +128,7 @@
 }
 
 .images {
-  position: absolute;
+  position: fixed;
   width: 0%;
   height: 100vh;
   left: 55%;
@@ -172,7 +181,6 @@ export default {
   methods: {
     ...mapActions(cartStore, ["getCartList"]),
     toggleMenu() {
-      console.log("點擊到囉");
       this.isOpen = !this.isOpen;
       this.navMotion.reversed(!this.navMotion.reversed());
     },
@@ -206,12 +214,12 @@ export default {
     this.navMotion = gsap.timeline({ paused: true });
     // 開啟動畫
     this.navMotion.to(".menu", {
-      duration: 2,
+      duration: 1,
       width: "55%",
       ease: "expo.in",
     });
     this.navMotion.from(".menu ul li", {
-      duration: 2,
+      duration: 1,
       y: 20,
       opacity: 0,
       ease: "expo.inOut",
@@ -220,14 +228,14 @@ export default {
     this.navMotion.to(
       ".images",
       {
-        duration: 2,
+        duration: 1,
         width: "45%",
         ease: "expo.inOut",
-        delay: -2,
+        delay: -1,
       },
       "-=1"
     );
-    this.navMotion.reverse(); //測試後要加(0)才會倒轉!
+    this.navMotion.reverse();
   },
 };
 </script>
