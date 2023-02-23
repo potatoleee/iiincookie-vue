@@ -1,5 +1,6 @@
 import { createApp } from "vue";
 import { createPinia } from "pinia";
+
 import App from "./App.vue";
 import router from "./router";
 import axios from "axios";
@@ -11,6 +12,7 @@ import { localize, setLocale } from "@vee-validate/i18n";
 import zhTW from "@vee-validate/i18n/dist/locale/zh_TW.json";
 import AllRules from "@vee-validate/rules";
 import CKEditor from "@ckeditor/ckeditor5-vue";
+import "bootstrap-icons/font/bootstrap-icons.css";
 import { gsap, ScrollTrigger, Draggable, MotionPathPlugin } from "gsap/all";
 gsap.registerPlugin(ScrollTrigger, Draggable, MotionPathPlugin);
 
