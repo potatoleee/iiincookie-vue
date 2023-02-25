@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import axios from "axios";
-import Swal from "sweetalert2";
+import { Toast } from "../utils/toast.js";
 import loadingStore from "./loadingStore.js";
 const loading = loadingStore();
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
@@ -9,28 +9,27 @@ export default defineStore("cartStore", {
     cart: {},
   }),
   actions: {
-    addToCart(product_id) {
+    addToCart(product_id, qty = 1) {
       const data = {
         product_id,
-        qty: 1,
+        qty,
       };
-      this.loadingItem = product_id;
+      loading.loadingItem = product_id;
       // loading.isLoading = true;
       axios
         .post(`${VITE_APP_URL}/api/${VITE_APP_PATH}/cart`, { data }) //{data:data}同名可以縮寫
-        .then(() => {
-          this.getCartList();
-          Swal.fire({
-            position: "top-end",
+        .then((res) => {
+          Toast.fire({
             icon: "success",
-            title: "已加入購物車",
-            showConfirmButton: false,
-            timer: 800,
+            title: `${res.data.message}`,
           });
-          this.loadingItem = ""; //清空loading暫存
+          loading.loadingItem = ""; //清空loading暫存
         })
         .catch((error) => {
-          alert(error.response.data.message);
+          Toast.fire({
+            icon: "error",
+            title: `${error.response.data.message}`,
+          });
         });
     },
     getCartList() {
@@ -39,6 +38,7 @@ export default defineStore("cartStore", {
         .get(`${VITE_APP_URL}/api/${VITE_APP_PATH}/cart`)
         .then((res) => {
           this.cart = res.data.data;
+          console.log(this.cart);
         })
         .catch((error) => {
           alert(error.response.data.message);
@@ -53,7 +53,7 @@ export default defineStore("cartStore", {
         product_id: cartItem.product_id,
         qty: cartItem.qty,
       };
-      this.loadingItem = cartItem.id;
+      loading.loadingItem = cartItem.id;
       axios
         .put(`${VITE_APP_URL}/api/${VITE_APP_PATH}/cart/${cartItem.id}`, {
           data,
@@ -61,7 +61,45 @@ export default defineStore("cartStore", {
         .then((res) => {
           console.log(res);
           this.getCartList();
-          this.loadingItem = "";
+          loading.loadingItem = "";
+        })
+        .catch((error) => {
+          alert(error.response.data.message);
+        });
+    },
+    addNum(cartItem) {
+      const data = {
+        product_id: cartItem.product_id,
+        qty: cartItem.qty + 1,
+      };
+      loading.loadingItem = cartItem.id;
+      axios
+        .put(`${VITE_APP_URL}/api/${VITE_APP_PATH}/cart/${cartItem.id}`, {
+          data,
+        }) //{data:data}同名可以縮寫
+        .then((res) => {
+          console.log(res);
+          this.getCartList();
+          loading.loadingItem = "";
+        })
+        .catch((error) => {
+          alert(error.response.data.message);
+        });
+    },
+    decreaseNum(cartItem) {
+      const data = {
+        product_id: cartItem.product_id,
+        qty: cartItem.qty - 1,
+      };
+      loading.loadingItem = cartItem.id;
+      axios
+        .put(`${VITE_APP_URL}/api/${VITE_APP_PATH}/cart/${cartItem.id}`, {
+          data,
+        }) //{data:data}同名可以縮寫
+        .then((res) => {
+          console.log(res);
+          this.getCartList();
+          loading.loadingItem = "";
         })
         .catch((error) => {
           alert(error.response.data.message);
@@ -72,19 +110,19 @@ export default defineStore("cartStore", {
       this.loadingItem = cartItem.id;
       axios
         .delete(`${VITE_APP_URL}/api/${VITE_APP_PATH}/cart/${cartItem.id}`) //{data:data}同名可以縮寫
-        .then(() => {
-          Swal.fire({
-            position: "top-end",
+        .then((res) => {
+          Toast.fire({
             icon: "success",
-            title: "已刪除品項",
-            showConfirmButton: false,
-            timer: 800,
+            title: `${res.data.message}`,
           });
           this.getCartList();
           this.loadingItem = "";
         })
         .catch((error) => {
-          alert(error.response.data.message);
+          Toast.fire({
+            icon: "error",
+            title: `${error.response.data.message}`,
+          });
         })
         .finally(() => {
           loading.isLoading = false;
@@ -94,17 +132,17 @@ export default defineStore("cartStore", {
       axios
         .delete(`${VITE_APP_URL}/api/${VITE_APP_PATH}/carts`)
         .then(() => {
-          Swal.fire({
-            position: "top-end",
+          Toast.fire({
             icon: "success",
             title: "已刪除全部品項",
-            showConfirmButton: false,
-            timer: 800,
           });
           this.getCartList();
         })
         .catch((error) => {
-          alert(error.response.data.message);
+          Toast.fire({
+            icon: "error",
+            title: `${error.response.data.message}`,
+          });
         });
     },
   },

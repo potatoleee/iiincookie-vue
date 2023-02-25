@@ -16,6 +16,21 @@ $utilities: map-merge(
         class: fw,
         values: $weightValue
       ),
+      "letter-spacing": (
+              responsive: true,
+              property: letter-spacing,
+              class: letterSpace,
+              values:( 
+                2:  2px,
+                4:  4px,
+                8:  8px,
+                12: 12px,
+                16: 16px,
+                24: 24px,
+                32: 32px
+                ) 
+                
+            ),
     "object-fit": (
       property: object-fit,
       class: object,

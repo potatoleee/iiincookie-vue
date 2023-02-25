@@ -68,7 +68,7 @@
 import DeleteModal from "../../components/admin/DeleteModal.vue";
 import PaginationComponent from "../../components/PaginationComponent.vue";
 import OrderModal from "../../components/admin/OrderModal.vue";
-import Swal from "sweetalert2";
+import { Toast } from "../../utils/toast.js";
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
 export default {
   data() {
@@ -85,13 +85,14 @@ export default {
           `${VITE_APP_URL}/api/${VITE_APP_PATH}/admin/orders/?page=${currentPage}`
         )
         .then((res) => {
-          console.log(res.data);
           this.orderData = res.data.orders;
           this.pagination = res.data.pagination;
-          console.log(this.orderData);
         })
         .catch((error) => {
-          alert(error.response.data.message);
+          Toast.fire({
+            icon: "error",
+            title: `${error.response.data.message}`,
+          });
         });
     },
     formatDate(timestamp) {
@@ -113,12 +114,18 @@ export default {
           `${VITE_APP_URL}/api/${VITE_APP_PATH}/admin/order/${this.tempOrder.id}`
         )
         .then((res) => {
-          alert(res.data.message);
+          Toast.fire({
+            icon: "success",
+            title: `${res.data.message}`,
+          });
           this.$refs.deleteModal.hide();
           this.getOrderList();
         })
         .catch((error) => {
-          alert(error.response.data.message);
+          Toast.fire({
+            icon: "error",
+            title: `${error.response.data.message}`,
+          });
         });
     },
     editOrderModal(order) {
@@ -129,19 +136,19 @@ export default {
         .put(`${VITE_APP_URL}/api/${VITE_APP_PATH}/admin/order/${order.id}`, {
           data: orderInfo,
         }) //這邊格式比較特別本來，要對照文件給的格式放入data
-        .then(() => {
-          Swal.fire({
-            position: "top-end",
+        .then((res) => {
+          Toast.fire({
             icon: "success",
-            title: "已訂單資訊",
-            showConfirmButton: false,
-            timer: 800,
+            title: `${res.data.message}`,
           });
           this.$refs.orderModal.hide();
           this.getOrderList();
         })
         .catch((error) => {
-          alert(error.response.data.message);
+          Toast.fire({
+            icon: "error",
+            title: `${error.response.data.message}`,
+          });
         });
     },
   },

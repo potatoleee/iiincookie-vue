@@ -2,7 +2,7 @@
 //
 // Variables should follow the `$component-state-property-size` formula for
 // consistent naming. Ex: $nav-link-disabled-color and $modal-content-box-shadow-xs.
-@import url('https://fonts.googleapis.com/css2?family=Cormorant:wght@400;500;600&family=Noto+Sans+TC:wght@400;500&family=Noto+Serif+TC:wght@500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant:wght@300;400;500;600&family=Noto+Sans+TC:wght@400;500&family=Noto+Serif+TC:wght@500;700;900&display=swap');
 // Color system
 
 // scss-docs-start gray-color-variables
@@ -419,6 +419,8 @@ $zindex-values:(
   6: 6,
   7: 7,
   8: 8,
+  9: 9,
+  10: 10,
 )!default;
 // Body
 //
@@ -597,7 +599,7 @@ $weightValue: (
 ) !default;
 
 $line-height-base:            1.5 !default;
-$line-height-sm:              1.25 !default;
+$line-height-sm:              1.2 !default;
 $line-height-lg:              2 !default;
 
 $h1-font-size:                $font-size-base * 2.5 !default;

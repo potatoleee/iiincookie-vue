@@ -220,7 +220,7 @@
 <script>
 import UploadImages from "../../components/admin/UploadImages.vue";
 import { Modal } from "bootstrap";
-import Swal from "sweetalert2";
+import { Toast } from "../../utils/toast.js";
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
 export default {
   props: ["isNew", "innerTempData"],
@@ -243,19 +243,19 @@ export default {
         url = `${VITE_APP_URL}/api/${VITE_APP_PATH}/admin/product/${this.tempData.id}`;
       }
       this.$http[http](url, { data: this.tempData }) //這邊格式比較特別本來，要對照文件給的格式放入data
-        .then(() => {
-          Swal.fire({
-            position: "top-end",
+        .then((res) => {
+          Toast.fire({
             icon: "success",
-            title: "已更新產品",
-            showConfirmButton: false,
-            timer: 800,
+            title: `${res.data.message}`,
           });
           this.editProductModal.hide();
           this.$emit("update"); //emit 觸發外層 getProductList()
         })
         .catch((error) => {
-          alert(error.response.data.message);
+          Toast.fire({
+            icon: "error",
+            title: `${error.response.data.message}`,
+          });
         });
     },
     //新增圖片

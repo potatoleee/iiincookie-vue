@@ -22,13 +22,18 @@
 <style lang="scss"></style>
 <script>
 import { RouterView } from "vue-router";
+import { Toast } from "../utils/toast.js";
 const { VITE_APP_URL } = import.meta.env;
 export default {
   methods: {
     logout() {
       this.$http.post(`${VITE_APP_URL}/logout`).then(() => {
         document.cookie = `hexToken=; expires=${new Date()};`; //cookie清除
-        alert("token 已清除 已登出");
+
+        Toast.fire({
+          icon: "success",
+          title: "token 已清除 已登出",
+        });
         this.$router.push("/login");
       });
     },
@@ -43,9 +48,18 @@ export default {
 
       this.$http
         .post(`${VITE_APP_URL}/api/user/check`)
-        .then(() => {})
-        .catch(() => {
-          alert("請先登入帳號密碼喔～感謝你！");
+        .then((res) => {
+          console.log(res);
+          Toast.fire({
+            icon: "success",
+            title: "登入成功",
+          });
+        })
+        .catch((error) => {
+          Toast.fire({
+            icon: "error",
+            title: `${error.response.data.message}`,
+          });
           this.$router.push("/login");
         });
     },

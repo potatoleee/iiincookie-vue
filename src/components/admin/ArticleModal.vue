@@ -141,7 +141,7 @@
 import { Modal } from "bootstrap";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import UploadImages from "../../components/admin/UploadImages.vue";
-import Swal from "sweetalert2";
+import { Toast } from "../../utils/toast.js";
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
 export default {
   props: ["isNew", "innerTempArticle"],
@@ -181,19 +181,19 @@ export default {
         url = `${VITE_APP_URL}/api/${VITE_APP_PATH}/admin/article/${this.tempArticle.id}`;
       }
       this.$http[http](url, { data: this.tempArticle }) //這邊格式比較特別本來，要對照文件給的格式放入data
-        .then(() => {
-          Swal.fire({
-            position: "top-end",
+        .then((res) => {
+          Toast.fire({
             icon: "success",
-            title: "已更新文章",
-            showConfirmButton: false,
-            timer: 800,
+            title: `${res.data.message}`,
           });
           this.articleModal.hide();
           this.$emit("update");
         })
         .catch((error) => {
-          alert(error.response.data.message);
+          Toast.fire({
+            icon: "error",
+            title: `${error.response.data.message}`,
+          });
         });
     },
     show() {
@@ -219,7 +219,6 @@ export default {
   },
   mounted() {
     this.articleModal = new Modal(this.$refs.articleModal);
-    console.log(this.tempData);
   },
   components: {
     UploadImages,

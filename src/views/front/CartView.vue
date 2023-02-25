@@ -43,7 +43,28 @@
           </td>
           <td class="text-center">NT$ {{ cartItem.product.price }}</td>
           <td>
-            <div class="input-group input-group-sm">
+            <div class="count d-flex justify-content-center">
+              <button
+                @click="decreaseNum(cartItem)"
+                class="btn btn-secondary-light border border-secondary-dark rounded-0"
+                :class="{ disabled: cartItem.qty == 1 }"
+              >
+                -
+              </button>
+              <input
+                class="text-center bg-secondary-light border-0"
+                type="number"
+                v-model="cartItem.qty"
+                readonly
+              />
+              <button
+                class="btn btn-secondary-light border border-secondary-dark rounded-0"
+                @click="addNum(cartItem)"
+              >
+                +
+              </button>
+            </div>
+            <!-- <div class="input-group input-group-sm">
               <div class="input-group mb-3">
                 <select
                   name=""
@@ -58,7 +79,7 @@
                   </option>
                 </select>
               </div>
-            </div>
+            </div> -->
           </td>
           <td class="text-center">NT$ {{ cartItem.total }}</td>
 
@@ -116,7 +137,49 @@ export default {
       "deleteCartItem",
       "updateCartItem",
       "deleteAllCartItem",
+      "addNum",
+      "decreaseNum",
     ]),
+    // addNum(cartItem) {
+    //   console.log("增加數量+1");
+    //   const data = {
+    //     product_id: cartItem.product_id,
+    //     qty: cartItem.qty + 1,
+    //   };
+    //   this.loadingItem = cartItem.id;
+    //   this.$http
+    //     .put(`${VITE_APP_URL}/api/${VITE_APP_PATH}/cart/${cartItem.id}`, {
+    //       data,
+    //     }) //{data:data}同名可以縮寫
+    //     .then((res) => {
+    //       console.log(res);
+    //       this.getCartList();
+    //       this.loadingItem = "";
+    //     })
+    //     .catch((error) => {
+    //       alert(error.response.data.message);
+    //     });
+    // },
+    // decreaseNum(cartItem) {
+    //   console.log("增加數量+1");
+    //   const data = {
+    //     product_id: cartItem.product_id,
+    //     qty: cartItem.qty - 1,
+    //   };
+    //   this.loadingItem = cartItem.id;
+    //   this.$http
+    //     .put(`${VITE_APP_URL}/api/${VITE_APP_PATH}/cart/${cartItem.id}`, {
+    //       data,
+    //     }) //{data:data}同名可以縮寫
+    //     .then((res) => {
+    //       console.log(res);
+    //       this.getCartList();
+    //       this.loadingItem = "";
+    //     })
+    //     .catch((error) => {
+    //       alert(error.response.data.message);
+    //     });
+    // },
   },
   computed: {
     ...mapState(cartStore, ["cartList"]),

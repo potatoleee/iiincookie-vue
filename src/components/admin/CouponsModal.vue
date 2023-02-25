@@ -103,7 +103,8 @@
 
 <script>
 import { Modal } from "bootstrap";
-import Swal from "sweetalert2";
+import { Toast } from "../../utils/toast.js";
+
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
 export default {
   props: ["isNew", "innerTempCoupon"],
@@ -126,19 +127,19 @@ export default {
         url = `${VITE_APP_URL}/api/${VITE_APP_PATH}/admin/coupon/${this.tempCoupon.id}`;
       }
       this.$http[http](url, { data: this.tempCoupon }) //這邊格式比較特別本來，要對照文件給的格式放入data
-        .then(() => {
-          Swal.fire({
-            position: "top-end",
+        .then((res) => {
+          Toast.fire({
             icon: "success",
-            title: "已更新優惠券",
-            showConfirmButton: false,
-            timer: 800,
+            title: `${res.data.message}`,
           });
           this.couponsModal.hide();
           this.$emit("update");
         })
         .catch((error) => {
-          alert(error.response.data.message);
+          Toast.fire({
+            icon: "error",
+            title: `${error.response.data.message}`,
+          });
         });
     },
     show() {
@@ -149,15 +150,16 @@ export default {
     },
   },
   watch: {
-    //監聽props
     innerTempCoupon() {
       this.tempCoupon = this.innerTempCoupon;
       //將外面傳進來的時間轉成 YYYY-MM-DD
-      const timeStampToDate = new Date(this.tempCoupon.due_date * 1000)
-        .toISOString()
-        .split("T");
+      const timeStampToDate = new Date(this.tempCoupon.due_date * 1000);
+      this.due_date = timeStampToDate.toLocaleString();
+      console.log(this.due_date);
+      // .toISOString()
+      // .split("T");
       // .split('T') : 使用 "T" 分隔符將日期和時間拆分為一個數組，例如 ["2023-02-20", "13:42:30.000Z"]。
-      this.due_date = timeStampToDate[0];
+      // this.due_date = timeStampToDate[0];
       //[this.due_data] = timeStampToDate;
     },
     due_date() {
@@ -167,7 +169,6 @@ export default {
   },
   mounted() {
     this.couponsModal = new Modal(this.$refs.couponsModal);
-    console.log(this.tempData);
   },
 };
 </script>

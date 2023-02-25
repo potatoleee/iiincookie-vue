@@ -73,6 +73,7 @@
 import CouponsModal from "../../components/admin/CouponsModal.vue";
 import DeleteModal from "../../components/admin/DeleteModal.vue";
 import PaginationComponent from "../../components/PaginationComponent.vue";
+import { Toast } from "../../utils/toast.js";
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
 export default {
   data() {
@@ -115,12 +116,14 @@ export default {
           `${VITE_APP_URL}/api/${VITE_APP_PATH}/admin/coupons/?page=${currentPage}`
         )
         .then((res) => {
-          console.log(res.data);
           this.pagination = res.data.pagination;
           this.coupons = res.data.coupons;
         })
         .catch((error) => {
-          alert(error.response.data.message);
+          Toast.fire({
+            icon: "error",
+            title: `${error.response.data.message}`,
+          });
         });
     },
     formatDate(timestamp) {
@@ -133,12 +136,18 @@ export default {
           `${VITE_APP_URL}/api/${VITE_APP_PATH}/admin/coupon/${this.tempCoupon.id}`
         )
         .then((res) => {
-          alert(res.data.message);
+          Toast.fire({
+            icon: "success",
+            title: `${res.data.message}`,
+          });
           this.$refs.deleteModal.hide();
           this.getCouponList();
         })
         .catch((error) => {
-          alert(error.response.data.message);
+          Toast.fire({
+            icon: "error",
+            title: `${error.response.data.message}`,
+          });
         });
     },
   },

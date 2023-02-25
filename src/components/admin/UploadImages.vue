@@ -1,4 +1,6 @@
 <template>
+  <VueLoading v-model:active="isLoading"></VueLoading>
+
   <div class="mt-4">
     <h2 class="fs-xl">圖片上傳區</h2>
     <label for="file" class="mb-2"
@@ -11,6 +13,7 @@
       placeholder="請輸入圖片連結"
       @change="upload"
     />
+
     <a v-if="imageUrl" :href="imageUrl" target="_blank"
       >上傳的圖片連結(右鍵可複製網址)</a
     >
@@ -18,6 +21,9 @@
 </template>
 
 <script>
+import { Toast } from "../../utils/toast.js";
+import loadingStore from "../../stores/loadingStore.js";
+import { mapState } from "pinia";
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
 export default {
   data() {
@@ -40,16 +46,29 @@ export default {
       }
       const formData = new FormData();
       formData.append("file-to-upload", file);
+      this.isLoading = true;
       this.$http
         .post(`${VITE_APP_URL}/api/${VITE_APP_PATH}/admin/upload`, formData)
         .then((res) => {
           this.imageUrl = res.data.imageUrl;
-          alert("圖片上傳成功");
+          Toast.fire({
+            icon: "success",
+            title: "圖片上傳成功",
+          });
         })
-        .catch((err) => {
-          alert(err.response.data.message);
+        .catch((error) => {
+          Toast.fire({
+            icon: "error",
+            title: `${error.response.data.message}`,
+          });
+        })
+        .finally(() => {
+          this.isLoading = false;
         });
     },
+  },
+  computed: {
+    ...mapState(loadingStore, ["isLoading"]),
   },
 };
 </script>

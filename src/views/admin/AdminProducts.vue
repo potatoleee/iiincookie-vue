@@ -83,7 +83,7 @@
 import DeleteModal from "../../components/admin/DeleteModal.vue";
 import ProductModal from "../../components/admin/ProductModal.vue";
 import PaginationComponent from "../../components/PaginationComponent.vue";
-
+import { Toast } from "../../utils/toast.js";
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
 export default {
   data() {
@@ -108,12 +108,14 @@ export default {
           `${VITE_APP_URL}/api/${VITE_APP_PATH}/admin/products/?page=${currentPage}`
         )
         .then((res) => {
-          console.log(res.data);
           this.pagination = res.data.pagination;
           this.products = res.data.products;
         })
         .catch((error) => {
-          alert(error.response.data.message);
+          Toast.fire({
+            icon: "error",
+            title: `${error.response.data.message}`,
+          });
         });
     },
     //確認開啟的modal類別

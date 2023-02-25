@@ -72,6 +72,7 @@
 import ArticleModal from "../../components/admin/ArticleModal.vue";
 import DeleteModal from "../../components/admin/DeleteModal.vue";
 import PaginationComponent from "../../components/PaginationComponent.vue";
+import { Toast } from "../../utils/toast.js";
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
 export default {
   data() {
@@ -110,25 +111,28 @@ export default {
           `${VITE_APP_URL}/api/${VITE_APP_PATH}/admin/articles/?page=${currentPage}`
         )
         .then((res) => {
-          console.log(res.data);
           this.pagination = res.data.pagination;
           this.articles = res.data.articles;
         })
         .catch((error) => {
-          alert(error.response.data.message);
+          Toast.fire({
+            icon: "error",
+            title: `${error.response.data.message}`,
+          });
         });
     },
     openArticle(article) {
       this.$http
         .get(`${VITE_APP_URL}/api/${VITE_APP_PATH}/admin/article/${article.id}`)
         .then((res) => {
-          console.log(res.data);
-          // console.log(res.data.article);
           this.tempArticle = res.data.article;
           this.$refs.articleModal.show();
         })
         .catch((error) => {
-          alert(error.response.data.message);
+          Toast.fire({
+            icon: "error",
+            title: `${error.response.data.message}`,
+          });
         });
     },
     formatDate(timestamp) {
@@ -141,12 +145,18 @@ export default {
           `${VITE_APP_URL}/api/${VITE_APP_PATH}/admin/article/${this.tempArticle.id}`
         )
         .then((res) => {
-          alert(res.data.message);
+          Toast.fire({
+            icon: "success",
+            title: `${res.data.message}`,
+          });
           this.$refs.deleteModal.hide();
           this.getArticleList();
         })
         .catch((error) => {
-          alert(error.response.data.message);
+          Toast.fire({
+            icon: "error",
+            title: `${error.response.data.message}`,
+          });
         });
     },
   },

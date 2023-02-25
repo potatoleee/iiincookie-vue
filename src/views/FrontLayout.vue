@@ -1,7 +1,7 @@
 <template>
   <!-- 導覽列 -->
   <div
-    class="container-fluid d-flex w-100 justify-content-between position-fixed z-8 py-7"
+    class="container-fluid d-flex w-100 justify-content-between position-fixed top-0 left-0 z-8 py-7"
   >
     <div class="menu-btn" @click="toggleMenu" :class="{ open: isOpen }"></div>
     <RouterLink to="/">
@@ -55,8 +55,9 @@
   </main>
   <!-- 主要內容 -->
   <!-- footer -->
-  <div class="footer">這是底部</div>
+  <div class="footer mt-auto">這是底部</div>
   <!-- footer -->
+  <!-- </div> -->
 </template>
 
 <style lang="scss">
@@ -108,6 +109,7 @@
   top: 0;
   left: 0;
   background: $secondary-dark;
+
   ul {
     position: absolute;
     top: 50%;
@@ -119,6 +121,7 @@
       color: #594637;
       font-size: 30px;
       line-height: 60px;
+      display: block;
       &:hover {
         color: #a66f2c;
         transition: 1s;
@@ -131,6 +134,7 @@
   position: fixed;
   width: 0%;
   height: 100vh;
+  top: 0;
   left: 55%;
   background: url("../assets/images/newbanner正方形.jpg") no-repeat 50% 50%;
   background-size: cover;
@@ -224,6 +228,7 @@ export default {
       opacity: 0,
       ease: "expo.inOut",
       stagger: 0.1,
+      display: "none",
     });
     this.navMotion.to(
       ".images",
