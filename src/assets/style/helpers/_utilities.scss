@@ -16,6 +16,16 @@ $utilities: map-merge(
         class: fw,
         values: $weightValue
       ),
+      "text-opacity": (
+        css-var: true,
+        class: text-opacity,
+        values: (
+          25: .25,
+          70: .70,
+          80: .80,
+          100: 1
+        )
+      ),
       "letter-spacing": (
               responsive: true,
               property: letter-spacing,

@@ -5,7 +5,7 @@ const router = createRouter({
   linkActiveClass: "active",
   routes: [
     {
-      path: "/",
+      path: "",
       name: "index",
       component: () => import("../views/front/IndexView.vue"),
     },

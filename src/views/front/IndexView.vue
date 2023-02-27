@@ -17,7 +17,7 @@
       </div>
     </div>
     <!-- 導覽列 -->
-    <!-- 導覽列展開內容 -->
+    <!-- 導覽列展開內容 start-->
     <div class="position-relative z-9">
       <div class="images">
         <span ref="bg1" class="bg bg1 hide"></span>
@@ -49,7 +49,7 @@
         </ul>
       </div>
     </div>
-    <!-- 導覽列展開內容 -->
+    <!-- 導覽列展開內容 end-->
     <div class="video-content d-flex justify-content-center align-items-center">
       <video
         id="videoBg"
