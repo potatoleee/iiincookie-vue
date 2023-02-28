@@ -2,13 +2,13 @@
   <div class="video-wrap">
     <!-- 導覽列 -->
     <div
-      class="container-fluid d-flex w-100 justify-content-between position-fixed top-0 left-0 z-10 py-7"
+      class="container-fluid px-10 d-flex w-100 justify-content-between position-fixed top-0 left-0 z-10 py-7"
     >
       <div class="menu-btn" @click="toggleMenu" :class="{ open: isOpen }"></div>
       <RouterLink to="/">
         <img class="logo" src="../../assets/images/logo.svg" alt="餅乾生產餡" />
       </RouterLink>
-      <div class="d-flex align-items-cente gap-2">
+      <div class="d-flex align-items-center gap-10">
         <i class="bi bi-heart fs-2xl"></i>
         <RouterLink to="/cart">
           <i class="bi bi-bag fs-2xl"></i>
@@ -50,6 +50,7 @@
       </div>
     </div>
     <!-- 導覽列展開內容 end-->
+
     <div class="video-content d-flex justify-content-center align-items-center">
       <video
         id="videoBg"
@@ -62,8 +63,11 @@
       >
         <source src="../../assets/video/boilTea.mp4" type="video/mp4" />
       </video>
+      <p class="vertical-rl">人生很苦了，來一塊甜的吧！</p>
     </div>
-    <h2 class="position-absolute top-50 start-50 translate-middle text-white">
+    <h2
+      class="font-serifTc position-absolute top-50 start-50 translate-middle text-white font-2xl"
+    >
       因緣受到朋友委託製作餅乾 因此挑戰了很想嘗試的鐵盒餅乾
       第一次嘗試，但朋友一吃驚艷 鼓勵我讓大家也能品嚐得到 那美味的夾餡餅乾
       便誤打誤撞開始生產餡這個品牌 從沒想過餅乾會成為另一份事業
@@ -201,6 +205,8 @@
   width: 35em;
   height: 35em;
   object-fit: cover;
+  position: absolute;
+  bottom: 0;
 }
 </style>
 
@@ -259,6 +265,14 @@ export default {
     videoMotion
       .to(".videoCanvas", {
         width: "90vw",
+        height: "75vh",
+        borderRadius: "0em",
+        duration: 20,
+        ease: "power1.out",
+        yPercent: "-50%",
+      })
+      .to(".videoCanvas", {
+        width: "90vw",
         height: "90vh",
         borderRadius: "0em",
         duration: 20,
@@ -293,7 +307,7 @@ export default {
       xPercent: "-50",
       y: "70vh",
       duration: 2,
-      opacity: 0.3,
+      opacity: 0.6,
       ease: "ease",
     });
 

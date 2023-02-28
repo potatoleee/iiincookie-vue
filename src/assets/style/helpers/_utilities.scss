@@ -41,6 +41,16 @@ $utilities: map-merge(
                 ) 
                 
             ),
+            "writing-mode": (
+              responsive: true,
+              property: writing-mode,
+              class: vertical,
+              values:(
+                rl: vertical-rl,
+                lr: vertical-lr,
+                ) 
+                
+            ),
     "object-fit": (
       property: object-fit,
       class: object,
