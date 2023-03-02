@@ -32,5 +32,17 @@
       align-items: center;
     }
   }
+  .line{
+    position: relative;
+   &::before{
+    position: absolute;
+    content: "";
+    width: 1px;
+    height: 180px;
+    background-color: $dark;
+    top: 20%;
+    left: 42%;
+   } 
+  }
  
   

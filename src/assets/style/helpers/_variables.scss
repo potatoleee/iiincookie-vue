@@ -301,7 +301,8 @@ $cyans: (
 $primary:        #B4622B;//$blue !default;
 $secondary-light:     #ECE9E3;
 $secondary:     #D9D4CB;//$gray-600 !default;
-$secondary-dark:     #B9B0A2;;
+$secondary-dark:     #B9B0A2;
+$secondary-darker:     #A29382;
 $success:       $green !default;
 $info:          $cyan !default;
 $warning:       $yellow !default;
@@ -316,6 +317,7 @@ $theme-colors: (
   "secondary-light": $secondary-light,
   "secondary":  $secondary,
   "secondary-dark": $secondary-dark,
+  "secondary-darker":$secondary-darker,
   "success":    $success,
   "info":       $info,
   "warning":    $warning,

@@ -100,9 +100,44 @@
     </p>
   </div>
   <!-- 影片區 end-->
-  <!-- about -->
-  <p>這是關於區</p>
-  <!-- about -->
+  <!-- about start-->
+  <div class="container mb-17">
+    <p class="fs-2xl font-serifTc text-center mb-9">更多有關於我們的故事</p>
+    <div class="d-flex justify-content-center">
+      <RouterLink
+        to="/about"
+        class="bg-secondary-light border border-dark py-2 px-17 rounded-pill d-inline-block btn font-english"
+      >
+        See More
+        <i class="bi bi-arrow-up-right fs-xs ms-2"></i>
+      </RouterLink>
+    </div>
+  </div>
+  <!-- about end-->
+  <!-- products start-->
+  <div class="container">
+    <div class="mb-13">
+      <p class="fs-7xl font-english fw-light lh-sm">Products</p>
+      <p class="font-serifTc fs-xl fw-medium">商品一覽</p>
+    </div>
+    <div class="row">
+      <div class="col-5 d-flex gap-10">
+        <p class="vertical-rl line letter-spacing-4">招牌商品</p>
+        <div>
+          <h3 class="fs-3xl font-serifTc py-7">伯爵巧克力夾餡</h3>
+          <p>
+            餅乾生產餡的logo，你有發現裡頭藏了一個栗子嗎？
+            手工一個個按壓栗子造型的巧克力栗子餅乾，內餡深色的內餡，為香濃的伯爵茶香甘納許，兩者一同咬下配上一杯茶，人生一大享受呀！
+          </p>
+        </div>
+      </div>
+      <div class="col-6 offset-lg-1">
+        <img src="../../assets/images/chocolate01.jpg" alt="" />
+      </div>
+      <img src="../../assets/images/chocolate拷貝.jpg" class="w-50" alt="" />
+    </div>
+  </div>
+  <!-- products end-->
 </template>
 
 <style lang="scss">

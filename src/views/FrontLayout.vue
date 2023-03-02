@@ -1,16 +1,19 @@
 <template>
   <!-- 導覽列 -->
   <div
-    class="container-fluid d-flex w-100 justify-content-between position-fixed top-0 left-0 z-9 py-7"
+    class="container-fluid d-flex w-100 justify-content-between align-items-center position-fixed top-0 left-0 z-9 py-7 bg-secondary-light"
   >
     <div class="menu-btn" @click="toggleMenu" :class="{ open: isOpen }"></div>
-    <RouterLink to="/">
+    <RouterLink
+      to="/"
+      class="position-absolute start-50 top-50 translate-middle"
+    >
       <img class="logo" src="../assets/images/logo.svg" alt="餅乾生產餡" />
     </RouterLink>
     <div class="d-flex align-items-center gap-2">
-      <i class="bi bi-heart fs-2xl"></i>
+      <i class="bi bi-heart fs-xl fs-lg-2xl"></i>
       <RouterLink to="/cart">
-        <i class="bi bi-bag fs-2xl"></i>
+        <i class="bi bi-bag fs-xl fs-lg-2xl"></i>
         {{ cartList.carts?.length }}
       </RouterLink>
     </div>
@@ -27,22 +30,27 @@
       <ul class="d-flex flex-column gap-14">
         <RouterLink to="/about">
           <li @mouseenter="showBg1" @mouseleave="hideBg1" @click="toggleMenu">
-            <p class="menu-title fs-8xl font-english">ABOUT</p>
-            <p class="menu-title fs-2xl">關於我們</p>
+            <p class="fs-6xl fs-md-7xl fs-lg-8xl font-english lh-sm">ABOUT</p>
+            <p class="fs-2xl font-serifTc fw-medium">關於我們</p>
           </li>
         </RouterLink>
         <RouterLink to="/products" class="menu-item-2">
           <li @mouseenter="showBg2" @mouseleave="hideBg2">
-            <p class="menu-title fs-8xl font-english" @click="toggleMenu">
+            <p
+              class="fs-6xl fs-md-7xl fs-lg-8xl font-english lh-sm"
+              @click="toggleMenu"
+            >
               PRODUCTS
             </p>
-            <p class="menu-title fs-2xl" @click="toggleMenu">產品ㄧ覽</p>
+            <p class="fs-2xl font-serifTc fw-medium" @click="toggleMenu">
+              產品ㄧ覽
+            </p>
           </li>
         </RouterLink>
         <RouterLink to="/articles" class="menu-item-3">
           <li @mouseenter="showBg3" @mouseleave="hideBg3" @click="toggleMenu">
-            <p class="menu-title fs-8xl font-english">NEWS</p>
-            <p class="menu-title fs-2xl">最新消息</p>
+            <p class="fs-6xl fs-md-7xl fs-lg-8xl font-english lh-sm">NEWS</p>
+            <p class="fs-2xl font-serifTc fw-medium">最新消息</p>
           </li>
         </RouterLink>
       </ul>
@@ -109,18 +117,24 @@
   top: 0;
   left: 0;
   background: $secondary-dark;
+  z-index: 3;
 
   ul {
     position: absolute;
     top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    left: 12%;
+    transform: translate(0, -50%);
     cursor: pointer;
+    @include pad {
+      left: 5%;
+    }
+    @include phone {
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
 
     li {
       color: #594637;
-      font-size: 30px;
-      line-height: 60px;
       display: block;
       &:hover {
         color: #a66f2c;
@@ -129,15 +143,23 @@
     }
   }
 }
-
+.logo {
+  @include pad {
+    width: 110px;
+  }
+}
 .images {
   position: fixed;
+  z-index: 4;
   width: 0%;
   height: 100vh;
   top: 0;
   left: 55%;
   background: url("../assets/images/newbanner正方形.jpg") no-repeat 50% 50%;
   background-size: cover;
+  @include phone {
+    display: none;
+  }
 }
 .bg {
   position: absolute;
@@ -219,7 +241,7 @@ export default {
     // 開啟動畫
     this.navMotion.to(".menu", {
       duration: 1,
-      width: "55%",
+      width: "100%",
       ease: "expo.in",
     });
     this.navMotion.from(".menu ul li", {
