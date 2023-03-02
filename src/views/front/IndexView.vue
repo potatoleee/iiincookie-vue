@@ -1,56 +1,55 @@
 <template>
-  <div class="video-wrap">
-    <!-- 導覽列 -->
-    <div
-      class="container-fluid px-10 d-flex w-100 justify-content-between position-fixed top-0 left-0 z-10 py-7"
-    >
-      <div class="menu-btn" @click="toggleMenu" :class="{ open: isOpen }"></div>
-      <RouterLink to="/">
-        <img class="logo" src="../../assets/images/logo.svg" alt="餅乾生產餡" />
+  <div
+    class="container-fluid px-10 d-flex w-100 justify-content-between position-fixed top-0 left-0 z-10 py-7"
+  >
+    <div class="menu-btn" @click="toggleMenu" :class="{ open: isOpen }"></div>
+    <RouterLink to="">
+      <img class="logo" src="../../assets/images/logo.svg" alt="餅乾生產餡" />
+    </RouterLink>
+    <div class="d-flex align-items-center gap-10">
+      <i class="bi bi-heart fs-2xl"></i>
+      <RouterLink to="/cart">
+        <i class="bi bi-bag fs-2xl"></i>
+        {{ cartList.carts?.length }}
       </RouterLink>
-      <div class="d-flex align-items-center gap-10">
-        <i class="bi bi-heart fs-2xl"></i>
-        <RouterLink to="/cart">
-          <i class="bi bi-bag fs-2xl"></i>
-          {{ cartList.carts?.length }}
+    </div>
+  </div>
+  <!-- 導覽列 -->
+  <!-- 導覽列展開內容 start-->
+  <div class="position-relative z-9">
+    <div class="images">
+      <span ref="bg1" class="bg bg1 hide"></span>
+      <span ref="bg2" class="bg bg2 hide"></span>
+      <span ref="bg3" class="bg bg3 hide"></span>
+    </div>
+    <div class="menu">
+      <ul class="d-flex flex-column gap-14">
+        <RouterLink to="/about">
+          <li @mouseenter="showBg1" @mouseleave="hideBg1" @click="toggleMenu">
+            <p class="menu-title fs-8xl font-english">ABOUT</p>
+            <p class="menu-title fs-2xl">關於我們</p>
+          </li>
         </RouterLink>
-      </div>
+        <RouterLink to="/products" class="menu-item-2">
+          <li @mouseenter="showBg2" @mouseleave="hideBg2">
+            <p class="menu-title fs-8xl font-english" @click="toggleMenu">
+              PRODUCTS
+            </p>
+            <p class="menu-title fs-2xl" @click="toggleMenu">產品ㄧ覽</p>
+          </li>
+        </RouterLink>
+        <RouterLink to="/articles" class="menu-item-3">
+          <li @mouseenter="showBg3" @mouseleave="hideBg3" @click="toggleMenu">
+            <p class="menu-title fs-8xl font-english">NEWS</p>
+            <p class="menu-title fs-2xl">最新消息</p>
+          </li>
+        </RouterLink>
+      </ul>
     </div>
-    <!-- 導覽列 -->
-    <!-- 導覽列展開內容 start-->
-    <div class="position-relative z-9">
-      <div class="images">
-        <span ref="bg1" class="bg bg1 hide"></span>
-        <span ref="bg2" class="bg bg2 hide"></span>
-        <span ref="bg3" class="bg bg3 hide"></span>
-      </div>
-      <div class="menu">
-        <ul class="d-flex flex-column gap-14">
-          <RouterLink to="/about">
-            <li @mouseenter="showBg1" @mouseleave="hideBg1">
-              <p class="menu-title fs-8xl font-english">ABOUT</p>
-              <p class="menu-title fs-2xl">關於我們</p>
-            </li>
-          </RouterLink>
-          <RouterLink to="/products" class="menu-item-2">
-            <li @mouseenter="showBg2" @mouseleave="hideBg2">
-              <p class="menu-title fs-8xl font-english" @click="toggleMenu">
-                PRODUCTS
-              </p>
-              <p class="menu-title fs-2xl" @click="toggleMenu">產品ㄧ覽</p>
-            </li>
-          </RouterLink>
-          <RouterLink to="/articles" class="menu-item-3">
-            <li @mouseenter="showBg3" @mouseleave="hideBg3">
-              <p class="menu-title fs-8xl font-english">NEWS</p>
-              <p class="menu-title fs-2xl">最新消息</p>
-            </li>
-          </RouterLink>
-        </ul>
-      </div>
-    </div>
-    <!-- 導覽列展開內容 end-->
-
+  </div>
+  <!-- 導覽列展開內容 end-->
+  <!-- 影片區 end-->
+  <div class="video-wrap">
     <div class="video-content d-flex justify-content-center align-items-center">
       <video
         id="videoBg"
@@ -61,19 +60,49 @@
         loop
         muted
       >
-        <source src="../../assets/video/boilTea.mp4" type="video/mp4" />
+        <source src="../../assets/video/indexVideo.mp4" type="video/mp4" />
       </video>
-      <p class="vertical-rl">人生很苦了，來一塊甜的吧！</p>
+      <p class="vertical-rl">餅乾生產餡，呈現最美味的味。</p>
+      <!-- <img
+        class="position-absolute bottom-0"
+        src="../../assets/images/mocha01.jpg"
+        width="300"
+        alt=""
+      /> -->
     </div>
-    <h2
-      class="font-serifTc position-absolute top-50 start-50 translate-middle text-white font-2xl"
+    <p
+      class="font-serifTc position-absolute start-30 top-30 fw-medium letter-spacing-2 text-white fs-xl lh-lg"
     >
-      因緣受到朋友委託製作餅乾 因此挑戰了很想嘗試的鐵盒餅乾
-      第一次嘗試，但朋友一吃驚艷 鼓勵我讓大家也能品嚐得到 那美味的夾餡餅乾
-      便誤打誤撞開始生產餡這個品牌 從沒想過餅乾會成為另一份事業
+      你好，我們是餅乾生產餡，<br />
+      致力於製作美味的甜點，<br />
+      使每一個味蕾都獲得滿足。
+    </p>
+    <p
+      class="font-serifTc position-absolute start-30 top-50 fw-medium letter-spacing-2 text-white fs-xl lh-lg"
+    >
+      因緣受到朋友委託製作餅乾，<br />
+      因此挑戰了很想嘗試的鐵盒餅乾，<br />
+      雖是第一次嘗試，但朋友一吃驚艷，<br />
+      鼓勵我讓更多人也能品嚐得到。<br />
+    </p>
+    <p
+      class="font-serifTc position-absolute start-30 top-70 fw-medium letter-spacing-2 text-white fs-xl lh-lg"
+    >
+      便誤打誤撞開始生產餡這個品牌 <br />
+      從沒想過餅乾會成為另一份事業<br />
       人生就是這麼奇妙吧！
-    </h2>
+    </p>
+    <p
+      class="font-serifTc position-absolute start-30 top-80 fw-medium letter-spacing-2 text-white fs-xl lh-lg"
+    >
+      透過香甜的滋味， <br />
+      幸福你的每一時刻！<br />
+    </p>
   </div>
+  <!-- 影片區 end-->
+  <!-- about -->
+  <p>這是關於區</p>
+  <!-- about -->
 </template>
 
 <style lang="scss">
@@ -152,7 +181,7 @@
   height: 100vh;
   top: 0;
   left: 55%;
-  background: url("../assets/images/newbanner正方形.jpg") no-repeat 50% 50%;
+  background: url("../../assets/images/newbanner正方形.jpg") no-repeat 50% 50%;
   background-size: cover;
 }
 .bg {
@@ -170,17 +199,17 @@
 }
 .bg1 {
   display: block;
-  background: url("../assets/images/newbanner正方形.jpg") no-repeat 50% 50%;
+  background: url("../../assets/images/newbanner正方形.jpg") no-repeat 50% 50%;
   background-size: cover;
 }
 .bg2 {
   display: block;
-  background: url("../assets/images/02.jpg") no-repeat 50% 50%;
+  background: url("../../assets/images/02.jpg") no-repeat 50% 50%;
   background-size: cover;
 }
 .bg3 {
   display: block;
-  background: url("../assets/images/03.jpg") no-repeat 50% 50%;
+  background: url("../../assets/images/03.jpg") no-repeat 50% 50%;
   background-size: cover;
 }
 .hide {
@@ -206,7 +235,6 @@
   height: 35em;
   object-fit: cover;
   position: absolute;
-  bottom: 0;
 }
 </style>
 
@@ -221,7 +249,9 @@ ScrollTrigger.defaults({
 });
 export default {
   data() {
-    return {};
+    return {
+      isOpen: false,
+    };
   },
   methods: {
     ...mapActions(cartStore, ["getCartList"]),
@@ -252,6 +282,7 @@ export default {
     },
   },
   mounted() {
+    this.getCartList();
     let videoMotion = gsap.timeline({
       scrollTrigger: {
         trigger: ".video-wrap",
@@ -266,31 +297,27 @@ export default {
       .to(".videoCanvas", {
         width: "90vw",
         height: "75vh",
-        borderRadius: "0em",
         duration: 20,
-        ease: "power1.out",
+        ease: "ease",
         yPercent: "-50%",
       })
       .to(".videoCanvas", {
         width: "90vw",
         height: "90vh",
-        borderRadius: "0em",
         duration: 20,
-        ease: "power1.out",
+        ease: "ease",
       })
       .to(".videoCanvas", {
         width: "100vw",
         height: "100vh",
-        borderRadius: "0em",
         duration: 10,
-        ease: "power1.out",
+        ease: "ease",
       })
       .to(".videoCanvas", {
-        width: "10vmin",
+        width: "25vmin",
         height: "50vmin",
-        borderRadius: "0em",
         duration: 20,
-        ease: "power1.out",
+        ease: "ease",
       });
 
     let logoTop = gsap.timeline({
@@ -310,7 +337,6 @@ export default {
       opacity: 0.6,
       ease: "ease",
     });
-
     this.navMotion = gsap.timeline({ paused: true });
     // 開啟動畫
     this.navMotion.to(".menu", {

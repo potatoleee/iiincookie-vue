@@ -63,11 +63,7 @@
                 <div
                   class="count border border-secondary-dark d-flex justify-content-between w-100"
                 >
-                  <button
-                    class="btn rounded-0"
-                    @click="decreaseQty"
-                    :disabled="isDisabled"
-                  >
+                  <button class="btn rounded-0" @click="decreaseQty">
                     <i class="bi bi-dash-lg"></i>
                   </button>
                   <input
@@ -100,26 +96,13 @@
           </div>
         </div>
       </div>
-      <!-- <div class="row justify-content-center justify-content-lg-start">
-        <a
-          class="text-center d-flex flex-column align-items-center col-2 offset-lg-6 transition-5s w-auto"
-          href="product.html"
-        >
-          <div class="d-flex gap-2 mb-2">
-            <div class="w-2n h-2n bg-dark"></div>
-            <div class="w-2n h-2n bg-dark"></div>
-            <div class="w-2n h-2n bg-dark"></div>
-          </div>
-          <p>back to list</p>
-        </a>
-      </div> -->
     </div>
 
     <div class="row justify-content-lg-end">
       <div class="col-12 col-lg-5">
-        <div class="w-100 h-1 bg-secondary-dark mb-10"></div>
+        <div class="w-100 h-1 bg-secondary-dark mb-6"></div>
         <p class="fw-medium mb-6">詳細資訊</p>
-        <table class="table">
+        <table class="table mb-6">
           <tbody>
             <tr>
               <th class="border-0 fw-regular ps-0 fs-sm" width="120">重量</th>
@@ -155,10 +138,87 @@
         </table>
       </div>
     </div>
+    <div class="text-center mb-8">
+      <div class="w-100 h-1 bg-secondary-dark mb-8"></div>
+      <p class="font-english fs-3xl">Other products</p>
+      <p class="fw-medium fs-xl">其他商品</p>
+    </div>
+    <div class="mb-16">
+      <swiper
+        :slides-per-view="1"
+        :autoplay="{
+          delay: 2500,
+          disableOnInteraction: false,
+        }"
+        :loop="true"
+        :space-between="50"
+        :modules="modules"
+        :breakpoints="{
+          '768': {
+            slidesPerView: 2,
+            spaceBetween: 24,
+          },
+          '992': {
+            slidesPerView: 3,
+            spaceBetween: 24,
+          },
+        }"
+      >
+        <swiper-slide v-for="product in productList" :key="product.id">
+          <RouterLink :to="`/product/${product.id}`" class="mb-7">
+            <img :src="product.imageUrl" alt="" />
+          </RouterLink>
+          <p class="fw-medium mb-2 font-serifTc">{{ product.title }}</p>
+          <p
+            class="fs-sm fw-medium mb-2 font-serifTc text-dark text-opacity-80"
+          >
+            {{ product.flavor }}
+          </p>
+          <p class="font-serifTc">NT$ {{ product.price }}</p>
+        </swiper-slide>
+      </swiper>
+    </div>
+    <div>
+      <RouterLink
+        to="/products"
+        class="d-flex flex-row-reverse align-items-center gap-5"
+      >
+        <div class="d-flex gap-1">
+          <div>
+            <div
+              class="w-2n h-2n bg-secondary-light border-dark border mb-1"
+            ></div>
+            <div class="w-2n h-2n bg-secondary-light border-dark border"></div>
+          </div>
+          <div>
+            <div
+              class="w-2n h-2n bg-secondary-light border-dark border mb-1"
+            ></div>
+            <div class="w-2n h-2n bg-secondary-light border-dark border"></div>
+          </div>
+        </div>
+        <p class="fs-2xl font-english">Back To List</p>
+      </RouterLink>
+    </div>
   </div>
 </template>
 
+<style lang="scss">
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+</style>
+
 <script>
+import { Swiper, SwiperSlide } from "swiper/vue";
+import { Autoplay } from "swiper";
+// Import Swiper styles
+import "swiper/css";
+
+import { RouterLink } from "vue-router";
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
 import cartStore from "../../stores/cartStore.js";
 import { mapActions } from "pinia";
@@ -169,11 +229,18 @@ export default {
       activeIndex: 0,
       images: [],
       qty: 1, //必須要定義原始值
+      productList: [],
+      modules: [Autoplay],
+      routeID: "",
     };
   },
+  components: {
+    Swiper,
+    SwiperSlide,
+    RouterLink,
+  },
   methods: {
-    getProduct() {
-      const { id } = this.$route.params;
+    getProduct(id) {
       this.$http
         .get(`${VITE_APP_URL}/api/${VITE_APP_PATH}/product/${id}`)
         .then((res) => {
@@ -181,6 +248,21 @@ export default {
           this.product = res.data.product;
           this.images = this.product.imagesUrl;
           console.log(this.product);
+        });
+    },
+    getProductList() {
+      this.isLoading = true;
+      this.$http
+        .get(`${VITE_APP_URL}/api/${VITE_APP_PATH}/products/all`)
+        .then((res) => {
+          this.productList = res.data.products;
+          console.log(this.productList);
+        })
+        .catch((error) => {
+          alert(error.data.message);
+        })
+        .finally(() => {
+          this.isLoading = false;
         });
     },
     switchImage(index) {
@@ -197,9 +279,23 @@ export default {
     },
     ...mapActions(cartStore, ["addToCart", "addNum", "decreaseNum"]),
   },
-
+  computed: {
+    id() {
+      return this.$route.params.id;
+    },
+  },
+  watch: {
+    id(newID) {
+      this.routeID = newID;
+      if (this.$route.name === "product") {
+        this.getProduct(this.routeID);
+      }
+    },
+  },
   mounted() {
-    this.getProduct();
+    this.routeID = this.$route.params.id;
+    this.getProduct(this.routeID);
+    this.getProductList();
   },
 };
 </script>

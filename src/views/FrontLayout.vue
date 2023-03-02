@@ -1,13 +1,13 @@
 <template>
   <!-- 導覽列 -->
   <div
-    class="container-fluid d-flex w-100 justify-content-between position-fixed top-0 left-0 z-8 py-7"
+    class="container-fluid d-flex w-100 justify-content-between position-fixed top-0 left-0 z-9 py-7"
   >
     <div class="menu-btn" @click="toggleMenu" :class="{ open: isOpen }"></div>
     <RouterLink to="/">
-      <img src="../assets/images/logo.svg" alt="餅乾生產餡" />
+      <img class="logo" src="../assets/images/logo.svg" alt="餅乾生產餡" />
     </RouterLink>
-    <div class="d-flex align-items-cente gap-2">
+    <div class="d-flex align-items-center gap-2">
       <i class="bi bi-heart fs-2xl"></i>
       <RouterLink to="/cart">
         <i class="bi bi-bag fs-2xl"></i>
@@ -26,7 +26,7 @@
     <div class="menu">
       <ul class="d-flex flex-column gap-14">
         <RouterLink to="/about">
-          <li @mouseenter="showBg1" @mouseleave="hideBg1">
+          <li @mouseenter="showBg1" @mouseleave="hideBg1" @click="toggleMenu">
             <p class="menu-title fs-8xl font-english">ABOUT</p>
             <p class="menu-title fs-2xl">關於我們</p>
           </li>
@@ -40,7 +40,7 @@
           </li>
         </RouterLink>
         <RouterLink to="/articles" class="menu-item-3">
-          <li @mouseenter="showBg3" @mouseleave="hideBg3">
+          <li @mouseenter="showBg3" @mouseleave="hideBg3" @click="toggleMenu">
             <p class="menu-title fs-8xl font-english">NEWS</p>
             <p class="menu-title fs-2xl">最新消息</p>
           </li>

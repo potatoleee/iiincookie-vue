@@ -3,6 +3,14 @@ import { createRouter, createWebHashHistory } from "vue-router";
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
   linkActiveClass: "active",
+  scrollBehavior(to) {
+    if (to.fullPath.match("product")) {
+      return {
+        top: 0,
+      };
+    }
+    return {};
+  },
   routes: [
     {
       path: "",
@@ -13,8 +21,13 @@ const router = createRouter({
       path: "/",
       component: () => import("../views/FrontLayout.vue"),
       children: [
+        // {
+        //   path: "",
+        //   name: "index",
+        //   component: () => import("../views/front/IndexView.vue"),
+        // },
         {
-          path: "about",
+          path: "/about",
           name: "about",
           component: () => import("../views/front/AboutView.vue"),
         },
