@@ -160,7 +160,7 @@
         </div>
       </div>
       <div class="col-11 col-md-7 ps-12 pe-0 pe-md-3">
-        <img src="../../assets/images/chocolate03.jpg" alt="" />
+        <img src="../../assets/images/boxflower.jpg" alt="" />
       </div>
     </div>
   </div>
