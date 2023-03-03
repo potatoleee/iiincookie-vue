@@ -40,9 +40,16 @@
     width: 1px;
     height: 180px;
     background-color: $dark;
-    top: 20%;
+    top: 60%;
     left: 42%;
+    @include pad {
+      top: 40%;
+    }
+    @include phone {
+     top: 60%;
+   }
    } 
+
   }
  
   

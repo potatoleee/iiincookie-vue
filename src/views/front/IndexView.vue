@@ -120,23 +120,69 @@
       <p class="fs-7xl font-english fw-light lh-sm">Products</p>
       <p class="font-serifTc fs-xl fw-medium">商品一覽</p>
     </div>
-    <div class="row">
-      <div class="col-5 d-flex gap-10">
+    <div
+      class="row flex-column flex-md-row align-items-end align-items-md-start mb-12 mb-md-0"
+    >
+      <div class="col-12 col-md-5 d-flex gap-10 mb-10">
         <p class="vertical-rl line letter-spacing-4">招牌商品</p>
         <div>
-          <h3 class="fs-3xl font-serifTc py-7">伯爵巧克力夾餡</h3>
+          <h3 class="fs-2xl fs-lg-3xl font-serifTc py-7">伯爵巧克力夾餡</h3>
           <p>
             餅乾生產餡的logo，你有發現裡頭藏了一個栗子嗎？
             手工一個個按壓栗子造型的巧克力栗子餅乾，內餡深色的內餡，為香濃的伯爵茶香甘納許，兩者一同咬下配上一杯茶，人生一大享受呀！
           </p>
         </div>
       </div>
-      <div class="col-6 offset-lg-1">
+      <div class="col-9 col-md-6 offset-md-1">
         <img src="../../assets/images/chocolate01.jpg" alt="" />
       </div>
-      <img src="../../assets/images/chocolate拷貝.jpg" class="w-50" alt="" />
+    </div>
+    <!-- <div class="w-50">
+      <img src="../../assets/images/motcha02.jpg" alt="" />
+    </div> -->
+  </div>
+  <div class="container-fluid p-0 mb-17">
+    <div class="w-80 w-md-40 mt-md-m10 mt-0">
+      <img src="../../assets/images/motcha02.jpg" alt="" />
     </div>
   </div>
+  <div class="container mb-17">
+    <div
+      class="row flex-column flex-md-row align-items-end align-items-md-start mb-12 mb-md-0"
+    >
+      <div class="col-12 col-md-5 d-flex gap-10 mb-10">
+        <p class="vertical-rl line letter-spacing-4">季節商品</p>
+        <div>
+          <h3 class="fs-2xl fs-lg-3xl font-serifTc py-7">綜合鐵盒餅乾</h3>
+          <p>
+            綜合鐵盒餅乾，作為創業的起點，裝載了我們滿滿的用心，每一個時節會推出不一樣的口味，有鹹有甜，讓你的味蕾都得到滿足，因為很喜歡禮物收到花，包材也會去花市挑選適合的花材，希望妳收到餅乾時也能很開心！
+          </p>
+        </div>
+      </div>
+      <div class="col-11 col-md-7 ps-12 pe-0 pe-md-3">
+        <img src="../../assets/images/chocolate03.jpg" alt="" />
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div
+      class="row flex-column flex-md-row-reverse align-items-start mb-12 mb-md-0"
+    >
+      <div class="col-12 col-md-5 d-flex flex-row-reverse gap-10 mb-10">
+        <p class="vertical-rl line letter-spacing-4">特色商品</p>
+        <div>
+          <h3 class="fs-2xl fs-lg-3xl font-serifTc py-7">大人味昭和布丁</h3>
+          <p>
+            雖然主要販售的商品餅乾，不過布丁也是我們很喜歡的品項，後來研發後也開始販售，我們的焦糖熬煮的稍苦，綜合奶香的甜味，並加入萊姆酒增添酒香，如果你也對於綿密絲滑的布丁有興趣的話，歡迎來吃看看喔！
+          </p>
+        </div>
+      </div>
+      <div class="col-11 col-md-7 pe-12">
+        <img src="../../assets/images/pudding02.jpg" alt="" />
+      </div>
+    </div>
+  </div>
+
   <!-- products end-->
 </template>
 
@@ -181,7 +227,6 @@
   }
 }
 // 漢堡end
-
 .menu {
   position: fixed;
   width: 0%;
@@ -209,7 +254,6 @@
     }
   }
 }
-
 .images {
   position: fixed;
   width: 0%;
