@@ -1,5 +1,6 @@
 <template>
-  <div
+  <!-- 導覽列展開內容 -->
+  <!-- <div
     class="container-fluid px-10 d-flex w-100 justify-content-between position-fixed top-0 left-0 z-10 py-7"
   >
     <div class="menu-btn" @click="toggleMenu" :class="{ open: isOpen }"></div>
@@ -13,10 +14,10 @@
         {{ cartList.carts?.length }}
       </RouterLink>
     </div>
-  </div>
+  </div> -->
   <!-- 導覽列 -->
   <!-- 導覽列展開內容 start-->
-  <div class="position-relative z-9">
+  <!-- <div class="position-relative z-9">
     <div class="images">
       <span ref="bg1" class="bg bg1 hide"></span>
       <span ref="bg2" class="bg bg2 hide"></span>
@@ -46,7 +47,7 @@
         </RouterLink>
       </ul>
     </div>
-  </div>
+  </div> -->
   <!-- 導覽列展開內容 end-->
   <!-- 影片區 end-->
   <div class="video-wrap">
@@ -189,116 +190,116 @@
 <style lang="scss">
 @import "../../assets/style/all.scss";
 // 漢堡start
-.menu-btn {
-  position: relative;
-  width: 24px;
-  height: 24px;
-  z-index: 1030;
-  cursor: pointer;
+// .menu-btn {
+//   position: relative;
+//   width: 24px;
+//   height: 24px;
+//   z-index: 1030;
+//   cursor: pointer;
 
-  &::before,
-  &::after {
-    position: absolute;
-    content: "";
-    width: 20px;
-    height: 1px;
-    background-color: black;
-    right: 2px;
-    transition: all 0.5s;
-  }
-  &::before {
-    top: 8px;
-  }
-  &::after {
-    bottom: 8px;
-  }
-  &.open {
-    &::before,
-    &::after {
-      top: 50%;
-      transform: translateY(-50%);
-    }
-    &::before {
-      transform: rotate(45deg);
-    }
-    &::after {
-      transform: rotate(-45deg);
-    }
-  }
-}
-// 漢堡end
-.menu {
-  position: fixed;
-  width: 0%;
-  height: 100vh;
-  top: 0;
-  left: 0;
-  background: $secondary-dark;
+//   &::before,
+//   &::after {
+//     position: absolute;
+//     content: "";
+//     width: 20px;
+//     height: 1px;
+//     background-color: black;
+//     right: 2px;
+//     transition: all 0.5s;
+//   }
+//   &::before {
+//     top: 8px;
+//   }
+//   &::after {
+//     bottom: 8px;
+//   }
+//   &.open {
+//     &::before,
+//     &::after {
+//       top: 50%;
+//       transform: translateY(-50%);
+//     }
+//     &::before {
+//       transform: rotate(45deg);
+//     }
+//     &::after {
+//       transform: rotate(-45deg);
+//     }
+//   }
+// }
+// // 漢堡end
+// .menu {
+//   position: fixed;
+//   width: 0%;
+//   height: 100vh;
+//   top: 0;
+//   left: 0;
+//   background: $secondary-dark;
 
-  ul {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    cursor: pointer;
+//   ul {
+//     position: absolute;
+//     top: 50%;
+//     left: 50%;
+//     transform: translate(-50%, -50%);
+//     cursor: pointer;
 
-    li {
-      color: #594637;
-      font-size: 30px;
-      line-height: 60px;
-      display: block;
-      &:hover {
-        color: #a66f2c;
-        transition: 1s;
-      }
-    }
-  }
-}
-.images {
-  position: fixed;
-  width: 0%;
-  height: 100vh;
-  top: 0;
-  left: 55%;
-  background: url("../../assets/images/newbanner正方形.jpg") no-repeat 50% 50%;
-  background-size: cover;
-}
-.bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  opacity: 0.5;
-  transition: opacity 0.5s ease;
-  &.show {
-    transition: opacity 0.5s ease;
-    opacity: 1;
-  }
-}
-.bg1 {
-  display: block;
-  background: url("../../assets/images/newbanner正方形.jpg") no-repeat 50% 50%;
-  background-size: cover;
-}
-.bg2 {
-  display: block;
-  background: url("../../assets/images/02.jpg") no-repeat 50% 50%;
-  background-size: cover;
-}
-.bg3 {
-  display: block;
-  background: url("../../assets/images/03.jpg") no-repeat 50% 50%;
-  background-size: cover;
-}
-.hide {
-  display: none;
-}
-.logo {
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%, 0);
-}
+//     li {
+//       color: #594637;
+//       font-size: 30px;
+//       line-height: 60px;
+//       display: block;
+//       &:hover {
+//         color: #a66f2c;
+//         transition: 1s;
+//       }
+//     }
+//   }
+// }
+// .images {
+//   position: fixed;
+//   width: 0%;
+//   height: 100vh;
+//   top: 0;
+//   left: 55%;
+//   background: url("../../assets/images/newbanner正方形.jpg") no-repeat 50% 50%;
+//   background-size: cover;
+// }
+// .bg {
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 100vh;
+//   opacity: 0.5;
+//   transition: opacity 0.5s ease;
+//   &.show {
+//     transition: opacity 0.5s ease;
+//     opacity: 1;
+//   }
+// }
+// .bg1 {
+//   display: block;
+//   background: url("../../assets/images/newbanner正方形.jpg") no-repeat 50% 50%;
+//   background-size: cover;
+// }
+// .bg2 {
+//   display: block;
+//   background: url("../../assets/images/02.jpg") no-repeat 50% 50%;
+//   background-size: cover;
+// }
+// .bg3 {
+//   display: block;
+//   background: url("../../assets/images/03.jpg") no-repeat 50% 50%;
+//   background-size: cover;
+// }
+// .hide {
+//   display: none;
+// }
+// .logo {
+//   position: absolute;
+//   left: 50%;
+//   transform: translate(-50%, 0);
+// }
 .video-wrap {
   height: 1000vh; //可以調整這裡 改變滑動的距離
   position: relative;
@@ -323,9 +324,6 @@ import cartStore from "../../stores/cartStore.js";
 import { gsap, ScrollTrigger } from "gsap/all";
 gsap.registerPlugin(gsap, ScrollTrigger);
 
-ScrollTrigger.defaults({
-  markers: true,
-});
 export default {
   data() {
     return {
@@ -334,10 +332,7 @@ export default {
   },
   methods: {
     ...mapActions(cartStore, ["getCartList"]),
-    toggleMenu() {
-      this.isOpen = !this.isOpen;
-      this.navMotion.reversed(!this.navMotion.reversed());
-    },
+
     showBg1() {
       this.$refs.bg1.style.display = "block";
       this.$refs.bg1.classList.add("show");
@@ -399,49 +394,30 @@ export default {
         ease: "ease",
       });
 
-    let logoTop = gsap.timeline({
-      scrollTrigger: {
-        trigger: ".videoCanvas",
-        // trigger element - viewport
-        start: "top top",
-        end: "bottom top",
-        scrub: true,
-      },
-    });
-    logoTop.from(".logo", {
-      width: "80%",
-      xPercent: "-50",
-      y: "70vh",
-      duration: 2,
-      opacity: 0.6,
-      ease: "ease",
-    });
-    this.navMotion = gsap.timeline({ paused: true });
-    // 開啟動畫
-    this.navMotion.to(".menu", {
-      duration: 1,
-      width: "55%",
-      ease: "expo.in",
-    });
-    this.navMotion.from(".menu ul li", {
-      duration: 1,
-      y: 20,
-      opacity: 0,
-      ease: "expo.inOut",
-      stagger: 0.1,
-      display: "none",
-    });
-    this.navMotion.to(
-      ".images",
-      {
-        duration: 1,
-        width: "45%",
-        ease: "expo.inOut",
-        delay: -1,
-      },
-      "-=1"
-    );
-    this.navMotion.reverse();
+    this.logoTop = gsap
+      .timeline({
+        scrollTrigger: {
+          trigger: ".videoCanvas",
+          // trigger element - viewport
+          start: "top top",
+          end: "bottom top",
+          scrub: true,
+        },
+      })
+      .from(".logo", {
+        scale: 8,
+        xPercent: "-50",
+        y: "70vh",
+        duration: 2,
+        opacity: 0.6,
+        ease: "ease",
+      });
+  },
+  beforeRouteLeave(to, from, next) {
+    // 在離開路由之前，暫停動畫並刪除它
+    this.logoTop.pause();
+    this.logoTop.kill();
+    next();
   },
 
   computed: {

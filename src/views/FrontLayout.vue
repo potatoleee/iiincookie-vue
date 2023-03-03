@@ -4,10 +4,13 @@
     class="container-fluid d-flex w-100 justify-content-between align-items-center position-fixed top-0 left-0 z-9 py-7 bg-secondary-light"
   >
     <div class="menu-btn" @click="toggleMenu" :class="{ open: isOpen }"></div>
-    <RouterLink
+    <!-- <RouterLink
       to="/"
       class="position-absolute start-50 top-50 translate-middle"
     >
+      <img class="logo" src="../assets/images/logo.svg" alt="餅乾生產餡" />
+    </RouterLink> -->
+    <RouterLink to="/" exact native>
       <img class="logo" src="../assets/images/logo.svg" alt="餅乾生產餡" />
     </RouterLink>
     <div class="d-flex align-items-center gap-2">
@@ -144,6 +147,10 @@
   }
 }
 .logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   @include pad {
     width: 110px;
   }
