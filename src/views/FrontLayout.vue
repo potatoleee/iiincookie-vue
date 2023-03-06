@@ -1,7 +1,7 @@
 <template>
   <!-- 導覽列 -->
   <div
-    class="container-fluid d-flex w-100 justify-content-between align-items-center position-fixed top-0 left-0 z-9 py-7 bg-secondary-light"
+    class="container-fluid d-flex w-100 justify-content-between align-items-center position-fixed top-0 left-0 z-9 py-7"
   >
     <div class="menu-btn" @click="toggleMenu" :class="{ open: isOpen }"></div>
     <!-- <RouterLink
@@ -17,7 +17,7 @@
       <i class="bi bi-heart fs-xl fs-lg-2xl"></i>
       <RouterLink to="/cart">
         <i class="bi bi-bag fs-xl fs-lg-2xl"></i>
-        {{ cartList.carts?.length }}
+        {{ totalQty }}
       </RouterLink>
     </div>
   </div>
@@ -66,7 +66,23 @@
   </main>
   <!-- 主要內容 -->
   <!-- footer -->
-  <div class="footer mt-auto">這是底部</div>
+  <footer class="footer mt-auto bg-secondary container-fluid py-10">
+    <div class="d-flex justify-content-between align-items-center">
+      <div class="d-flex gap-8">
+        <img src="../assets/images/logo.svg" alt="" />
+        <p class="font-english">© 2023 iiincookie</p>
+        <a
+          class="font-english"
+          href="https://www.instagram.com/iiin.cookies/"
+          target="_blank"
+        >
+          <img src="./assets/images/icon-ig.svg" alt="" />
+          instagram
+        </a>
+      </div>
+      <p @click="scrollToTop">To Top</p>
+    </div>
+  </footer>
   <!-- footer -->
   <!-- </div> -->
 </template>
@@ -238,9 +254,18 @@ export default {
     hideBg3() {
       this.$refs.bg3.style.display = "none";
     },
+    scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+        block: "start",
+        inline: "nearest",
+        duration: 2000,
+      });
+    },
   },
   computed: {
-    ...mapState(cartStore, ["cartList"]),
+    ...mapState(cartStore, ["cartList", "totalQty"]),
   },
   mounted() {
     this.getCartList();

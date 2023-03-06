@@ -307,7 +307,7 @@ $success:       $green !default;
 $info:          $cyan !default;
 $warning:       $yellow !default;
 $danger:        $red !default;
-$light:         $gray-100 !default;
+$light:         white !default;
 $dark:          #1B1817;//$gray-900 !default;
 // scss-docs-end theme-color-variables
 
@@ -544,7 +544,7 @@ $border-radius-pill:          50rem !default;
 // scss-docs-start box-shadow-variables
 $box-shadow:                  0 .5rem 1rem rgba($black, .15) !default;
 $box-shadow-sm:               0 .125rem .25rem rgba($black, .075) !default;
-$box-shadow-lg:               0 1rem 3rem rgba($black, .175) !default;
+$box-shadow-lg:               0 1rem 3rem rgba($black, .15) !default;
 $box-shadow-inset:            inset 0 1px 2px rgba($black, .075) !default;
 // scss-docs-end box-shadow-variables
 

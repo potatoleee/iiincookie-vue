@@ -4,10 +4,13 @@ import { Toast } from "../utils/toast.js";
 import loadingStore from "./loadingStore.js";
 const loading = loadingStore();
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
-export default defineStore("cartStore", {
-  state: () => ({
-    cart: {},
-  }),
+const cartStore = defineStore("cartStore", {
+  state: () => {
+    return {
+      cart: {},
+      totalQty: 0,
+    };
+  },
   actions: {
     addToCart(product_id, qty = 1) {
       const data = {
@@ -23,6 +26,7 @@ export default defineStore("cartStore", {
             icon: "success",
             title: `${res.data.message}`,
           });
+          this.getCartList();
           loading.loadingItem = ""; //清空loading暫存
         })
         .catch((error) => {
@@ -37,8 +41,12 @@ export default defineStore("cartStore", {
       axios
         .get(`${VITE_APP_URL}/api/${VITE_APP_PATH}/cart`)
         .then((res) => {
+          this.totalQty = 0;
           this.cart = res.data.data;
           console.log(this.cart);
+          this.cart.carts.forEach((item) => {
+            this.totalQty += item.qty;
+          });
         })
         .catch((error) => {
           alert(error.response.data.message);
@@ -152,3 +160,5 @@ export default defineStore("cartStore", {
     },
   },
 });
+
+export default cartStore;

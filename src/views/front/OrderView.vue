@@ -1,93 +1,179 @@
 <template>
-  <!-- 資料表單 start-->
-  <div class="my-5 row justify-content-center">
-    <VForm
-      ref="form"
-      class="col-md-6"
-      v-slot="{ errors }"
-      @submit="createOrder"
-    >
-      <div class="mb-3">
-        <label for="email" class="form-label">Email</label>
-        <VField
-          id="email"
-          name="email"
-          type="email"
-          class="form-control"
-          :class="{ 'is-invalid': errors['email'] }"
-          placeholder="請輸入 Email"
-          rules="email|required"
-          v-model="orderData.user.email"
-        ></VField>
-        <ErrorMessage name="email" class="invalid-feedback"></ErrorMessage>
-      </div>
-
-      <div class="mb-3">
-        <label for="name" class="form-label">收件人姓名</label>
-        <VField
-          id="name"
-          name="姓名"
-          type="text"
-          class="form-control"
-          :class="{ 'is-invalid': errors['姓名'] }"
-          placeholder="請輸入姓名"
-          rules="required"
-          v-model="orderData.user.name"
-        ></VField>
-        <ErrorMessage name="姓名" class="invalid-feedback"></ErrorMessage>
-      </div>
-
-      <div class="mb-3">
-        <label for="tel" class="form-label">收件人電話</label>
-        <VField
-          id="tel"
-          name="電話"
-          type="tel"
-          class="form-control"
-          :class="{ 'is-invalid': errors['電話'] }"
-          placeholder="請輸入電話"
-          :rules="isPhone"
-          v-model="orderData.user.tel"
-        ></VField>
-        <ErrorMessage name="電話" class="invalid-feedback"></ErrorMessage>
-      </div>
-
-      <div class="mb-3">
-        <label for="address" class="form-label">收件人地址</label>
-        <VField
-          id="address"
-          name="地址"
-          type="text"
-          class="form-control"
-          :class="{ 'is-invalid': errors['地址'] }"
-          placeholder="請輸入地址"
-          rules="required"
-          v-model="orderData.user.address"
-        ></VField>
-        <ErrorMessage name="地址" class="invalid-feedback"></ErrorMessage>
-      </div>
-
-      <div class="mb-3">
-        <label for="message" class="form-label">留言</label>
-        <textarea
-          id="message"
-          class="form-control"
-          cols="30"
-          rows="10"
-          v-model="orderData.message"
-        ></textarea>
-      </div>
-      <div class="text-end">
-        <button type="submit" class="btn btn-danger">送出訂單</button>
-      </div>
-    </VForm>
+  <div class="title py-15">
+    <span
+      class="title-sub fs-10xl fw-light font-english text-secondary text-opacity-50 d-block text-end"
+      >Carts
+    </span>
+    <h1 class="title-main font-serifTc fw-black fs-xl fs-lg-3xl">購物車</h1>
   </div>
-  <!-- 資料表單 start-->
+  <div class="container">
+    <ul class="d-flex justify-content-center align-items-center gap-7">
+      <li class="text-center">
+        <p class="fs-xs fs-lg-sm">Step.1</p>
+        <p class="fs-xs fs-lg-sm">購買項目</p>
+      </li>
+      <i class="bi bi-chevron-right"></i>
+      <li class="text-center">
+        <p class="fs-xs fs-lg-sm">Step.2</p>
+        <p class="fs-xs fs-lg-sm">填寫資料</p>
+      </li>
+      <i class="bi bi-chevron-right"></i>
+      <li class="text-center">
+        <p class="fs-xs fs-lg-sm">Step.3</p>
+        <p class="fs-xs fs-lg-sm">確認付款</p>
+      </li>
+      <i class="bi bi-chevron-right"></i>
+      <li class="text-center">
+        <p class="fs-xs fs-lg-sm">Step.4</p>
+        <p class="fs-xs fs-lg-sm">訂單完成</p>
+      </li>
+    </ul>
+  </div>
+  <div class="container">
+    <VueLoading v-model:active="isLoading"></VueLoading>
+    <div class="row my-13">
+      <!-- 購物車 start -->
+      <div class="col-lg-7 mb-8 mb-lg-0">
+        <div class="p-lg-7 rounded-2 shadow-lg-lg">
+          <div
+            class="d-flex justify-content-between align-items-center pb-4 border-bottom border-dark border-opacity-10"
+          >
+            <p class="fs-lg font-serifTc">訂單品項 {{ totalQty }}</p>
+            <p class="fs-lg fw-medium">
+              總金額：
+              <span class="text-primary">NT${{ cartList.final_total }}</span>
+            </p>
+          </div>
+
+          <ul v-for="cartItem in cartList.carts" :key="cartItem.id">
+            <li>
+              <div
+                class="d-flex py-7 gap-3 border-bottom border-dark border-opacity-10"
+              >
+                <img class="w-20n" :src="cartItem.product.imageUrl" alt="" />
+                <div class="w-100 d-flex flex-column justify-content-between">
+                  <div class="d-flex justify-content-between align-items-start">
+                    <p>{{ cartItem.product.title }}</p>
+                  </div>
+                  <div
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <p>NT$ {{ cartItem.product.price }} x {{ cartItem.qty }}</p>
+                    NT$ {{ cartItem.total }}
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- 購物車 start -->
+      <!-- 金額 start-->
+      <div class="col-lg-5">
+        <div class="p-lg-7 rounded-2 shadow-lg-lg">
+          <p
+            class="fs-lg font-serifTc pb-4 border-bottom border-dark border-opacity-10 mb-4"
+          >
+            寄送資訊
+          </p>
+          <VForm ref="form" v-slot="{ errors }" @submit="createOrder">
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <VField
+                id="email"
+                name="email"
+                type="email"
+                class="form-control border-dark border-opacity-40 rounded-0"
+                :class="{ 'is-invalid': errors['email'] }"
+                placeholder="請輸入 Email"
+                rules="email|required"
+                v-model="orderData.user.email"
+              ></VField>
+              <ErrorMessage
+                name="email"
+                class="invalid-feedback"
+              ></ErrorMessage>
+            </div>
+
+            <div class="mb-3">
+              <label for="name" class="form-label">收件人姓名</label>
+              <VField
+                id="name"
+                name="姓名"
+                type="text"
+                class="form-control border-dark border-opacity-40 rounded-0"
+                :class="{ 'is-invalid': errors['姓名'] }"
+                placeholder="請輸入姓名"
+                rules="required"
+                v-model="orderData.user.name"
+              ></VField>
+              <ErrorMessage name="姓名" class="invalid-feedback"></ErrorMessage>
+            </div>
+
+            <div class="mb-3">
+              <label for="tel" class="form-label">收件人電話</label>
+              <VField
+                id="tel"
+                name="電話"
+                type="tel"
+                class="form-control border-dark border-opacity-40 rounded-0"
+                :class="{ 'is-invalid': errors['電話'] }"
+                placeholder="請輸入電話"
+                :rules="isPhone"
+                v-model="orderData.user.tel"
+              ></VField>
+              <ErrorMessage name="電話" class="invalid-feedback"></ErrorMessage>
+            </div>
+
+            <div class="mb-3">
+              <label for="address" class="form-label">收件人地址</label>
+              <VField
+                id="address"
+                name="地址"
+                type="text"
+                class="form-control border-dark border-opacity-40 rounded-0"
+                :class="{ 'is-invalid': errors['地址'] }"
+                placeholder="請輸入地址"
+                rules="required"
+                v-model="orderData.user.address"
+              ></VField>
+              <ErrorMessage name="地址" class="invalid-feedback"></ErrorMessage>
+            </div>
+
+            <div class="mb-3">
+              <label for="message" class="form-label">留言</label>
+              <textarea
+                id="message"
+                class="form-control border-dark border-opacity-40 rounded-0"
+                cols="30"
+                rows="10"
+                v-model="orderData.message"
+              ></textarea>
+            </div>
+            <div class="text-end">
+              <button
+                type="submit"
+                class="btn btn-secondary-darker text-light w-100"
+              >
+                提交訂單
+              </button>
+            </div>
+          </VForm>
+        </div>
+
+        <!-- 總額 end-->
+      </div>
+      <!-- 金額 end-->
+    </div>
+  </div>
 </template>
 
 <script>
-import Swal from "sweetalert2";
+import cartStore from "../../stores/cartStore.js";
+import loadingStore from "../../stores/loadingStore.js";
+import { mapActions, mapState } from "pinia";
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
+import { Toast } from "../../utils/toast.js";
 export default {
   data() {
     return {
@@ -100,9 +186,11 @@ export default {
         },
         message: "",
       },
+      orderId: "",
     };
   },
   methods: {
+    ...mapActions(cartStore, ["getCartList"]),
     isPhone(value) {
       const phoneNumber = /^(09)[0-9]{8}$/;
       return phoneNumber.test(value) ? true : "請填寫正確的手機號碼格式";
@@ -114,27 +202,30 @@ export default {
           data: this.orderData,
         })
         .then((res) => {
-          console.log(res);
           this.$refs.form.resetForm(); //清空表單
           this.orderData.message = "";
-          Swal.fire({
-            position: "top-end",
+          console.log(res);
+          this.orderId = res.data.orderId;
+          Toast.fire({
             icon: "success",
-            title: "訂單建立成功",
-            showConfirmButton: false,
-            timer: 1500,
+            title: `${res.data.message}`,
           });
+          this.$router.push(`/pay/${this.orderId}`);
         })
-        .catch(() => {
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "訂單建立失敗，請確認",
-            showConfirmButton: false,
-            timer: 1500,
+        .catch((error) => {
+          Toast.fire({
+            icon: "error",
+            title: `${error.response.data.message}`,
           });
         });
     },
+  },
+  computed: {
+    ...mapState(cartStore, ["cartList", "totalQty"]),
+    ...mapState(loadingStore, ["isLoading"]),
+  },
+  mounted() {
+    this.getCartList();
   },
 };
 </script>
