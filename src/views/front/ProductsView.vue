@@ -14,29 +14,37 @@
         <div
           class="d-flex align-items-center justify-content-center justify-content-md-start py-10 border-top border-bottom border-secondary mb-15"
         >
-          <h3 class="fs-sm fs-md-base d-none d-md-block me-12">商品類別</h3>
+          <h3 class="fs-sm fs-md-base d-none d-md-block me-12 font-serifTc">
+            商品類別
+          </h3>
           <ul class="d-flex gap-7 justify-content-center">
             <li
-              class="fs-sm fs-md-base py-2 px-8 bg-secondary-light border border-secondary-dark rounded-pill"
+              class="fs-sm fs-md-base cursor-pointer cursor-pointer"
+              @click="getCategory('')"
+              :class="{ 'text-primary': nowCategory === '' }"
             >
-              全部
+              <p class="px-3 px-md-4 py-1 font-serifTc">全部</p>
             </li>
             <li
-              class="fs-sm fs-md-base py-2 px-8 bg-secondary-light border border-secondary-dark rounded-pill"
+              class="fs-sm fs-md-base cursor-pointer cursor-pointer"
+              @click="getCategory('餅乾')"
+              :class="{ 'text-primary': nowCategory === '餅乾' }"
             >
-              餅乾
+              <p class="px-3 px-md-4 py-1 font-serifTc">餅乾</p>
             </li>
             <li
-              class="fs-sm fs-md-base py-2 px-8 bg-secondary-light border border-secondary-dark rounded-pill"
+              class="fs-sm fs-md-base cursor-pointer cursor-pointer"
+              @click="getCategory('布丁')"
+              :class="{ 'text-primary': nowCategory === '布丁' }"
             >
-              布丁
+              <p class="px-3 px-md-4 py-1 font-serifTc">布丁</p>
             </li>
           </ul>
         </div>
         <ul class="row gy-13">
           <li
             class="col-6 col-lg-4 d-flex flex-column align-items-center"
-            v-for="product in productList"
+            v-for="product in selectCategoryList"
             :key="product.id"
           >
             <RouterLink :to="`/product/${product.id}`" class="mb-6">
@@ -76,12 +84,51 @@
       </div>
     </div>
   </div>
-  <div class="container d-flex justify-content-center">
-    <PaginationComponent
+  <div class="container d-flex justify-content-center py-9">
+    <!-- <PaginationComponent
       :pageIn="page"
-      @getPages="getProductList"
-    ></PaginationComponent>
-    <!-- <PaginationComponent></PaginationComponent> -->
+      @getPages="getCategory"
+    ></PaginationComponent> -->
+
+    <div>
+      <ul class="d-flex align-items-center gap-7">
+        <li class="page-item" :class="{ disabled: page.has_pre === false }">
+          <a
+            class="page-link"
+            href="#"
+            @click.prevent="getCategory(nowCategory, page.current_page - 1)"
+          >
+            <i class="bi bi-arrow-left fs-xl fs-lg-3xl"></i>
+          </a>
+        </li>
+        <li
+          class=""
+          :class="{ active: pages === page.current_page }"
+          v-for="pages in page.total_pages"
+          :key="pages + 'pages'"
+        >
+          <a
+            class="font-english fs-3xl fs-lg-5xl pb-2"
+            href="#"
+            @click.prevent="getCategory(nowCategory, pages)"
+            >{{ pages }}</a
+          >
+        </li>
+
+        <li class="page-item" :class="{ disabled: !page.has_next }">
+          <a
+            class="page-link"
+            href="#"
+            @click.prevent="getCategory(nowCategory, page.current_page + 1)"
+          >
+            <i class="bi bi-arrow-right fs-xl fs-lg-3xl"></i>
+            <!-- <span class="material-symbols-outlined fs-4xl">
+              arrow_right_alt
+            </span> -->
+          </a>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 <style lang="scss">
@@ -117,7 +164,7 @@
 
 <script>
 import { RouterLink } from "vue-router";
-import PaginationComponent from "../../components/PaginationComponent.vue";
+// import PaginationComponent from "../../components/PaginationComponent.vue";
 import cartStore from "../../stores/cartStore.js";
 // import productsStore from "../../stores/productsStore.js";
 import loadingStore from "../../stores/loadingStore.js";
@@ -129,7 +176,11 @@ export default {
     return {
       productList: [],
       page: {},
-      search: "",
+      selectCategoryList: [],
+      selectCategory: "",
+      nowCategory: "",
+      allProducts: [],
+
       // isLoading: false,
     };
   },
@@ -142,6 +193,48 @@ export default {
           this.productList = res.data.products;
           this.page = res.data.pagination;
           console.log(this.page);
+          console.log(res.data);
+        })
+        .catch((error) => {
+          alert(error.data.message);
+        })
+        .finally(() => {
+          this.isLoading = false;
+        });
+    },
+    getAllProducts() {
+      this.isLoading = true;
+      this.$http
+        .get(`${VITE_APP_URL}/api/${VITE_APP_PATH}/products/all`)
+        .then((res) => {
+          console.log(res.data.products);
+          this.allProducts = res.data.products;
+        })
+        .catch((error) => {
+          alert(error.data.message);
+        })
+        .finally(() => {
+          this.isLoading = false;
+        });
+    },
+
+    getCategory(category, page = 1) {
+      this.isLoading = true;
+      this.$http
+        .get(
+          `${VITE_APP_URL}/api/${VITE_APP_PATH}/products?page=${page}&category=${category}`
+        )
+        .then((res) => {
+          console.log("相似類別全部", res.data.products);
+
+          this.selectCategoryList = res.data.products;
+          this.page = res.data.pagination;
+          this.nowCategory = this.page.category;
+          console.log(this.nowCategory);
+          console.log(this.page);
+          console.log(this.page.category);
+          console.log(res);
+          this.$router.push(`./products?page=${page}&category=${category}`);
         })
         .catch((error) => {
           alert(error.data.message);
@@ -161,13 +254,19 @@ export default {
         return item.title.match(this.search);
       });
     },
+    categoryProducts() {
+      return this.allProducts.filter((item) =>
+        item.category.match(this.selectCategory)
+      );
+    },
   },
   mounted() {
-    this.getProductList();
+    this.getCategory("", 1);
+
+    this.getAllProducts();
   },
   components: {
     RouterLink,
-    PaginationComponent,
   },
 };
 </script>

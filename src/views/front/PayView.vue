@@ -18,7 +18,7 @@
         <p class="fs-xs fs-lg-sm">Step.2</p>
         <p class="fs-xs fs-lg-sm">填寫資料</p>
       </li>
-      <i class="bi bi-chevron-right"></i>
+      <i class="bi bi-chevron-right text-primary"></i>
       <li class="text-center">
         <p class="fs-xs fs-lg-sm">Step.3</p>
         <p class="fs-xs fs-lg-sm">確認付款</p>
@@ -38,14 +38,16 @@
           <div
             class="d-flex justify-content-between align-items-center pb-4 border-bottom border-dark border-opacity-10"
           >
-            <p class="fs-lg font-serifTc">
+            <p class="fs-lg">
               訂單品項
               <span v-if="!orderInfo.is_paid" class="text-danger">未付款</span>
             </p>
 
-            <p class="fs-lg fw-medium">
+            <p class="fs-lg">
               總金額：
-              <span class="text-primary">NT${{ orderInfo.total }}</span>
+              <span class="text-primary"
+                ><span class="font-arimo">NT$ {{ orderInfo.total }}</span></span
+              >
             </p>
           </div>
 
@@ -66,11 +68,11 @@
                   <div
                     class="d-flex justify-content-between align-items-center"
                   >
-                    <p>
+                    <p class="font-arimo">
                       NT$ {{ orderProduct.product.price }} x
                       {{ orderProduct.qty }}
                     </p>
-                    NT$ {{ orderProduct.total }}
+                    <p class="font-arimo">NT$ {{ orderProduct.total }}</p>
                   </div>
                 </div>
               </div>
@@ -82,20 +84,65 @@
       <!-- 訂單資訊 start-->
       <div class="col-lg-5">
         <div class="p-lg-7 rounded-2 shadow-lg-lg">
-          <p
-            class="fs-lg font-serifTc pb-4 border-bottom border-dark border-opacity-10 mb-4"
-          >
+          <p class="fs-lg pb-4 border-bottom border-dark border-opacity-10">
             訂單資訊
           </p>
-          <p>訂單金額：NT$ {{ orderInfo.total }}</p>
-          <p>訂單編號：{{ orderInfo.id }}</p>
-          <p>下單時間：{{ formatDate(orderInfo.create_at) }}</p>
-          <p>寄送地址：{{ orderUser.address }}</p>
-          <p>顧客姓名：{{ orderUser.name }}</p>
-          <p>聯絡電話：{{ orderUser.tel }}</p>
-          <p>電子信箱：{{ orderUser.email }}</p>
-          <p>備註：{{ orderInfo.message }}</p>
-          <button type="button" class="btn btn-primary" @click="pay">
+          <table class="table mb-6">
+            <tbody>
+              <tr class="border-dark border-opacity-10">
+                <th class="fw-regular ps-0" width="120">訂單金額：</th>
+                <td class="font-arimo">NT$ {{ orderInfo.total }}</td>
+              </tr>
+              <tr class="border-dark border-opacity-10">
+                <th class="fw-regular ps-0" width="120">訂單編號：</th>
+                <td>
+                  {{ orderInfo.id }}
+                </td>
+              </tr>
+              <tr class="border-dark border-opacity-10">
+                <th class="fw-regular ps-0" width="120">下單時間：</th>
+                <td>
+                  {{ formatDate(orderInfo.create_at) }}
+                </td>
+              </tr>
+              <tr class="border-dark border-opacity-10">
+                <th class="fw-regular ps-0" width="120">寄送地址：</th>
+                <td>
+                  {{ orderUser.address }}
+                </td>
+              </tr>
+              <tr class="border-dark border-opacity-10">
+                <th class="fw-regular ps-0" width="120">顧客姓名：</th>
+                <td>
+                  {{ orderUser.name }}
+                </td>
+              </tr>
+              <tr class="border-dark border-opacity-10">
+                <th class="fw-regular ps-0" width="120">聯絡電話：</th>
+                <td>
+                  {{ orderUser.tel }}
+                </td>
+              </tr>
+              <tr class="border-dark border-opacity-10">
+                <th class="fw-regular ps-0" width="120">電子信箱：</th>
+                <td>
+                  {{ orderUser.email }}
+                </td>
+              </tr>
+              <tr class="border-dark border-opacity-10">
+                <th class="fw-regular ps-0" width="120">備註：</th>
+                <td>
+                  {{ orderInfo.message }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <button
+            type="button"
+            class="btn btn-primary text-light w-100"
+            @click="pay"
+          >
             確認付款
           </button>
         </div>

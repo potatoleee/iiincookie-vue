@@ -56,6 +56,11 @@ $utilities: map-merge(
       class: object,
       values: cover
     ),
+    "cursor": (
+      property: cursor,
+      class: cursor,
+      values: pointer
+    ),
 
     "height": (
       property: height,
@@ -125,6 +130,12 @@ $utilities: map-merge(
     responsive: true,
     class: z,
     values: $zindex-values,
+  ),
+  "start": (
+    property: left,
+    class: start,
+    responsive: true,
+    values: $position-values
   ),
   "border-opacity": (
     css-var: true,

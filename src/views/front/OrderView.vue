@@ -13,7 +13,7 @@
         <p class="fs-xs fs-lg-sm">購買項目</p>
       </li>
       <i class="bi bi-chevron-right"></i>
-      <li class="text-center">
+      <li class="text-center text-primary">
         <p class="fs-xs fs-lg-sm">Step.2</p>
         <p class="fs-xs fs-lg-sm">填寫資料</p>
       </li>
@@ -38,10 +38,14 @@
           <div
             class="d-flex justify-content-between align-items-center pb-4 border-bottom border-dark border-opacity-10"
           >
-            <p class="fs-lg font-serifTc">訂單品項 {{ totalQty }}</p>
-            <p class="fs-lg fw-medium">
+            <p class="fs-lg">
+              訂單品項 <span class="font-arimo">{{ totalQty }}</span>
+            </p>
+            <p class="fs-lg">
               總金額：
-              <span class="text-primary">NT${{ cartList.final_total }}</span>
+              <span class="text-primary font-arimo"
+                >NT$ {{ cartList.final_total }}</span
+              >
             </p>
           </div>
 
@@ -58,8 +62,10 @@
                   <div
                     class="d-flex justify-content-between align-items-center"
                   >
-                    <p>NT$ {{ cartItem.product.price }} x {{ cartItem.qty }}</p>
-                    NT$ {{ cartItem.total }}
+                    <p class="font-arimo">
+                      NT$ {{ cartItem.product.price }} x {{ cartItem.qty }}
+                    </p>
+                    <p class="font-arimo">NT$ {{ cartItem.total }}</p>
                   </div>
                 </div>
               </div>
@@ -72,7 +78,7 @@
       <div class="col-lg-5">
         <div class="p-lg-7 rounded-2 shadow-lg-lg">
           <p
-            class="fs-lg font-serifTc pb-4 border-bottom border-dark border-opacity-10 mb-4"
+            class="fs-lg pb-4 border-bottom border-dark border-opacity-10 mb-4"
           >
             寄送資訊
           </p>
@@ -151,10 +157,7 @@
               ></textarea>
             </div>
             <div class="text-end">
-              <button
-                type="submit"
-                class="btn btn-secondary-darker text-light w-100"
-              >
+              <button type="submit" class="btn btn-primary text-light w-100">
                 提交訂單
               </button>
             </div>

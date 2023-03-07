@@ -20,7 +20,7 @@
   <div v-else>
     <div class="container">
       <ul class="d-flex justify-content-center align-items-center gap-7">
-        <li class="text-center">
+        <li class="text-center text-primary">
           <p class="fs-xs fs-lg-sm">Step.1</p>
           <p class="fs-xs fs-lg-sm">購買項目</p>
         </li>
@@ -58,7 +58,7 @@
             <div
               class="d-flex justify-content-between align-items-center pb-4 border-bottom border-dark border-opacity-10"
             >
-              <p class="fs-lg font-serifTc">購物車品項</p>
+              <p class="fs-lg">購物車品項</p>
               <button
                 v-if="cartList.carts?.length > 0"
                 class="btn border border-dark border-opacity-40 py-2 px-8 rounded-pill fs-sm"
@@ -88,14 +88,17 @@
                       ></i>
                     </div>
                     <div class="d-flex justify-content-between align-items-end">
-                      <p>NT$ {{ cartItem.product.price }}</p>
+                      <p class="font-arimo">NT$ {{ cartItem.product.price }}</p>
                       <div
                         class="count d-flex justify-content-between border border-dark border-opacity-40"
                       >
                         <button
                           @click="decreaseNum(cartItem)"
                           class="btn rounded-0"
-                          :class="{ disabled: cartItem.qty == 1 }"
+                          :class="{
+                            disabled: cartItem.qty == 1,
+                            'border-0': cartItem.qty === 1,
+                          }"
                         >
                           <i class="bi bi-dash-lg"></i>
                         </button>
@@ -121,7 +124,7 @@
         <div class="col-lg-5">
           <div class="p-lg-7 rounded-2 shadow-lg-lg">
             <p
-              class="fs-lg font-serifTc pb-4 border-bottom border-dark border-opacity-10 mb-4"
+              class="fs-lg pb-4 border-bottom border-dark border-opacity-10 mb-4"
             >
               訂單資訊
             </p>
@@ -129,11 +132,13 @@
             <div class="pb-6 border-bottom border-dark border-opacity-10 mb-4">
               <div class="mb-4 d-flex justify-content-between">
                 <p>總數量</p>
-                <p>共 {{ totalQty }} 個</p>
+                <p>
+                  共 <span class="font-arimo">{{ totalQty }}</span> 個
+                </p>
               </div>
               <div class="mb-4 d-flex justify-content-between">
                 <p>小計</p>
-                <p>NT$ {{ cartList.total }}</p>
+                <p class="font-arimo">NT$ {{ cartList.total }}</p>
               </div>
               <div class="d-flex justify-content-between">
                 <input
@@ -144,7 +149,7 @@
                 />
                 <button
                   type="button"
-                  class="btn btn-secondary-darker w-30 rounded-0 text-light fs-sm border-0"
+                  class="btn btn-primary w-30 rounded-0 text-light fs-sm border-0"
                   @click="useCoupon"
                 >
                   使用優惠券
@@ -153,11 +158,9 @@
             </div>
             <div class="d-flex justify-content-between mb-6">
               <p>總計</p>
-              <p>NT$ {{ cartList.final_total }}</p>
+              <p class="font-arimo">NT$ {{ cartList.final_total }}</p>
             </div>
-            <RouterLink
-              to="/order"
-              class="btn btn-secondary-darker text-light w-100"
+            <RouterLink to="/order" class="btn btn-primary text-light w-100"
               >去買單</RouterLink
             >
           </div>

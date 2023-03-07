@@ -6,7 +6,7 @@
     </span>
     <h1 class="title-main font-serifTc fw-black fs-xl fs-lg-3xl">訂單完成</h1>
   </div>
-  <div class="container">
+  <div class="container mb-8">
     <ul class="d-flex justify-content-center align-items-center gap-7">
       <li class="text-center">
         <p class="fs-xs fs-lg-sm">Step.1</p>
@@ -23,18 +23,34 @@
         <p class="fs-xs fs-lg-sm">確認付款</p>
       </li>
       <i class="bi bi-chevron-right"></i>
-      <li class="text-center">
+      <li class="text-center text-primary">
         <p class="fs-xs fs-lg-sm">Step.4</p>
         <p class="fs-xs fs-lg-sm">訂單完成</p>
       </li>
     </ul>
   </div>
-  <div class="text-center">
-    <p class="text-center fs-5xl">感謝你的支持！</p>
-    <p>
-      謝謝你對於本店的支持，我們會盡快將產品寄出讓你品嚐到的 ，希望你會喜歡～
-    </p>
-    <p>如有任何問題，可以私訊 ig:iiincookie</p>
+  <div class="container">
+    <div class="text-center">
+      <p class="text-center fs-5xl mb-5">感謝你的支持！</p>
+      <p class="mb-1">
+        謝謝你對於本店的支持，我們會盡快將產品寄出讓你品嚐到的 ，希望你會喜歡～
+      </p>
+      <p class="mb-6">如有任何問題，可以私訊 ig:iiincookie</p>
+      <div class="d-flex flex-column flex-lg-row justify-content-center gap-5">
+        <RouterLink
+          to="/"
+          class="bg-secondary-light border border-dark py-2 px-15 rounded-pill d-inline-block btn"
+        >
+          回到首頁
+        </RouterLink>
+        <RouterLink
+          to="/products"
+          class="py-2 px-15 rounded-pill d-inline-block btn btn-primary text-light"
+        >
+          繼續購物
+        </RouterLink>
+      </div>
+    </div>
   </div>
   <div class="container">
     <div class="row my-13">
@@ -44,15 +60,17 @@
           <div
             class="d-flex justify-content-between align-items-center pb-4 border-bottom border-dark border-opacity-10"
           >
-            <p class="fs-lg font-serifTc">
+            <p class="fs-lg">
               訂單品項
               <span v-if="!orderInfo.is_paid" class="text-danger">未付款</span>
               <span v-else class="text-primary">已付款</span>
             </p>
 
-            <p class="fs-lg fw-medium">
+            <p class="fs-lg">
               總金額：
-              <span class="text-primary">NT${{ orderInfo.total }}</span>
+              <span class="text-primary font-arimo"
+                >NT$ {{ orderInfo.total }}</span
+              >
             </p>
           </div>
 
@@ -73,11 +91,11 @@
                   <div
                     class="d-flex justify-content-between align-items-center"
                   >
-                    <p>
+                    <p class="font-arimo">
                       NT$ {{ orderProduct.product.price }} x
                       {{ orderProduct.qty }}
                     </p>
-                    NT$ {{ orderProduct.total }}
+                    <p class="font-arimo">NT$ {{ orderProduct.total }}</p>
                   </div>
                 </div>
               </div>
@@ -89,19 +107,59 @@
       <!-- 訂單資訊 start-->
       <div class="col-lg-5">
         <div class="p-lg-7 rounded-2 shadow-lg-lg">
-          <p
-            class="fs-lg font-serifTc pb-4 border-bottom border-dark border-opacity-10 mb-4"
-          >
+          <p class="fs-lg pb-4 border-bottom border-dark border-opacity-10">
             訂單資訊
           </p>
-          <p>訂單金額：NT$ {{ orderInfo.total }}</p>
-          <p>訂單編號：{{ orderInfo.id }}</p>
-          <p>下單時間：{{ formatDate(orderInfo.create_at) }}</p>
-          <p>寄送地址：{{ orderUser.address }}</p>
-          <p>顧客姓名：{{ orderUser.name }}</p>
-          <p>聯絡電話：{{ orderUser.tel }}</p>
-          <p>電子信箱：{{ orderUser.email }}</p>
-          <p>備註：{{ orderInfo.message }}</p>
+          <table class="table mb-6">
+            <tbody>
+              <tr class="border-dark border-opacity-10">
+                <th class="fw-regular ps-0" width="120">訂單金額：</th>
+                <td class="font-arimo">NT$ {{ orderInfo.total }}</td>
+              </tr>
+              <tr class="border-dark border-opacity-10">
+                <th class="fw-regular ps-0" width="120">訂單編號：</th>
+                <td>
+                  {{ orderInfo.id }}
+                </td>
+              </tr>
+              <tr class="border-dark border-opacity-10">
+                <th class="fw-regular ps-0" width="120">下單時間：</th>
+                <td>
+                  {{ formatDate(orderInfo.create_at) }}
+                </td>
+              </tr>
+              <tr class="border-dark border-opacity-10">
+                <th class="fw-regular ps-0" width="120">寄送地址：</th>
+                <td>
+                  {{ orderUser.address }}
+                </td>
+              </tr>
+              <tr class="border-dark border-opacity-10">
+                <th class="fw-regular ps-0" width="120">顧客姓名：</th>
+                <td>
+                  {{ orderUser.name }}
+                </td>
+              </tr>
+              <tr class="border-dark border-opacity-10">
+                <th class="fw-regular ps-0" width="120">聯絡電話：</th>
+                <td>
+                  {{ orderUser.tel }}
+                </td>
+              </tr>
+              <tr class="border-dark border-opacity-10">
+                <th class="fw-regular ps-0" width="120">電子信箱：</th>
+                <td>
+                  {{ orderUser.email }}
+                </td>
+              </tr>
+              <tr class="border-dark border-opacity-10">
+                <th class="fw-regular ps-0" width="120">備註：</th>
+                <td>
+                  {{ orderInfo.message }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
       <!-- 訂單資訊 end-->
