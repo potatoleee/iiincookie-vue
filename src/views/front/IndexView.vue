@@ -1,6 +1,10 @@
 <template>
   <!-- 影片區 end-->
   <div class="video-wrap">
+    <p class="position-absolute">餅乾生產餡，呈現最美味的味。</p>
+    <p class="vertical-lr scroll-down letter-spacing-2 font-english">
+      Scroll Down
+    </p>
     <div class="video-content d-flex justify-content-center align-items-center">
       <video
         id="videoBg"
@@ -22,14 +26,14 @@
       /> -->
     </div>
     <p
-      class="font-serifTc position-absolute start-20 start-lg-30 top-30 fw-medium letter-spacing-2 text-white fs-base fs-lg-xl lh-lg"
+      class="font-serifTc position-absolute start-20 start-lg-30 top-20 fw-medium letter-spacing-2 text-white fs-base fs-lg-xl lh-lg"
     >
       你好，我們是餅乾生產餡，<br />
       致力於製作美味的甜點，<br />
       使每一個味蕾都獲得滿足。
     </p>
     <p
-      class="font-serifTc position-absolute start-20 start-lg-30 top-50 fw-medium letter-spacing-2 text-white fs-base fs-lg-xl lh-lg"
+      class="font-serifTc position-absolute start-20 start-lg-30 top-40 fw-medium letter-spacing-2 text-white fs-base fs-lg-xl lh-lg"
     >
       因緣受到朋友委託製作餅乾，<br />
       因此挑戰了很想嘗試的鐵盒餅乾，<br />
@@ -37,7 +41,7 @@
       鼓勵我讓更多人也能品嚐得到。<br />
     </p>
     <p
-      class="font-serifTc position-absolute start-20 start-lg-30 top-70 fw-medium letter-spacing-2 text-white fs-base fs-lg-xl lh-lg"
+      class="font-serifTc position-absolute start-20 start-lg-30 top-60 fw-medium letter-spacing-2 text-white fs-base fs-lg-xl lh-lg"
     >
       便誤打誤撞開始生產餡這個品牌 <br />
       從沒想過餅乾會成為另一份事業<br />
@@ -167,6 +171,7 @@
               spaceBetween: 24,
             },
           }"
+          class="swiper-index"
         >
           <swiper-slide v-for="product in productList" :key="product.id">
             <RouterLink :to="`/product/${product.id}`" class="mb-7">
@@ -195,7 +200,7 @@
   </div>
   <!-- more products end-->
   <!-- news start -->
-  <div class="container">
+  <div class="container mb-10">
     <div class="d-flex justify-content-between align-items-center my-10">
       <div>
         <p class="fs-7xl font-english lh-sm">News</p>
@@ -210,19 +215,38 @@
       </RouterLink>
     </div>
     <div class="mb-10">
-      <ul class="row">
-        <li
-          class="col-md-4"
-          v-for="article in articlesList.slice(0, 3)"
-          :key="article.id"
-        >
-          <div :style="{ backgroundImage: `url(${article.image})` }"></div>
-          <img :src="article.image" class="object-cover" height="300" alt="" />
-          <div class="d-flex justify-content-between">
-            <p>{{ article.tag }}</p>
-            <p>{{ formatDate(article.create_at) }}</p>
-          </div>
-          <p>{{ article.title }}</p>
+      <ul class="d-flex flex-column gap-7">
+        <li v-for="article in articlesList.slice(0, 3)" :key="article.id">
+          <RouterLink :to="`/article/${article.id}`">
+            <div
+              class="d-flex justify-content-between border-bottom border-dark border-opacity-50"
+            >
+              <div class="d-flex flex-column flex-md-row">
+                <div class="py-7">
+                  <p
+                    class="fs-sm bg-secondary-dark py-2 px-3 d-inline-block mb-5 text-dark font-serifTc"
+                  >
+                    {{ article.tag }}
+                  </p>
+                  <p
+                    class="fs-lg fs-lg-xl fw-medium mb-3 text-dark font-serifTc"
+                  >
+                    {{ article.title }}
+                  </p>
+                  <div>
+                    <p class="text-dark text-opacity-70">
+                      {{ formatDate(article.create_at) }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="d-flex align-items-end">
+                <i
+                  class="bi bi-arrow-up-right fs-lg pb-2 text-dark text-opacity-70"
+                ></i>
+              </div>
+            </div>
+          </RouterLink>
         </li>
       </ul>
     </div>
@@ -247,13 +271,14 @@
   height: 100%;
   object-fit: cover;
 }
-.swiper {
+.swiper-index {
   height: 100%;
   width: 100%;
   padding: 0 10%;
 }
 .video-wrap {
   height: 1000vh; //可以調整這裡 改變滑動的距離
+  margin-top: -84px;
   position: relative;
 }
 .video-content {
@@ -263,10 +288,52 @@
   left: 0;
 }
 .videoCanvas {
-  width: 35em;
-  height: 35em;
+  width: 45em;
+  height: 45em;
   object-fit: cover;
   position: absolute;
+  @include phone {
+    width: 80vw;
+    height: 80vh;
+  }
+}
+.scroll-down {
+  position: fixed;
+  right: 2vw;
+  bottom: 1.25vw;
+  &::before {
+    position: absolute;
+    content: "";
+    width: 1px;
+    height: 100%;
+    background-color: $secondary;
+    left: 0;
+    top: 0;
+  }
+  &::after {
+    animation: scrollDown 2s ease-in-out infinite;
+    position: absolute;
+    content: "";
+    width: 1px;
+    height: 0%;
+    background-color: $secondary-darker;
+    left: 0;
+    top: 0;
+  }
+  @keyframes scrollDown {
+    0% {
+      height: 0%;
+      top: 0%;
+    }
+    50% {
+      height: 100%;
+      top: 0%;
+    }
+    100% {
+      height: 100%;
+      top: 120%;
+    }
+  }
 }
 </style>
 
@@ -280,7 +347,9 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import { Autoplay } from "swiper";
 import { Toast } from "../../utils/toast.js";
 import "swiper/css";
-
+// ScrollTrigger.defaults({
+//   markers: true,
+// });
 export default {
   data() {
     return {
@@ -334,12 +403,24 @@ export default {
     this.getCartList();
     this.getProductList();
     this.getArticleList();
+    this.scrollDown = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".video-wrap",
+        start: "bottom bottom",
+        scrub: true,
+      },
+    });
+    this.scrollDown.to(".scroll-down", {
+      opacity: 0,
+      x: 100,
+    });
+
     this.videoMotion = gsap.timeline({
       scrollTrigger: {
         trigger: ".video-wrap",
         // trigger element - viewport
         start: "top top",
-        end: "bottom top",
+        end: "bottom bottom",
         scrub: true,
       },
     });
@@ -348,26 +429,25 @@ export default {
       .to(".videoCanvas", {
         width: "90vw",
         height: "75vh",
-        duration: 20,
+        duration: 10,
         ease: "ease",
-        yPercent: "-50%",
       })
       .to(".videoCanvas", {
         width: "90vw",
-        height: "90vh",
-        duration: 20,
+        height: "75vh",
+        duration: 40,
         ease: "ease",
       })
       .to(".videoCanvas", {
         width: "100vw",
         height: "100vh",
-        duration: 10,
+        duration: 30,
         ease: "ease",
       })
       .to(".videoCanvas", {
-        width: "25vmin",
+        width: "35vmin",
         height: "50vmin",
-        duration: 20,
+        duration: 10,
         ease: "ease",
       });
 
@@ -406,10 +486,10 @@ export default {
         width: "80%",
         // scale: 5,
         xPercent: "-50",
-        y: "80vh",
+        y: "75vh",
         yPercent: "-50",
         duration: 2,
-        opacity: 0.6,
+        opacity: 0.8,
         ease: "ease",
       },
       {

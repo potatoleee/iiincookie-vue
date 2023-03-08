@@ -4,7 +4,7 @@ const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
   linkActiveClass: "active",
   scrollBehavior(to) {
-    if (to.fullPath.match("product")) {
+    if (to.fullPath.match("product") || to.fullPath.match("article")) {
       return {
         top: 0,
       };
@@ -40,6 +40,11 @@ const router = createRouter({
           path: "/articles",
           name: "articles",
           component: () => import("../views/front/ArticlesView.vue"),
+        },
+        {
+          path: "/article/:id",
+          name: "article",
+          component: () => import("../views/front/ArticleView.vue"),
         },
         {
           path: "/cart",

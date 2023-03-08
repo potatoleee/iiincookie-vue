@@ -10,7 +10,7 @@
 
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-md-11">
+      <div class="col-md-12">
         <div
           class="d-flex align-items-center justify-content-center justify-content-md-start py-10 border-top border-bottom border-secondary mb-15"
         >

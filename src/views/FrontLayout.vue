@@ -1,9 +1,9 @@
 <template>
   <!-- 導覽列 -->
+  <div class="menu-btn" @click="toggleMenu" :class="{ open: isOpen }"></div>
   <div
-    class="container-fluid d-flex w-100 justify-content-between align-items-center position-fixed top-0 left-0 z-9 py-7 px-7"
+    class="container-fluid d-flex w-100 justify-content-between align-items-center position-fixed top-0 left-0 z-3 py-7 px-7"
   >
-    <div class="menu-btn" @click="toggleMenu" :class="{ open: isOpen }"></div>
     <!-- <RouterLink
       to="/"
       class="position-absolute start-50 top-50 translate-middle"
@@ -13,11 +13,17 @@
     <RouterLink to="/" exact native>
       <img class="logo" src="../assets/images/logo.svg" alt="餅乾生產餡" />
     </RouterLink>
-    <div class="d-flex align-items-center gap-2">
+    <div class="d-flex align-items-center gap-5">
       <i class="bi bi-heart fs-xl fs-lg-2xl"></i>
       <RouterLink to="/cart">
-        <i class="bi bi-bag fs-xl fs-lg-2xl"></i>
-        {{ totalQty }}
+        <div class="position-relative">
+          <i class="bi bi-bag fs-xl fs-lg-2xl"></i>
+          <span
+            v-if="totalQty > 0"
+            class="badge bg-primary text-light position-absolute top-0 start-100 translate-middle"
+            >{{ totalQty }}</span
+          >
+        </div>
       </RouterLink>
     </div>
   </div>
@@ -66,7 +72,7 @@
   </main>
   <!-- 主要內容 -->
   <!-- footer -->
-  <footer class="footer mt-auto bg-secondary container-fluid py-10">
+  <footer class="footer mt-auto bg-secondary-dark container-fluid py-10">
     <div class="d-flex justify-content-between align-items-center">
       <div class="d-flex gap-8">
         <p class="font-english">© 2023 iiincookie</p>
@@ -89,20 +95,21 @@
 @import "../assets/style/all.scss";
 // 漢堡start
 .menu-btn {
-  position: relative;
-  width: 24px;
-  height: 24px;
-  z-index: 1030;
+  position: fixed;
+  width: 28px;
+  height: 28px;
   cursor: pointer;
+  top: 24px;
+  left: 24px;
+  z-index: 100;
 
   &::before,
   &::after {
     position: absolute;
     content: "";
-    width: 20px;
+    width: 28px;
     height: 1px;
     background-color: black;
-    right: 2px;
     transition: all 0.5s;
   }
   &::before {
@@ -164,6 +171,7 @@
   position: absolute;
   top: 50%;
   left: 50%;
+  z-index: -1;
   transform: translate(-50%, -50%);
   @include pad {
     width: 110px;
@@ -199,11 +207,23 @@
   display: block;
   background: url("../assets/images/newbanner正方形.jpg") no-repeat 50% 50%;
   background-size: cover;
+  opacity: 0.5;
+  transition: opacity 0.5s ease;
+  &.show {
+    transition: opacity 0.5s ease;
+    opacity: 1;
+  }
 }
 .bg2 {
   display: block;
   background: url("../assets/images/02.jpg") no-repeat 50% 50%;
   background-size: cover;
+  opacity: 0.5;
+  transition: opacity 0.5s ease;
+  &.show {
+    transition: opacity 0.5s ease;
+    opacity: 1;
+  }
 }
 .bg3 {
   display: block;
