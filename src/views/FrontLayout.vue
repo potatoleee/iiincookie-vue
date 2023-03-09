@@ -3,8 +3,8 @@
 
   <div class="offCanvas-favorite" v-if="showFavorites">
     <ul>
-      <li v-for="(favorite, index) in myFavorite" :key="favorite.id">
-        <button class="btn btn-primary" @click="removeFromFavorites(index)">
+      <li v-for="(favorite, index) in myFavoriteList" :key="favorite.id">
+        <button class="btn btn-primary" @click="removeFavorite(index)">
           移除
         </button>
         {{ favorite.title }}
@@ -273,37 +273,30 @@
 <script>
 import gsap from "gsap";
 import cartStore from "../stores/cartStore.js";
+import favoriteStore from "../stores/favoriteStore.js";
 import { mapState, mapActions } from "pinia";
 export default {
+  props: {
+    favoriteList: {
+      type: Array,
+      default() {
+        return [];
+      },
+    },
+  },
   data() {
     return {
       isOpen: false,
       showFavorites: false,
       myFavorite: JSON.parse(localStorage.getItem("myFavorite")) || [],
-      myFavoriteId: JSON.parse(localStorage.getItem("myFavoriteId")) || [],
-      // favoriteList: [],
+
+      tempFavorite: [],
     };
   },
   methods: {
     ...mapActions(cartStore, ["getCartList"]),
-    toggleFavorite(product) {
-      //
-      const favoriteIndex = this.myFavorite.findIndex(
-        (item) => item.id === product.id
-      );
-      // 如果找不到相符資料，就將資料新增一筆進去
-      if (favoriteIndex === -1) {
-        this.myFavorite.push(product);
-        this.myFavoriteId.push(product.id);
-        console.log("加到我得最愛");
-      } else {
-        // 如果有找到相符資料，就將資料刪除一筆
-        this.myFavorite.splice(favoriteIndex, 1);
-        this.myFavoriteId.splice(favoriteIndex, 1);
-        console.log("重複刪除");
-      }
-      // localStorage.setItem("favorite", JSON.stringify(this.favorite));
-    },
+    ...mapActions(favoriteStore, ["removeFavorite"]),
+
     removeFromFavorites(index) {
       this.myFavorite.splice(index, 1);
       this.myFavoriteId.splice(index, 1);
@@ -353,27 +346,28 @@ export default {
   },
   computed: {
     ...mapState(cartStore, ["cartList", "totalQty"]),
+    ...mapState(favoriteStore, ["myFavoriteList"]),
   },
   watch: {
-    // 用locolstorage自訂欄位並存取資料
-    myFavorite: {
+    // 因為是陣列，所以用深層監聽
+    myFavoriteList: {
       handler() {
         // localStorage只接受字串
-        localStorage.setItem("myFavorite", JSON.stringify(this.myFavorite));
-      },
-      deep: true,
-    },
-    myFavoriteId: {
-      handler() {
-        localStorage.setItem("myFavoriteId", JSON.stringify(this.myFavoriteId));
+        localStorage.setItem(
+          "myFavoriteList",
+          JSON.stringify(this.myFavoriteList)
+        );
       },
       deep: true,
     },
   },
   mounted() {
     this.getCartList();
+    // this.$on("updateFavorite", () => {
+    //   this.myFavorite = JSON.parse(localStorage.getItem("myFavorite")) || [];
+    // });
     console.log("myFavorite:", this.myFavorite);
-    console.log("myFavoriteId:", this.myFavoriteId);
+
     this.navMotion = gsap.timeline({ paused: true });
     // 開啟動畫
     this.navMotion.to(".menu", {

@@ -81,7 +81,16 @@
                 <div
                   class="d-flex align-items-center border border-secondary-dark px-3"
                 >
-                  <i class="bi bi-heart"></i>
+                  <i
+                    v-if="isFavorite(product)"
+                    class="bi bi-heart-fill text--dark"
+                    @click="toggleFavorite(product)"
+                  ></i>
+                  <i
+                    v-else
+                    class="bi bi-heart text-dark"
+                    @click="toggleFavorite(product)"
+                  ></i>
                 </div>
               </div>
               <div>
@@ -216,6 +225,7 @@
 <script>
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Autoplay } from "swiper";
+
 import loadingStore from "../../stores/loadingStore.js";
 // Import Swiper styles
 import "swiper/css";
@@ -223,6 +233,7 @@ import "swiper/css";
 import { RouterLink } from "vue-router";
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
 import cartStore from "../../stores/cartStore.js";
+import favoriteStore from "../../stores/favoriteStore.js";
 import { mapState, mapActions } from "pinia";
 export default {
   data() {
@@ -242,6 +253,7 @@ export default {
     RouterLink,
   },
   methods: {
+    ...mapActions(favoriteStore, ["toggleFavorite", "isFavorite"]),
     getProduct(id) {
       this.$http
         .get(`${VITE_APP_URL}/api/${VITE_APP_PATH}/product/${id}`)

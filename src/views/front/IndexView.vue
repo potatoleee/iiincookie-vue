@@ -91,7 +91,7 @@
         </div>
         <div class="col-9 col-md-6 offset-md-1">
           <div class="mask">
-            <!-- <div class="mask-bg"></div> -->
+            <div class="mask-bg"></div>
             <img src="../../assets/images/chocolate01.jpg" alt="" />
           </div>
         </div>
@@ -102,7 +102,10 @@
     </div>
     <div class="container-fluid p-0 mb-17">
       <div class="w-80 w-md-40 mt-md-m10 mt-0">
-        <img src="../../assets/images/motcha02.jpg" alt="" />
+        <div class="mask">
+          <div class="mask-bg"></div>
+          <img src="../../assets/images/motcha02.jpg" alt="" />
+        </div>
       </div>
     </div>
     <div>
@@ -120,7 +123,8 @@
             </div>
           </div>
           <div class="col-11 col-md-7 ps-12 pe-0 pe-md-3">
-            <div>
+            <div class="mask">
+              <div class="mask-bg"></div>
               <img src="../../assets/images/boxflower.jpg" alt="" />
             </div>
           </div>
@@ -273,21 +277,21 @@
   &-bg {
     position: absolute;
     top: 0;
-    left: 0;
+    right: 0;
     background: $secondary-light;
-    width: 100%;
+    width: 0%;
     height: 100%;
   }
 }
-.mask:before {
-  position: absolute;
-  content: "";
-  background-color: $secondary-light;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
+// .mask:before {
+//   position: absolute;
+//   content: "";
+//   background-color: $secondary-light;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 100%;
+// }
 .swiper-slide img {
   display: block;
   width: 100%;
@@ -424,10 +428,30 @@ export default {
     SwiperSlide,
   },
   mounted() {
-    gsap.to(".mask:before", {
-      duration: 20,
-      height: "0%",
+    const maskList = gsap.utils.toArray(".mask");
+    console.log(maskList);
+    maskList.forEach((mask) => {
+      gsap.from(mask.querySelector(".mask-bg"), {
+        scrollTrigger: {
+          trigger: mask,
+          start: "top bottom",
+          markers: true,
+        },
+        duration: 1,
+        width: "100%",
+        ease: "power3.inOut",
+      });
     });
+    // gsap.from(".mask-bg", {
+    //   scrollTrigger: {
+    //     trigger: ".mask-bg",
+    //     start: "50px bottom",
+    //     markers: true,
+    //   },
+    //   duration: 1,
+    //   width: "100%",
+    //   ease: "power3.inOut",
+    // });
     this.getCartList();
     this.getProductList();
     this.getArticleList();
