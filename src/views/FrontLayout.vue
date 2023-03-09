@@ -1,4 +1,20 @@
 <template>
+  <!-- 我的最愛視窗 -->
+
+  <div class="offCanvas-favorite" v-if="showFavorites">
+    <ul>
+      <li v-for="(favorite, index) in myFavorite" :key="favorite.id">
+        <button class="btn btn-primary" @click="removeFromFavorites(index)">
+          移除
+        </button>
+        {{ favorite.title }}
+        {{ favorite.id }}
+        NT$ {{ favorite.price }}
+        <img :src="favorite.imageUrl" width="300" alt="" />
+      </li>
+    </ul>
+  </div>
+  <div class="overlay" v-if="showFavorites" @click="toggleCanvas"></div>
   <!-- 導覽列 -->
   <div class="menu-btn" @click="toggleMenu" :class="{ open: isOpen }"></div>
   <div
@@ -14,7 +30,7 @@
       <img class="logo" src="../assets/images/logo.svg" alt="餅乾生產餡" />
     </RouterLink>
     <div class="d-flex align-items-center gap-5">
-      <i class="bi bi-heart fs-xl fs-lg-2xl"></i>
+      <i class="bi bi-heart fs-xl fs-lg-2xl" @click="toggleFavorites"></i>
       <RouterLink to="/cart">
         <div class="position-relative">
           <i class="bi bi-bag fs-xl fs-lg-2xl"></i>
@@ -93,6 +109,25 @@
 
 <style lang="scss">
 @import "../assets/style/all.scss";
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(27, 24, 23, 0.5);
+  z-index: 3;
+}
+.offCanvas-favorite {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 50%;
+  background-color: $secondary-dark;
+  z-index: 4;
+}
 // 漢堡start
 .menu-btn {
   position: fixed;
@@ -243,13 +278,47 @@ export default {
   data() {
     return {
       isOpen: false,
+      showFavorites: false,
+      myFavorite: JSON.parse(localStorage.getItem("myFavorite")) || [],
+      myFavoriteId: JSON.parse(localStorage.getItem("myFavoriteId")) || [],
+      // favoriteList: [],
     };
   },
   methods: {
     ...mapActions(cartStore, ["getCartList"]),
+    toggleFavorite(product) {
+      //
+      const favoriteIndex = this.myFavorite.findIndex(
+        (item) => item.id === product.id
+      );
+      // 如果找不到相符資料，就將資料新增一筆進去
+      if (favoriteIndex === -1) {
+        this.myFavorite.push(product);
+        this.myFavoriteId.push(product.id);
+        console.log("加到我得最愛");
+      } else {
+        // 如果有找到相符資料，就將資料刪除一筆
+        this.myFavorite.splice(favoriteIndex, 1);
+        this.myFavoriteId.splice(favoriteIndex, 1);
+        console.log("重複刪除");
+      }
+      // localStorage.setItem("favorite", JSON.stringify(this.favorite));
+    },
+    removeFromFavorites(index) {
+      this.myFavorite.splice(index, 1);
+      this.myFavoriteId.splice(index, 1);
+      localStorage.setItem("myFavorite", JSON.stringify(this.myFavorite));
+      console.log("移除產品");
+    },
+    toggleFavorites() {
+      this.showFavorites = !this.showFavorites;
+    },
     toggleMenu() {
       this.isOpen = !this.isOpen;
       this.navMotion.reversed(!this.navMotion.reversed());
+    },
+    toggleCanvas() {
+      this.showFavorites = !this.showFavorites;
     },
     showBg1() {
       this.$refs.bg1.style.display = "block";
@@ -285,8 +354,26 @@ export default {
   computed: {
     ...mapState(cartStore, ["cartList", "totalQty"]),
   },
+  watch: {
+    // 用locolstorage自訂欄位並存取資料
+    myFavorite: {
+      handler() {
+        // localStorage只接受字串
+        localStorage.setItem("myFavorite", JSON.stringify(this.myFavorite));
+      },
+      deep: true,
+    },
+    myFavoriteId: {
+      handler() {
+        localStorage.setItem("myFavoriteId", JSON.stringify(this.myFavoriteId));
+      },
+      deep: true,
+    },
+  },
   mounted() {
     this.getCartList();
+    console.log("myFavorite:", this.myFavorite);
+    console.log("myFavoriteId:", this.myFavoriteId);
     this.navMotion = gsap.timeline({ paused: true });
     // 開啟動畫
     this.navMotion.to(".menu", {

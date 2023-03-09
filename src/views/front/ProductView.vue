@@ -1,4 +1,5 @@
 <template>
+  <VueLoading v-model:active="isLoading"></VueLoading>
   <div class="title py-lg-15">
     <span
       class="title-sub fs-10xl fw-light font-english text-secondary text-opacity-50 d-block text-end"
@@ -215,13 +216,14 @@
 <script>
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Autoplay } from "swiper";
+import loadingStore from "../../stores/loadingStore.js";
 // Import Swiper styles
 import "swiper/css";
 
 import { RouterLink } from "vue-router";
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
 import cartStore from "../../stores/cartStore.js";
-import { mapActions } from "pinia";
+import { mapState, mapActions } from "pinia";
 export default {
   data() {
     return {
@@ -280,6 +282,7 @@ export default {
     ...mapActions(cartStore, ["addToCart", "addNum", "decreaseNum"]),
   },
   computed: {
+    ...mapState(loadingStore, ["isLoading", "loadingItem"]),
     id() {
       return this.$route.params.id;
     },

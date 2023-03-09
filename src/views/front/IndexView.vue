@@ -90,7 +90,10 @@
           </div>
         </div>
         <div class="col-9 col-md-6 offset-md-1">
-          <img src="../../assets/images/chocolate01.jpg" alt="" />
+          <div class="mask">
+            <!-- <div class="mask-bg"></div> -->
+            <img src="../../assets/images/chocolate01.jpg" alt="" />
+          </div>
         </div>
       </div>
       <!-- <div class="w-50">
@@ -265,6 +268,26 @@
 
 <style lang="scss">
 @import "../../assets/style/all.scss";
+.mask {
+  position: relative;
+  &-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: $secondary-light;
+    width: 100%;
+    height: 100%;
+  }
+}
+.mask:before {
+  position: absolute;
+  content: "";
+  background-color: $secondary-light;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
 .swiper-slide img {
   display: block;
   width: 100%;
@@ -361,6 +384,7 @@ export default {
   },
   methods: {
     ...mapActions(cartStore, ["getCartList"]),
+
     formatDate(timestamp) {
       const date = new Date(timestamp * 1000);
       return date.toLocaleDateString();
@@ -400,6 +424,10 @@ export default {
     SwiperSlide,
   },
   mounted() {
+    gsap.to(".mask:before", {
+      duration: 20,
+      height: "0%",
+    });
     this.getCartList();
     this.getProductList();
     this.getArticleList();

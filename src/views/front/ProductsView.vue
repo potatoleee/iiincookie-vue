@@ -7,7 +7,19 @@
     </span>
     <h1 class="title-main font-serifTc fw-black fs-xl fs-lg-3xl">商品ㄧ覽</h1>
   </div>
-
+  <div>
+    <ul>
+      <li v-for="(favorite, index) in myFavorite" :key="favorite.id">
+        <button class="btn btn-primary" @click="removeFromFavorites(index)">
+          移除
+        </button>
+        {{ favorite.title }}
+        {{ favorite.id }}
+        NT$ {{ favorite.price }}
+        <img :src="favorite.imageUrl" width="300" alt="" />
+      </li>
+    </ul>
+  </div>
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-12">
@@ -47,9 +59,23 @@
             v-for="product in selectCategoryList"
             :key="product.id"
           >
-            <RouterLink :to="`/product/${product.id}`" class="mb-6">
-              <img :src="product.imageUrl" alt="" />
-            </RouterLink>
+            <div class="position-relative">
+              <RouterLink :to="`/product/${product.id}`" class="mb-6">
+                <img :src="product.imageUrl" alt="" />
+              </RouterLink>
+              <div class="position-absolute z-3 end-4n top-4n">
+                <i
+                  v-if="!myFavoriteId.includes(product.id)"
+                  class="bi bi-heart fs-xl text-light"
+                  @click="toggleFavorite(product)"
+                ></i>
+                <i
+                  v-else
+                  class="bi bi-heart-fill fs-xl text-light"
+                  @click="toggleFavorite(product)"
+                ></i>
+              </div>
+            </div>
             <h2 class="font-serifTc fs-base mb-4 text-center letterSpace-2">
               {{ product.title }}
             </h2>
@@ -74,11 +100,6 @@
                 <span class="sr-only"></span>
               </div>
             </button>
-            <!-- <RouterLink
-              :to="`/product/${product.id}`"
-              class="btn btn-outline-secondary"
-              >更多細節
-            </RouterLink> -->
           </li>
         </ul>
       </div>
@@ -171,6 +192,18 @@ import loadingStore from "../../stores/loadingStore.js";
 
 import { mapState, mapActions } from "pinia";
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
+
+// const storageMethods = {
+//   save(favorite) {
+//     const favoriteString = JSON.stringify(favorite);
+
+//     localStorage.setItem("favorite", favoriteString);
+//   },
+//   get() {
+//     return JSON.parse(localStorage.getItem("favorite"));
+//   },
+// };
+// console.log("storageMethods", storageMethods);
 export default {
   data() {
     return {
@@ -180,11 +213,49 @@ export default {
       selectCategory: "",
       nowCategory: "",
       allProducts: [],
+      // myFavorite: storageMethods.get() || [],
+      myFavorite: JSON.parse(localStorage.getItem("myFavorite")) || [],
+      myFavoriteId: JSON.parse(localStorage.getItem("myFavoriteId")) || [],
 
       // isLoading: false,
     };
   },
   methods: {
+    toggleFavorite(product) {
+      //
+      const favoriteIndex = this.myFavorite.findIndex(
+        (item) => item.id === product.id
+      );
+      // 如果找不到相符資料，就將資料新增一筆進去
+      if (favoriteIndex === -1) {
+        this.myFavorite.push(product);
+        this.myFavoriteId.push(product.id);
+        console.log("加到我得最愛");
+      } else {
+        // 如果有找到相符資料，就將資料刪除一筆
+        this.myFavorite.splice(favoriteIndex, 1);
+        this.myFavoriteId.splice(favoriteIndex, 1);
+        console.log("重複刪除");
+      }
+      // localStorage.setItem("favorite", JSON.stringify(this.favorite));
+    },
+    removeFromFavorites(index) {
+      this.myFavorite.splice(index, 1);
+      this.myFavoriteId.splice(index, 1);
+      localStorage.setItem("myFavorite", JSON.stringify(this.myFavorite));
+      console.log("移除產品");
+    },
+    // addMyFavorite(item) {
+    //   console.log("加到我的最愛");
+    //   // this.myFavorite.push(item.id);
+    //   if (this.myFavorite.includes(item.id)) {
+    //     this.myFavorite.splice(this.myFavorite.indexOf(item.id), 1); //刪除相同項目
+    //   } else {
+    //     this.myFavorite.push(item.id);
+    //   }
+    //   console.log(this.myFavorite);
+    //   storageMethods.save(this.myFavorite);
+    // },
     getProductList(page = 1) {
       this.isLoading = true;
       this.$http
@@ -260,8 +331,25 @@ export default {
       );
     },
   },
+  watch: {
+    // 用locolstorage自訂欄位並存取資料
+    myFavorite: {
+      handler() {
+        // localStorage只接受字串
+        localStorage.setItem("myFavorite", JSON.stringify(this.myFavorite));
+      },
+      deep: true,
+    },
+    myFavoriteId: {
+      handler() {
+        localStorage.setItem("myFavoriteId", JSON.stringify(this.myFavoriteId));
+      },
+      deep: true,
+    },
+  },
   mounted() {
     this.getCategory("", 1);
+    // localStorage.removeItem("favoriteId");
 
     this.getAllProducts();
   },
