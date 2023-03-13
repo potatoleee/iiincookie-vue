@@ -68,9 +68,8 @@
                 清空購物車
               </button>
             </div>
-
-            <ul v-for="cartItem in cartList.carts" :key="cartItem.id">
-              <li>
+            <ul>
+              <li v-for="cartItem in cartList.carts" :key="cartItem.id">
                 <div
                   class="d-flex py-7 gap-3 border-bottom border-dark border-opacity-10"
                 >

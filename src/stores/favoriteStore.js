@@ -32,12 +32,17 @@ const favoriteStore = defineStore("favoriteStore", {
     },
     removeFavorite(index) {
       this.myFavoriteList.splice(index, 1);
+      Toast.fire({
+        icon: "success",
+        title: "移除我的最愛",
+      });
       localStorage.setItem(
         "myFavoriteList",
         JSON.stringify(this.myFavoriteList)
       );
       console.log("移除產品");
     },
+
     isFavorite(item) {
       return this.myFavoriteList.some((element) => element.id === item.id);
     },

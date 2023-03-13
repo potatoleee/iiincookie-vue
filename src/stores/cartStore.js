@@ -7,7 +7,7 @@ const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
 const cartStore = defineStore("cartStore", {
   state: () => {
     return {
-      cart: {},
+      cartList: [],
       totalQty: 0,
     };
   },
@@ -42,9 +42,9 @@ const cartStore = defineStore("cartStore", {
         .get(`${VITE_APP_URL}/api/${VITE_APP_PATH}/cart`)
         .then((res) => {
           this.totalQty = 0;
-          this.cart = res.data.data;
-          console.log(this.cart);
-          this.cart.carts.forEach((item) => {
+          this.cartList = res.data.data;
+          console.log(this.cartList);
+          this.cartList.carts.forEach((item) => {
             this.totalQty += item.qty;
           });
         })
@@ -154,11 +154,11 @@ const cartStore = defineStore("cartStore", {
         });
     },
   },
-  getters: {
-    cartList: ({ cart }) => {
-      return cart;
-    },
-  },
+  // getters: {
+  //   cartList: ({ cart }) => {
+  //     return cart;
+  //   },
+  // },
 });
 
 export default cartStore;

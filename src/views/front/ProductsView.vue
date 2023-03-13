@@ -51,7 +51,7 @@
               <RouterLink :to="`/product/${product.id}`" class="mb-6">
                 <img :src="product.imageUrl" alt="" />
               </RouterLink>
-              <div class="position-absolute z-3 end-4n top-4n">
+              <div class="position-absolute z-2 end-4n top-4n">
                 <i
                   v-if="isFavorite(product)"
                   class="bi bi-heart-fill fs-xl text-light"
@@ -72,7 +72,7 @@
             </p>
             <button
               type="button"
-              class="btn btn-primary text-secondary-light rounded-0"
+              class="btn btn-outline-primary rounded-0"
               @click="addToCart(product.id)"
             >
               加入購物車

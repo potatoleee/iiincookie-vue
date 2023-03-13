@@ -435,7 +435,7 @@ export default {
         scrollTrigger: {
           trigger: mask,
           start: "top bottom",
-          markers: true,
+          // markers: true,
         },
         duration: 1,
         width: "100%",
