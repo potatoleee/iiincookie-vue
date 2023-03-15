@@ -5,12 +5,12 @@
       class="title-sub fs-10xl fw-light font-english text-secondary text-opacity-50 d-block text-end"
       >Product Detail
     </span>
-    <h1 class="title-main font-serifTc fw-black fs-xl fs-lg-3xl">產品細節</h1>
+    <h2 class="title-main font-serifTc fw-black fs-xl fs-lg-3xl">產品細節</h2>
   </div>
 
   <div class="container my-md-13 my-10">
-    <div class="row justify-content-center">
-      <div class="col-12 mb-10">
+    <div class="justify-content-center">
+      <div class="mb-10">
         <div class="row">
           <div class="col-1 d-none d-lg-block">
             <ul class="d-flex flex-column gap-6">
@@ -30,7 +30,7 @@
               <img :src="images[activeIndex]" alt="" />
             </div>
           </div>
-          <div class="d-lg-none">
+          <div class="d-lg-none mb-7">
             <ul class="d-flex gap-6">
               <li
                 v-for="(image, index) in images"
@@ -45,16 +45,19 @@
           </div>
           <div class="col-lg-5 d-flex flex-column justify-content-between">
             <div>
-              <h1 class="fs-2xl font-serifTc fw-4 letterSpace-4 mb-2">
+              <h1 class="fs-2xl fw-semiBold fs-xl font-serifTc fw-4 mb-2">
                 {{ product.title }}
               </h1>
               <p class="fs-sm font-serifTc text-dark text-opacity-70 mb-6">
                 {{ product.flavor }}
               </p>
-              <p class="fs-xl mb-10 letterSpace-2 text-dark font-arimo">
+              <p
+                class="fs-xl pb-6 mb-6 text-dark font-arimo border-bottom border-dark border-opacity-20 font-serifTc"
+              >
                 NT$ {{ product.price }}
               </p>
-              <p class="mb-4 letterSpace-2 fw-light">
+
+              <p class="mb-6">
                 {{ product.description }}
               </p>
             </div>
@@ -68,7 +71,7 @@
                     <i class="bi bi-dash-lg"></i>
                   </button>
                   <input
-                    class="text-center bg-secondary-light border-0"
+                    class="text-center bg-secondary-light w-80 border-0 text-dark"
                     type="number"
                     min="1"
                     v-model="qty"
@@ -83,7 +86,7 @@
                 >
                   <i
                     v-if="isFavorite(product)"
-                    class="bi bi-heart-fill text--dark"
+                    class="bi bi-heart-fill text-primary"
                     @click="toggleFavorite(product)"
                   ></i>
                   <i
@@ -96,7 +99,7 @@
               <div>
                 <button
                   type="button"
-                  class="btn btn-primary text-secondary-light w-100 py-4 rounded-0"
+                  class="btn btn-primary text-secondary-light w-100 py-4 rounded-0 letter-spacing-2 font-serifTc"
                   @click="addToCart(product.id, qty)"
                 >
                   加入購物車
@@ -110,7 +113,7 @@
 
     <div class="row justify-content-lg-end">
       <div class="col-12 col-lg-5">
-        <div class="w-100 h-1 bg-secondary-dark mb-6"></div>
+        <div class="w-100 h-1 bg-dark bg-opacity-20 mb-6"></div>
         <p class="fw-medium mb-6">詳細資訊</p>
         <table class="table mb-6">
           <tbody>
@@ -149,9 +152,9 @@
       </div>
     </div>
     <div class="text-center mb-8">
-      <div class="w-100 h-1 bg-secondary-dark mb-8"></div>
-      <p class="font-english fs-3xl">Other products</p>
-      <p class="fw-medium fs-xl">其他商品</p>
+      <div class="w-100 h-1 bg-dark bg-opacity-20 mb-8"></div>
+      <p class="font-english fs-2xl fs-lg-3xl">Other products</p>
+      <p class="fw-medium font-serifTc fs-lg fs-lg-xl">其他商品</p>
     </div>
     <div class="mb-16">
       <swiper

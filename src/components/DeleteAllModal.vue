@@ -29,6 +29,7 @@
             type="button"
             class="btn btn-outline-dark w-lg-50"
             data-bs-dismiss="modal"
+            @click="hide"
           >
             不要刪除
           </button>

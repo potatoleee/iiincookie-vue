@@ -1,15 +1,161 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
+  <VueLoading v-model:active="isLoading"></VueLoading>
+  <div class="title py-lg-15">
+    <span
+      class="title-sub fs-10xl fw-light font-english text-secondary text-opacity-50 d-block text-end"
+      >About iiin
+    </span>
+    <h1 class="title-main font-serifTc fw-black fs-xl fs-lg-3xl">關於我們</h1>
+  </div>
+
+  <div class="container mb-17">
+    <div class="row justify-content-end mb-12 mb-md-0">
+      <div class="col-12 col-lg-5 d-flex flex-row gap-10 mb-10">
+        <p class="vertical-rl line letter-spacing-4">品牌由來</p>
+        <div>
+          <h3 class="fs-2xl fs-lg-3xl font-serifTc py-5 py-lg-7">
+            品牌的小故事
+          </h3>
+          <p>
+            製造夾餡餅乾的過程一個步驟接著一個步驟，很像製造的生產線，藉此取了諧音＿餅乾生產餡。並在Logo右下角放上招牌栗子造型～
+            品牌英文名稱iiicookie的小巧思：iiin跟男友兩位名字都有穎，以英文諧音in為發想，覺得三個i有拉長音可愛的感覺，所以唸法為「穎～穎～cookie
+            」。
+          </p>
+        </div>
+      </div>
+      <div class="col-11 col-lg-7 ps-11">
+        <div class="mask">
+          <div class="mask-bg"></div>
+          <img
+            src="https://storage.googleapis.com/vue-course-api.appspot.com/week3dean/1678806137926.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=bLNjkCW8gCTf9YLVS2b3S6pLJwRhGw4DdjtnKZwSqApzsghT%2Bl3kj%2BVIN6LELfhqOSGh3GV3birPpVGVA5EF5%2BeqORIPt2LPhAXYZvtDFzLWYr%2BLefglqk1k%2F%2FRn64TNXbcV4PWr%2BF%2Bk7LW%2BFWXK2Vhb6XPZw0SrlJZSUNwbkZjuBc7%2FgmOMeFlW0i6lgNT2hagkJ7DuN2ZUttn5h3%2B%2BEh16r6SSKOl8VVfuPKgrNVQvE2euuCEymIVLqaRWs2T7oGk1uWl1%2FW5Zqvy%2FOGed7QJVlmEHwD7gTiUmDK7sF4E%2FeGMOX126VJc1mpBWUkX%2FczDH2fHtXRGLBX%2FhJU%2B8IA%3D%3D"
+            alt=""
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container py-17">
+    <p class="font-english fs-3xl fs-lg-5xl text-center">Contact</p>
+    <a
+      class="fs-xl fs-lg-5xl text-center font-serifTc"
+      href="https://www.instagram.com/iiin.cookies/"
+      target="_blank"
+    >
+      聯絡我們請往 instagram
+    </a>
   </div>
 </template>
 
-<style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-}
-</style>
+<script>
+import cartStore from "../../stores/cartStore.js";
+import favoriteStore from "../../stores/favoriteStore.js";
+import loadingStore from "../../stores/loadingStore.js";
+import { gsap, ScrollTrigger } from "gsap/all";
+gsap.registerPlugin(gsap, ScrollTrigger);
+
+import { mapState, mapActions } from "pinia";
+const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
+
+export default {
+  data() {
+    return {
+      productList: [],
+      page: {},
+      selectCategoryList: [],
+      selectCategory: "",
+      nowCategory: "",
+      allProducts: [],
+    };
+  },
+  methods: {
+    getProductList(page = 1) {
+      this.isLoading = true;
+      this.$http
+        .get(`${VITE_APP_URL}/api/${VITE_APP_PATH}/products/?page=${page}`)
+        .then((res) => {
+          this.productList = res.data.products;
+          this.page = res.data.pagination;
+          console.log(this.page);
+          console.log(res.data);
+        })
+        .catch((error) => {
+          alert(error.data.message);
+        })
+        .finally(() => {
+          this.isLoading = false;
+        });
+    },
+    getAllProducts() {
+      this.isLoading = true;
+      this.$http
+        .get(`${VITE_APP_URL}/api/${VITE_APP_PATH}/products/all`)
+        .then((res) => {
+          console.log(res.data.products);
+          this.allProducts = res.data.products;
+        })
+        .catch((error) => {
+          alert(error.data.message);
+        })
+        .finally(() => {
+          this.isLoading = false;
+        });
+    },
+
+    getCategory(category, page = 1) {
+      this.isLoading = true;
+      this.$http
+        .get(
+          `${VITE_APP_URL}/api/${VITE_APP_PATH}/products?page=${page}&category=${category}`
+        )
+        .then((res) => {
+          console.log("相似類別全部", res.data.products);
+
+          this.selectCategoryList = res.data.products;
+          this.page = res.data.pagination;
+          this.nowCategory = this.page.category;
+          console.log(this.nowCategory);
+          console.log(this.page);
+          console.log(this.page.category);
+          console.log(res);
+          this.$router.push(`./products?page=${page}&category=${category}`);
+        })
+        .catch((error) => {
+          alert(error.data.message);
+        })
+        .finally(() => {
+          this.isLoading = false;
+        });
+    },
+    ...mapActions(cartStore, ["addToCart"]),
+    ...mapActions(favoriteStore, [
+      "removeFavorite",
+      "toggleFavorite",
+      "isFavorite",
+    ]),
+    // ...mapActions(productsStore, ["getProductList"]),
+  },
+  computed: {
+    ...mapState(loadingStore, ["isLoading", "loadingItem"]),
+    ...mapState(favoriteStore, ["myFavoriteList"]),
+    // ...mapState(productsStore, ["sortProducts"]),
+    filterProduct() {
+      return this.productList.filter((item) => {
+        return item.title.match(this.search);
+      });
+    },
+    categoryProducts() {
+      return this.allProducts.filter((item) =>
+        item.category.match(this.selectCategory)
+      );
+    },
+  },
+  mounted() {
+    gsap.from(".mask-bg", {
+      duration: 1,
+      width: "100%",
+      ease: "power3.inOut",
+      delay: 3,
+    });
+  },
+};
+</script>

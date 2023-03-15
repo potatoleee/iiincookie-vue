@@ -1,4 +1,5 @@
 <template>
+  <LoadingComponent :isLoading="isLoading"></LoadingComponent>
   <div class="title py-15">
     <span
       class="title-sub fs-10xl fw-light font-english text-secondary text-opacity-50 d-block text-end"
@@ -42,7 +43,6 @@
       </ul>
     </div>
     <div class="container">
-      <VueLoading v-model:active="isLoading"></VueLoading>
       <div class="row my-13">
         <!-- 購物車 start -->
         <div class="col-lg-7 mb-8 mb-lg-0">
@@ -174,7 +174,8 @@
 
 <script>
 import cartStore from "../../stores/cartStore.js";
-import loadingStore from "../../stores/loadingStore.js";
+
+import LoadingComponent from "../../components/LoadingComponent.vue";
 import { mapActions, mapState } from "pinia";
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
 import { Toast } from "../../utils/toast.js";
@@ -185,7 +186,11 @@ export default {
       productId: "",
       loadingItem: "", //loading效果項目暫存區
       couponCode: "iiincookienew",
+      isLoading: true,
     };
+  },
+  components: {
+    LoadingComponent,
   },
   methods: {
     ...mapActions(cartStore, [
@@ -220,11 +225,10 @@ export default {
   },
   computed: {
     ...mapState(cartStore, ["cartList", "totalQty"]),
-    ...mapState(loadingStore, ["isLoading"]),
   },
   mounted() {
     this.getCartList();
-    console.log(this.isLoading);
+    this.isLoading = false;
   },
 };
 </script>

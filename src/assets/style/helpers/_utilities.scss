@@ -27,11 +27,25 @@ $utilities: map-merge(
           100: 1
         )
       ),
+      "bg-opacity": (
+        css-var: true,
+        class: bg-opacity,
+        values: (
+          10: .10,
+          20: .20,
+          30: .30,
+          40: .40,
+          50: .50,
+          70: .70,
+          100: 1
+        )
+      ),
       "letter-spacing": (
               responsive: true,
               property: letter-spacing,
               class: letter-spacing,
               values:( 
+                1:  1px,
                 2:  2px,
                 4:  4px,
                 8:  8px,

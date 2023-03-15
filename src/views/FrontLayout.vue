@@ -11,43 +11,47 @@
     @deleteConfirm="deleteAllCartItem"
   ></DeleteAllModal>
   <!-- 我的最愛 start-->
-  <div>
-    <div
-      class="offCanvas-favorite w-100 w-md-80 w-lg-50 px-5 p-7 overflow-y-auto"
-      :class="{ open: showFavorites }"
-    >
-      <div class="d-flex justify-content-between align-items-center mb-6">
-        <div
-          class="d-flex align-items-center gap-2 cursor-pointer"
-          @click="toggleFavorites"
-        >
-          <i class="bi bi-chevron-left fs-xl"></i>
-          <p>返回</p>
-        </div>
+  <div
+    class="offCanvas-cart w-100 w-md-80 w-lg-50"
+    :class="{ open: showFavorites }"
+  >
+    <div class="position-relative h-100 d-flex flex-column">
+      <div class="pt-7 px-5 px-lg-7">
+        <div class="d-flex justify-content-between align-items-center mb-6">
+          <div
+            class="d-flex align-items-center gap-2 cursor-pointer"
+            @click="toggleFavorites"
+          >
+            <i class="bi bi-chevron-left fs-xl"></i>
+            <p>返回</p>
+          </div>
 
-        <button
-          v-if="myFavoriteList.length > 0"
-          class="btn btn-outline-dark rounded-0 py-1 px-2 text-opacity-50 border-opacity-50"
-          @click="openDeleteAllModalFavorites"
+          <button
+            v-if="myFavoriteList.length > 0"
+            class="btn btn-outline-dark rounded-0 py-1 px-2 text-opacity-50 border-opacity-50"
+            @click="openDeleteAllModalFavorites"
+          >
+            清除全部
+          </button>
+        </div>
+        <h3
+          class="font-serifTc fs-2xl pb-6 border-bottom border-dark border-opacity-40"
         >
-          清除全部
-        </button>
+          收藏品項
+        </h3>
       </div>
-      <h3
-        class="font-serifTc fs-2xl pb-6 border-bottom border-dark border-opacity-40"
-      >
-        收藏品項
-      </h3>
       <div
         v-if="myFavoriteList.length === 0"
         class="d-flex justify-content-center align-items-center h-80 flex-column gap-5"
       >
         <p>目前尚無任何收藏項目</p>
         <RouterLink to="/products">
-          <button class="btn btn-primary text-light">去看看好吃的！</button>
+          <button class="btn btn-primary text-light" @click="toggleFavorites">
+            去看看好吃的！
+          </button>
         </RouterLink>
       </div>
-      <ul>
+      <ul class="overflow-y-auto h-100 pb-17 px-5 px-lg-7">
         <li v-for="(favorite, index) in myFavoriteList" :key="favorite.id">
           <div
             class="d-flex py-7 gap-3 border-bottom border-dark border-opacity-40"
@@ -73,18 +77,32 @@
           </div>
         </li>
       </ul>
+      <div
+        v-if="totalQty > 0"
+        class="d-flex justify-content-between align-items-center position-absolute w-100 bg-secondary bottom-0 start-0 p-5 py-7 p-lg-7 border-top border-dark border-opacity-40"
+      >
+        <div>
+          <p>收藏品項｜{{ myFavoriteList.length }}項</p>
+        </div>
+        <RouterLink to="/cart">
+          <button class="btn btn-primary text-light" @click="toggleFavorites">
+            購物車
+          </button>
+        </RouterLink>
+      </div>
     </div>
-    <div
-      class="overlay"
-      :class="{ open: showFavorites }"
-      @click="toggleFavorites"
-    ></div>
   </div>
+  <div
+    class="overlay"
+    :class="{ open: showFavorites }"
+    @click="toggleFavorites"
+  ></div>
   <!-- 我的最愛 end-->
+
   <!-- 購物車預覽 start -->
   <div class="offCanvas-cart w-100 w-md-80 w-lg-50" :class="{ open: showCart }">
-    <div class="position-relative h-100">
-      <div class="p-5 py-7 p-lg-7 pb-0">
+    <div class="position-relative h-100 d-flex flex-column">
+      <div class="pt-7 px-5 px-lg-7">
         <div class="d-flex justify-content-between align-items-center mb-6">
           <div
             class="d-flex align-items-center gap-2 cursor-pointer"
@@ -114,10 +132,12 @@
       >
         <p>目前購物車上無產品</p>
         <RouterLink to="/products">
-          <button class="btn btn-primary text-light">去看看好吃的！</button>
+          <button class="btn btn-primary text-light" @click="toggleCart">
+            去看看好吃的！
+          </button>
         </RouterLink>
       </div>
-      <ul class="overflow-y-auto h-100 pb-17 px-5 px-lg-7">
+      <ul class="overflow-y-scroll h-100 pb-17 px-5 px-lg-7">
         <li v-for="cartItem in cartList.carts" :key="cartItem.id">
           <div
             class="d-flex py-7 gap-3 border-bottom border-dark border-opacity-10"
@@ -169,14 +189,17 @@
         </li>
       </ul>
       <div
+        v-if="totalQty > 0"
         class="d-flex justify-content-between align-items-center position-absolute w-100 bg-secondary bottom-0 start-0 p-5 py-7 p-lg-7 border-top border-dark border-opacity-40"
       >
         <div>
           <p>總金額</p>
-          <p>NTD 400</p>
+          <p>NT$ {{ cartList.total }}</p>
         </div>
         <RouterLink to="/cart">
-          <button class="btn btn-primary text-light">前往結帳</button>
+          <button class="btn btn-primary text-light" @click="toggleCart">
+            前往結帳
+          </button>
         </RouterLink>
       </div>
     </div>
@@ -256,19 +279,49 @@
   </main>
   <!-- 主要內容 -->
   <!-- footer -->
-  <footer class="footer mt-auto bg-secondary-dark container-fluid py-10">
-    <div class="d-flex justify-content-between align-items-center">
-      <div class="d-flex gap-8">
-        <p class="font-english">© 2023 iiincookie</p>
-        <a
-          class="font-english"
-          href="https://www.instagram.com/iiin.cookies/"
-          target="_blank"
-        >
-          instagram
-        </a>
+  <footer
+    class="footer mt-auto bg-secondary-dark container-fluid py-12 px-7 pt-lg-15 position-relative"
+  >
+    <div>
+      <div
+        class="d-flex justify-content-between align-items-center flex-column flex-md-row gap-7"
+      >
+        <div class="d-flex gap-7">
+          <RouterLink class="font-english fs-sm text-dark" to="/products"
+            >Products</RouterLink
+          >
+          <RouterLink class="font-english fs-sm text-dark" to="/about"
+            >About</RouterLink
+          >
+          <RouterLink class="font-english fs-sm text-dark" to="/articles"
+            >News</RouterLink
+          >
+        </div>
+        <div class="d-flex gap-7 align-items-center flex-column flex-md-row">
+          <div class="d-flex gap-4">
+            <a
+              class="font-english fs-sm"
+              href="https://www.instagram.com/iiin.cookies/"
+              target="_blank"
+            >
+              Instagram
+            </a>
+            <span class="font-english fs-sm">|</span>
+            <RouterLink class="font-english fs-sm" to="/login"
+              >Admin</RouterLink
+            >
+          </div>
+          <p class="font-english fs-sm">
+            © 2023 iiincookie All Rights Reserved
+          </p>
+        </div>
       </div>
-      <p @click="scrollToTop">To Top</p>
+      <p
+        class="vertical-lr scroll-top letter-spacing-4 font-english"
+        @click="scrollToTop"
+      >
+        To Top
+      </p>
     </div>
   </footer>
   <!-- footer -->
@@ -277,6 +330,45 @@
 
 <style lang="scss">
 @import "../assets/style/all.scss";
+
+.scroll-top {
+  position: absolute;
+  right: 2vw;
+  top: -28px;
+  &::before {
+    position: absolute;
+    content: "";
+    width: 1px;
+    height: 150%;
+    background-color: $secondary-darker;
+    left: -2px;
+    bottom: 0;
+  }
+  &::after {
+    animation: scrollUp 2s ease-in-out infinite;
+    position: absolute;
+    content: "";
+    width: 1px;
+    height: 0%;
+    background-color: $secondary-light;
+    left: -2px;
+    bottom: 0;
+  }
+  @keyframes scrollUp {
+    0% {
+      height: 0%;
+      bottom: 0%;
+    }
+    50% {
+      height: 100%;
+      bottom: 0%;
+    }
+    100% {
+      height: 100%;
+      bottom: 120%;
+    }
+  }
+}
 
 .overlay {
   position: fixed;
@@ -485,6 +577,7 @@ export default {
       showCart: false,
       deleteAllModalFavorites: null,
       deleteAllModalCart: null,
+      paddingRight: 0,
     };
   },
   components: {
@@ -501,11 +594,9 @@ export default {
     ...mapActions(favoriteStore, ["removeFavorite"]),
     openDeleteAllModalFavorites() {
       this.$refs.deleteAllModalFavorites.show();
-      console.log("這是刪除收藏品項的");
     },
     openDeleteAllModalCart() {
       this.$refs.deleteAllModalCart.show();
-      console.log("這是刪除購物車品項的");
     },
     clearFavorites() {
       localStorage.clear("myFavoriteList");
@@ -537,9 +628,27 @@ export default {
     },
     toggleFavorites() {
       this.showFavorites = !this.showFavorites;
+      if (this.showFavorites) {
+        this.paddingRight =
+          window.innerWidth - document.body.offsetWidth + "px";
+        document.body.style.overflow = "hidden";
+        document.body.style.paddingRight = this.paddingRight;
+      } else {
+        document.body.style.overflow = "";
+        document.body.style.paddingRight = "";
+      }
     },
     toggleCart() {
       this.showCart = !this.showCart;
+      if (this.showCart) {
+        this.paddingRight =
+          window.innerWidth - document.body.offsetWidth + "px";
+        document.body.style.overflow = "hidden";
+        document.body.style.paddingRight = this.paddingRight;
+      } else {
+        document.body.style.overflow = "";
+        document.body.style.paddingRight = "";
+      }
     },
     toggleMenu() {
       this.isOpen = !this.isOpen;

@@ -1,5 +1,6 @@
 <template>
-  <VueLoading v-model:active="isLoading"></VueLoading>
+  <LoadingComponent :isLoading="isLoading"></LoadingComponent>
+
   <div class="title py-lg-15">
     <span
       class="title-sub fs-10xl fw-light font-english text-secondary text-opacity-50 d-block text-end"
@@ -48,7 +49,7 @@
             :key="product.id"
           >
             <div class="position-relative">
-              <RouterLink :to="`/product/${product.id}`" class="mb-6">
+              <RouterLink :to="`/product/${product.id}`" class="mb-6 imgHover">
                 <img :src="product.imageUrl" alt="" />
               </RouterLink>
               <div class="position-absolute z-2 end-4n top-4n">
@@ -76,10 +77,7 @@
               @click="addToCart(product.id)"
             >
               加入購物車
-              <!-- <i
-                v-if="product.id === loadingItem"
-                class="fas fa-spinner fa-pulse"
-              ></i> -->
+
               <div
                 v-if="product.id === loadingItem"
                 class="spinner-border text-light spinner-border-sm"
@@ -172,12 +170,11 @@
 </style>
 
 <script>
-import { RouterLink } from "vue-router";
-// import PaginationComponent from "../../components/PaginationComponent.vue";
+import { RouterLink } from "vue-router"; // import PaginationComponent from "../../components/PaginationComponent.vue";
+import LoadingComponent from "../../components/LoadingComponent.vue";
 import cartStore from "../../stores/cartStore.js";
 import favoriteStore from "../../stores/favoriteStore.js";
-// import productsStore from "../../stores/productsStore.js";
-import loadingStore from "../../stores/loadingStore.js";
+// import loadingStore from "../../stores/loadingStore.js";
 
 import { mapState, mapActions } from "pinia";
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
@@ -191,6 +188,7 @@ export default {
       selectCategory: "",
       nowCategory: "",
       allProducts: [],
+      isLoading: true,
     };
   },
   methods: {
@@ -201,8 +199,6 @@ export default {
         .then((res) => {
           this.productList = res.data.products;
           this.page = res.data.pagination;
-          console.log(this.page);
-          console.log(res.data);
         })
         .catch((error) => {
           alert(error.data.message);
@@ -229,6 +225,7 @@ export default {
 
     getCategory(category, page = 1) {
       this.isLoading = true;
+      this.$http;
       this.$http
         .get(
           `${VITE_APP_URL}/api/${VITE_APP_PATH}/products?page=${page}&category=${category}`
@@ -239,17 +236,11 @@ export default {
           this.selectCategoryList = res.data.products;
           this.page = res.data.pagination;
           this.nowCategory = this.page.category;
-          console.log(this.nowCategory);
-          console.log(this.page);
-          console.log(this.page.category);
-          console.log(res);
           this.$router.push(`./products?page=${page}&category=${category}`);
+          this.isLoading = false;
         })
         .catch((error) => {
           alert(error.data.message);
-        })
-        .finally(() => {
-          this.isLoading = false;
         });
     },
     ...mapActions(cartStore, ["addToCart"]),
@@ -258,12 +249,10 @@ export default {
       "toggleFavorite",
       "isFavorite",
     ]),
-    // ...mapActions(productsStore, ["getProductList"]),
   },
   computed: {
-    ...mapState(loadingStore, ["isLoading", "loadingItem"]),
+    // ...mapState(loadingStore, ["isLoading", "loadingItem"]),
     ...mapState(favoriteStore, ["myFavoriteList"]),
-    // ...mapState(productsStore, ["sortProducts"]),
     filterProduct() {
       return this.productList.filter((item) => {
         return item.title.match(this.search);
@@ -290,12 +279,11 @@ export default {
   },
   mounted() {
     this.getCategory("", 1);
-    // localStorage.removeItem("myFavoriteId");
-
     this.getAllProducts();
   },
   components: {
     RouterLink,
+    LoadingComponent,
   },
 };
 </script>
