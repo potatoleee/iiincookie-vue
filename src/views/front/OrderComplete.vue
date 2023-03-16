@@ -39,10 +39,11 @@
       <div class="d-flex flex-column flex-lg-row justify-content-center gap-5">
         <RouterLink
           to="/"
-          class="bg-secondary-light border border-dark py-2 px-15 rounded-pill d-inline-block btn"
+          class="bg-secondary-light btn-outline-dark py-2 px-15 rounded-pill d-inline-block btn hover-text-primary hover-border-primary"
         >
           回到首頁
         </RouterLink>
+
         <RouterLink
           to="/products"
           class="py-2 px-15 rounded-pill d-inline-block btn btn-primary text-light"

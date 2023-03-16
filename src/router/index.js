@@ -2,9 +2,13 @@ import { createRouter, createWebHashHistory } from "vue-router";
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
-  linkActiveClass: "active",
+  // linkActiveClass: "active",
   scrollBehavior(to) {
-    if (to.fullPath.match("product") || to.fullPath.match("article")) {
+    if (
+      to.fullPath.match("product") ||
+      to.fullPath.match("article") ||
+      to.fullPath.match("about")
+    ) {
       return {
         top: 0,
       };

@@ -221,15 +221,15 @@
       <img class="logo" src="../assets/images/logo.svg" alt="餅乾生產餡" />
     </RouterLink>
     <div class="d-flex align-items-center gap-5">
-      <div class="position-relative">
-        <i class="bi bi-heart fs-xl fs-md-2xl" @click="toggleFavorites"> </i>
+      <div class="position-relative cursor-pointer" @click="toggleFavorites">
+        <i class="bi bi-heart fs-xl fs-md-2xl"> </i>
         <span
           v-if="myFavoriteList.length > 0"
           class="badge bg-primary text-light position-absolute top-0 start-100 translate-middle"
           >{{ myFavoriteList.length }}</span
         >
       </div>
-      <div class="position-relative" @click="toggleCart">
+      <div class="position-relative cursor-pointer" @click="toggleCart">
         <i class="bi bi-bag fs-xl fs-md-2xl"></i>
         <span
           v-if="totalQty > 0"
