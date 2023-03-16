@@ -7,7 +7,7 @@
     </p>
     <div class="video-content d-flex justify-content-center align-items-center">
       <video
-        @load="videoLoading"
+        @loadedmetadata="videoLoaded"
         id="videoBg"
         class="videoCanvas"
         poster=""
@@ -19,12 +19,6 @@
         <source src="../../assets/video/indexVideo.mp4" type="video/mp4" />
       </video>
       <!-- <p class="vertical-rl">餅乾生產餡，呈現最美味的味。</p> -->
-      <!-- <img
-        class="position-absolute bottom-0"
-        src="../../assets/images/mocha01.jpg"
-        width="300"
-        alt=""
-      /> -->
     </div>
     <p
       class="font-serifTc position-absolute start-20 start-lg-30 top-20 fw-medium letter-spacing-2 text-white fs-base fs-lg-xl lh-lg"
@@ -62,7 +56,7 @@
     <div class="d-flex justify-content-center">
       <RouterLink
         to="/about"
-        class="bg-secondary-light border border-dark py-2 px-17 rounded-pill d-inline-block btn font-english"
+        class="bg-secondary-light py-2 px-17 rounded-pill d-inline-block btn btn-outline-dark hover-text-primary hover-border-primary font-english"
       >
         See More
         <i class="bi bi-arrow-up-right fs-xs ms-2"></i>
@@ -74,8 +68,8 @@
   <div class="my-17">
     <div class="container">
       <div class="mb-13">
-        <p class="fs-7xl font-english fw-light lh-sm">Products</p>
-        <p class="font-serifTc fs-xl fw-medium">商品一覽</p>
+        <p class="fs-6xl fs-md-7xl font-english fw-light lh-sm">Products</p>
+        <p class="font-serifTc fs-lg fs-md-xl fw-medium">商品一覽</p>
       </div>
       <div
         class="row flex-column flex-md-row align-items-end align-items-md-start mb-md-0 pb-17"
@@ -203,8 +197,8 @@
   <div class="bg-secondary py-17">
     <div class="container-fluid p-0">
       <div class="text-center pt-12 pb-10">
-        <p class="font-english fs-7xl">More Products</p>
-        <p class="font-serifTc fs-xl fw-medium">更多商品</p>
+        <p class="font-english fs-5xl fs-md-7xl">More Products</p>
+        <p class="font-serifTc fs-lg fs-md-xl fw-medium">更多商品</p>
       </div>
       <div class="mb-16">
         <swiper
@@ -245,7 +239,7 @@
       <div class="d-flex justify-content-center">
         <RouterLink
           to="/products"
-          class="border border-dark py-2 px-17 rounded-pill d-inline-block btn font-english"
+          class="py-2 px-17 rounded-pill d-inline-block bg-secondary btn btn-outline-dark hover-text-primary hover-border-primary font-english"
         >
           All Products
           <i class="bi bi-arrow-up-right fs-xs ms-2"></i>
@@ -258,12 +252,12 @@
   <div class="container mb-10">
     <div class="d-flex justify-content-between align-items-center my-10">
       <div>
-        <p class="fs-7xl font-english lh-sm">News</p>
-        <p class="fs-xl font-serifTc">最新消息</p>
+        <p class="fs-6xl fs-md-7xl font-english lh-sm">News</p>
+        <p class="fs-lg fs-md-xl font-serifTc">最新消息</p>
       </div>
       <RouterLink
         to="/articles"
-        class="border border-dark py-2 px-17 rounded-pill d-md-inline-block btn font-english d-none"
+        class="py-2 px-17 rounded-pill d-md-inline-block btn bg-secondary-light btn-outline-dark hover-text-primary hover-border-primary font-english d-none"
       >
         All News
         <i class="bi bi-arrow-up-right fs-xs ms-2"></i>
@@ -397,7 +391,6 @@
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
 import { mapState, mapActions } from "pinia";
 import LoadingComponent from "../../components/LoadingComponent.vue";
-
 import cartStore from "../../stores/cartStore.js";
 import { gsap, ScrollTrigger } from "gsap/all";
 gsap.registerPlugin(gsap, ScrollTrigger);
@@ -416,16 +409,25 @@ export default {
       productList: [],
       articlesList: [],
       isLoading: true,
+      isFirstLoad: false,
     };
   },
 
   methods: {
     ...mapActions(cartStore, ["getCartList"]),
     videoLoading() {
-      this.isLoading = false;
+      console.log("影片載入中");
+      this.isLoading = true;
       // setTimeout(() => {
       //   this.isLoading = false;
       // }, 5000);
+    },
+
+    videoLoaded() {
+      console.log("影片載入完畢");
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 8000);
     },
     formatDate(timestamp) {
       const date = new Date(timestamp * 1000);
@@ -464,6 +466,7 @@ export default {
     SwiperSlide,
     LoadingComponent,
   },
+
   mounted() {
     const maskList = gsap.utils.toArray(".mask");
     maskList.forEach((mask) => {
@@ -489,10 +492,7 @@ export default {
     //   width: "100%",
     //   ease: "power3.inOut",
     // });
-    this.getCartList();
-    this.getProductList();
-    this.getArticleList();
-    this.videoLoading();
+
     this.scrollDown = gsap.timeline({
       scrollTrigger: {
         trigger: ".video-wrap",
@@ -535,7 +535,7 @@ export default {
         ease: "ease",
       })
       .to(".videoCanvas", {
-        width: "35vmin",
+        width: "45vmin",
         height: "50vmin",
         duration: 10,
         ease: "ease",
@@ -589,7 +589,13 @@ export default {
         yPercent: "-50",
       }
     );
+    this.getCartList();
+    this.getProductList();
+    this.getArticleList();
+
+    // this.videoLoading();
   },
+
   beforeRouteLeave(to, from, next) {
     // 在離開路由之前，暫停動畫並刪除它
     // 設定一個回到預設狀態的動畫

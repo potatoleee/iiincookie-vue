@@ -1,5 +1,5 @@
 <template>
-  <div class="title py-15">
+  <div class="title my-10 my-lg-15">
     <span
       class="title-sub fs-10xl fw-light font-english text-secondary text-opacity-50 d-block text-end"
       >Complete
@@ -7,7 +7,7 @@
     <h1 class="title-main font-serifTc fw-black fs-xl fs-lg-3xl">訂單完成</h1>
   </div>
   <div class="container mb-8">
-    <ul class="d-flex justify-content-center align-items-center gap-7">
+    <ul class="d-flex justify-content-center align-items-center gap-lg-7 gap-1">
       <li class="text-center">
         <p class="fs-xs fs-lg-sm">Step.1</p>
         <p class="fs-xs fs-lg-sm">購買項目</p>
@@ -31,7 +31,7 @@
   </div>
   <div class="container">
     <div class="text-center">
-      <p class="text-center fs-5xl mb-5">感謝你的支持！</p>
+      <p class="text-center fs-xl fs-lg-5xl mb-5">感謝你的支持！</p>
       <p class="mb-1">
         謝謝你對於本店的支持，我們會盡快將產品寄出讓你品嚐到的 ，希望你會喜歡～
       </p>
@@ -55,7 +55,7 @@
   <div class="container">
     <div class="row my-13">
       <!-- 訂單品項 start -->
-      <div class="col-lg-7 mb-8 mb-lg-0">
+      <div class="col-lg-6 mb-8 mb-lg-0">
         <div class="p-lg-7 rounded-2 shadow-lg-lg">
           <div
             class="d-flex justify-content-between align-items-center pb-4 border-bottom border-dark border-opacity-10"
@@ -105,61 +105,96 @@
       </div>
       <!-- 訂單品項 start -->
       <!-- 訂單資訊 start-->
-      <div class="col-lg-5">
+      <div class="col-lg-6">
         <div class="p-lg-7 rounded-2 shadow-lg-lg">
           <p class="fs-lg pb-4 border-bottom border-dark border-opacity-10">
             訂單資訊
           </p>
-          <table class="table mb-6">
-            <tbody>
-              <tr class="border-dark border-opacity-10">
-                <th class="fw-regular ps-0" width="120">訂單金額：</th>
-                <td class="font-arimo">NT$ {{ orderInfo.total }}</td>
-              </tr>
-              <tr class="border-dark border-opacity-10">
-                <th class="fw-regular ps-0" width="120">訂單編號：</th>
-                <td>
-                  {{ orderInfo.id }}
-                </td>
-              </tr>
-              <tr class="border-dark border-opacity-10">
-                <th class="fw-regular ps-0" width="120">下單時間：</th>
-                <td>
-                  {{ formatDate(orderInfo.create_at) }}
-                </td>
-              </tr>
-              <tr class="border-dark border-opacity-10">
-                <th class="fw-regular ps-0" width="120">寄送地址：</th>
-                <td>
-                  {{ orderUser.address }}
-                </td>
-              </tr>
-              <tr class="border-dark border-opacity-10">
-                <th class="fw-regular ps-0" width="120">顧客姓名：</th>
-                <td>
-                  {{ orderUser.name }}
-                </td>
-              </tr>
-              <tr class="border-dark border-opacity-10">
-                <th class="fw-regular ps-0" width="120">聯絡電話：</th>
-                <td>
-                  {{ orderUser.tel }}
-                </td>
-              </tr>
-              <tr class="border-dark border-opacity-10">
-                <th class="fw-regular ps-0" width="120">電子信箱：</th>
-                <td>
-                  {{ orderUser.email }}
-                </td>
-              </tr>
-              <tr class="border-dark border-opacity-10">
-                <th class="fw-regular ps-0" width="120">備註：</th>
-                <td>
-                  {{ orderInfo.message }}
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <ul class="mb-6">
+            <li
+              class="d-flex ps-0 p-2 border-bottom border-dark border-opacity-20"
+            >
+              <p class="fw-regular d-md-none">
+                訂單金額： NT$ {{ orderInfo.total }}
+              </p>
+              <p class="fw-regular d-none d-md-block col-4">訂單金額：</p>
+              <p class="col d-none d-md-block col">NT$ {{ orderInfo.total }}</p>
+            </li>
+            <li
+              class="d-flex ps-0 p-2 border-bottom border-dark border-opacity-20"
+            >
+              <p class="fw-regular d-md-none">訂單編號： {{ orderInfo.id }}</p>
+              <p class="fw-regular d-none d-md-block col-4">訂單編號：</p>
+              <p class="col d-none d-md-block col">
+                {{ orderInfo.id }}
+              </p>
+            </li>
+            <li
+              class="d-flex ps-0 p-2 border-bottom border-dark border-opacity-20"
+            >
+              <p class="fw-regular d-md-none">
+                下單時間： {{ formatDate(orderInfo.create_at) }}
+              </p>
+              <p class="fw-regular d-none d-md-block col-4">下單時間：</p>
+              <p class="col d-none d-md-block col">
+                {{ formatDate(orderInfo.create_at) }}
+              </p>
+            </li>
+            <li
+              class="d-flex ps-0 p-2 border-bottom border-dark border-opacity-20"
+            >
+              <p class="fw-regular d-md-none">
+                寄送地址： {{ orderUser.address }}
+              </p>
+              <p class="fw-regular d-none d-md-block col-4">寄送地址：</p>
+              <p class="col d-none d-md-block col">
+                {{ orderUser.address }}
+              </p>
+            </li>
+            <li
+              class="d-flex ps-0 p-2 border-bottom border-dark border-opacity-20"
+            >
+              <p class="fw-regular d-md-none">
+                顧客姓名： {{ orderUser.name }}
+              </p>
+              <p class="fw-regular d-none d-md-block col-4">顧客姓名：</p>
+              <p class="col d-none d-md-block col">
+                {{ orderUser.name }}
+              </p>
+            </li>
+            <li
+              class="d-flex ps-0 p-2 border-bottom border-dark border-opacity-20"
+            >
+              <p class="fw-regular d-md-none">聯絡電話： {{ orderUser.tel }}</p>
+
+              <p class="fw-regular d-none d-md-block col-4">聯絡電話：</p>
+              <p class="col d-none d-md-block col">
+                {{ orderUser.tel }}
+              </p>
+            </li>
+            <li
+              class="d-flex ps-0 p-2 border-bottom border-dark border-opacity-20"
+            >
+              <p class="fw-regular d-md-none">
+                電子信箱： {{ orderUser.email }}
+              </p>
+              <p class="fw-regular d-none d-md-block col-4">電子信箱：</p>
+              <p class="col d-none d-md-block col">
+                {{ orderUser.email }}
+              </p>
+            </li>
+            <li
+              class="d-flex ps-0 p-2 border-bottom border-dark border-opacity-20"
+            >
+              <p class="fw-regular d-md-none">
+                客戶備註： {{ orderInfo.message }}
+              </p>
+              <p class="fw-regular d-none d-md-block col-4">客戶備註：</p>
+              <p class="col d-none d-md-block col">
+                {{ orderInfo.message }}
+              </p>
+            </li>
+          </ul>
         </div>
       </div>
       <!-- 訂單資訊 end-->

@@ -1,5 +1,6 @@
 <template>
-  <div class="title py-15">
+  <LoadingComponent :isLoading="isLoading"></LoadingComponent>
+  <div class="title my-10 my-lg-15">
     <span
       class="title-sub fs-10xl fw-light font-english text-secondary text-opacity-50 d-block text-end"
       >Carts
@@ -7,7 +8,7 @@
     <h1 class="title-main font-serifTc fw-black fs-xl fs-lg-3xl">購物車</h1>
   </div>
   <div class="container">
-    <ul class="d-flex justify-content-center align-items-center gap-7">
+    <ul class="d-flex justify-content-center align-items-center gap-lg-7 gap-1">
       <li class="text-center">
         <p class="fs-xs fs-lg-sm">Step.1</p>
         <p class="fs-xs fs-lg-sm">購買項目</p>
@@ -30,7 +31,6 @@
     </ul>
   </div>
   <div class="container">
-    <VueLoading v-model:active="isLoading"></VueLoading>
     <div class="row my-13">
       <!-- 購物車 start -->
       <div class="col-lg-7 mb-8 mb-lg-0">
@@ -174,6 +174,7 @@
 <script>
 import cartStore from "../../stores/cartStore.js";
 import loadingStore from "../../stores/loadingStore.js";
+import LoadingComponent from "../../components/LoadingComponent.vue";
 import { mapActions, mapState } from "pinia";
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
 import { Toast } from "../../utils/toast.js";
@@ -190,7 +191,11 @@ export default {
         message: "",
       },
       orderId: "",
+      isLoading: true,
     };
+  },
+  components: {
+    LoadingComponent,
   },
   methods: {
     ...mapActions(cartStore, ["getCartList"]),
@@ -207,12 +212,12 @@ export default {
         .then((res) => {
           this.$refs.form.resetForm(); //清空表單
           this.orderData.message = "";
-          console.log(res);
           this.orderId = res.data.orderId;
           Toast.fire({
             icon: "success",
             title: `${res.data.message}`,
           });
+          this.isLoading = false;
           this.$router.push(`/pay/${this.orderId}`);
         })
         .catch((error) => {
@@ -229,6 +234,7 @@ export default {
   },
   mounted() {
     this.getCartList();
+    this.isLoading = false;
   },
 };
 </script>

@@ -1,6 +1,6 @@
 <template>
   <LoadingComponent :isLoading="isLoading"></LoadingComponent>
-  <div class="title py-15">
+  <div class="title my-10 my-lg-15">
     <span
       class="title-sub fs-10xl fw-light font-english text-secondary text-opacity-50 d-block text-end"
       >Shopping Cart
@@ -12,15 +12,20 @@
     v-if="totalQty === 0"
   >
     <p class="text-center fs-lg-xl">目前購物車是空的喔！</p>
+
     <RouterLink
       to="/products"
-      class="btn btn-secondary-darker text-light fs-lg-xl py-5"
-      >來去逛逛吧！</RouterLink
+      class="py-2 px-17 rounded-pill d-md-inline-block btn bg-secondary-light btn-outline-dark hover-text-primary hover-border-primary font-english d-none"
     >
+      來去逛逛吧！
+      <i class="bi bi-arrow-up-right fs-xs ms-2"></i>
+    </RouterLink>
   </div>
   <div v-else>
     <div class="container">
-      <ul class="d-flex justify-content-center align-items-center gap-7">
+      <ul
+        class="d-flex justify-content-center align-items-center gap-lg-7 gap-1"
+      >
         <li class="text-center text-primary">
           <p class="fs-xs fs-lg-sm">Step.1</p>
           <p class="fs-xs fs-lg-sm">購買項目</p>

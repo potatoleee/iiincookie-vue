@@ -1,6 +1,6 @@
 <template>
   <VueLoading v-model:active="isLoading"></VueLoading>
-  <div class="title py-lg-15">
+  <div class="title my-10 my-lg-15">
     <span
       class="title-sub fs-10xl fw-light font-english text-secondary text-opacity-50 d-block text-end"
       >About iiin

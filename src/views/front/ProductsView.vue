@@ -1,7 +1,7 @@
 <template>
   <LoadingComponent :isLoading="isLoading"></LoadingComponent>
 
-  <div class="title py-lg-15">
+  <div class="title my-10 my-lg-15">
     <span
       class="title-sub fs-10xl fw-light font-english text-secondary text-opacity-50 d-block text-end"
       >All Products
@@ -224,20 +224,16 @@ export default {
     },
 
     getCategory(category, page = 1) {
-      this.isLoading = true;
       this.$http;
       this.$http
         .get(
           `${VITE_APP_URL}/api/${VITE_APP_PATH}/products?page=${page}&category=${category}`
         )
         .then((res) => {
-          console.log("相似類別全部", res.data.products);
-
           this.selectCategoryList = res.data.products;
           this.page = res.data.pagination;
           this.nowCategory = this.page.category;
           this.$router.push(`./products?page=${page}&category=${category}`);
-          this.isLoading = false;
         })
         .catch((error) => {
           alert(error.data.message);
