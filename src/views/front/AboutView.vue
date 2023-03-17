@@ -11,7 +11,7 @@
   <div class="container mb-17">
     <div class="row justify-content-end mb-12 mb-md-0">
       <div class="col-12 col-lg-5 d-flex flex-row gap-10 mb-10">
-        <p class="vertical-rl line letter-spacing-4">品牌由來</p>
+        <p class="vertical-rl lines letter-spacing-4">品牌由來</p>
         <div>
           <h3 class="fs-2xl fs-lg-3xl font-serifTc py-5 py-lg-7">
             品牌的小故事

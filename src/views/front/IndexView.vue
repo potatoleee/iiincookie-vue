@@ -2,33 +2,43 @@
   <LoadingComponent :isLoading="isLoading"></LoadingComponent>
   <!-- 影片區 end-->
   <div class="video-wrap">
-    <p class="vertical-lr scroll-down letter-spacing-4 font-english">
+    <p
+      class="d-none d-md-block vertical-lr scroll-down letter-spacing-4 font-english"
+    >
+      Scroll Down
+    </p>
+    <p class="d-md-none scroll-down-phone letter-spacing-4 font-english">
       Scroll Down
     </p>
     <div class="video-content d-flex justify-content-center align-items-center">
-      <video
-        @loadedmetadata="videoLoaded"
-        id="videoBg"
-        class="videoCanvas"
-        poster=""
-        playsinline
-        autoplay
-        loop
-        muted
-      >
-        <source src="../../assets/video/indexVideo.mp4" type="video/mp4" />
-      </video>
-      <!-- <p class="vertical-rl">餅乾生產餡，呈現最美味的味。</p> -->
+      <div class="position-relative">
+        <p class="position-absolute video-subTitle fs-xl">
+          餅乾生產餡，呈現最驚艷的味。
+        </p>
+
+        <video
+          @loadedmetadata="videoLoaded"
+          id="videoBg"
+          class="videoCanvas"
+          poster=""
+          playsinline
+          autoplay
+          loop
+          muted
+        >
+          <source src="../../assets/video/indexVideo.mp4" type="video/mp4" />
+        </video>
+      </div>
     </div>
     <p
-      class="font-serifTc position-absolute start-20 start-lg-30 top-20 fw-medium letter-spacing-2 text-white fs-base fs-lg-xl lh-lg"
+      class="font-serifTc position-absolute start-50 translate-middle-x top-20 fw-medium letter-spacing-4 text-white fs-base fs-md-2xl lh-lg w-100 d-flex justify-content-center"
     >
       你好，我們是餅乾生產餡，<br />
       致力於製作美味的甜點，<br />
       使每一個味蕾都獲得滿足。
     </p>
     <p
-      class="font-serifTc position-absolute start-20 start-lg-30 top-40 fw-medium letter-spacing-2 text-white fs-base fs-lg-xl lh-lg"
+      class="font-serifTc position-absolute start-50 translate-middle-x top-30 fw-medium letter-spacing-4 text-white fs-base fs-md-2xl lh-lg w-100 d-flex justify-content-center"
     >
       因緣受到朋友委託製作餅乾，<br />
       因此挑戰了很想嘗試的鐵盒餅乾，<br />
@@ -36,22 +46,25 @@
       鼓勵我讓更多人也能品嚐得到。<br />
     </p>
     <p
-      class="font-serifTc position-absolute start-20 start-lg-30 top-60 fw-medium letter-spacing-2 text-white fs-base fs-lg-xl lh-lg"
+      class="font-serifTc position-absolute start-50 translate-middle-x top-40 fw-medium letter-spacing-4 text-white fs-base fs-md-2xl lh-lg w-100 d-flex justify-content-center"
     >
       便誤打誤撞開始生產餡這個品牌 <br />
       從沒想過餅乾會成為另一份事業<br />
       人生就是這麼奇妙吧！
     </p>
     <p
-      class="font-serifTc position-absolute start-20 start-lg-30 top-80 fw-medium letter-spacing-2 text-white fs-base fs-lg-xl lh-lg"
+      class="font-serifTc position-absolute start-50 translate-middle-x top-60 fw-medium letter-spacing-4 text-white fs-xl fs-md-7xl lh-lg text-secondary-light w-100 d-flex justify-content-center"
     >
-      透過香甜的滋味， <br />
-      幸福你的每一時刻！<br />
+      餅乾生產餡 <br />
+      製造最驚豔的味！<br />
     </p>
   </div>
   <!-- 影片區 end-->
   <!-- about start-->
-  <div class="container mb-17">
+  <div class="container mb-17 index-About">
+    <p class="fs-6xl fs-md-7xl font-english fw-light lh-sm text-center mb-17">
+      About iiin
+    </p>
     <p class="fs-2xl font-serifTc text-center mb-9">更多有關於我們的故事</p>
     <div class="d-flex justify-content-center">
       <RouterLink
@@ -75,10 +88,11 @@
         class="row flex-column flex-md-row align-items-end align-items-md-start mb-md-0 pb-17"
       >
         <div class="col-12 col-md-5 d-flex gap-10 mb-10">
-          <p class="vertical-rl line letter-spacing-4">招牌商品</p>
+          <p class="vertical-rl lines letter-spacing-4">招牌商品</p>
           <div>
             <h3
-              class="fs-2xl fs-lg-3xl font-serifTc py-5 py-lg-7 letter-spacing-2"
+              class="fs-2xl fs-lg-3xl font-serifTc py-5 py-lg-7 letter-spacing-2 clip-path"
+              ref="myText1"
             >
               夾餡系列餅乾
             </h3>
@@ -125,9 +139,12 @@
           class="row flex-column flex-md-row align-items-end align-items-md-start mb-12 mb-md-0"
         >
           <div class="col-12 col-md-5 d-flex gap-10 mb-10">
-            <p class="vertical-rl line letter-spacing-4">季節商品</p>
+            <p class="vertical-rl lines letter-spacing-4">季節商品</p>
             <div>
-              <h3 class="fs-2xl fs-lg-3xl font-serifTc py-5 py-lg-7">
+              <h3
+                class="fs-2xl fs-lg-3xl font-serifTc py-5 py-lg-7 clip-path"
+                ref="myText2"
+              >
                 綜合鐵盒餅乾
               </h3>
               <p>
@@ -155,7 +172,7 @@
         class="row flex-column flex-md-row-reverse align-items-start mb-12 mb-md-0"
       >
         <div class="col-12 col-md-5 d-flex flex-row-reverse gap-10 mb-10">
-          <p class="vertical-rl line letter-spacing-4">特色商品</p>
+          <p class="vertical-rl lines letter-spacing-4">特色商品</p>
           <div>
             <h3 class="fs-2xl fs-lg-3xl font-serifTc py-5 py-lg-7">
               大人味焦糖布丁
@@ -340,12 +357,17 @@
 .videoCanvas {
   width: 45em;
   height: 45em;
+  // width: 80vw;
+  // height: 45vh;
   object-fit: cover;
-  position: absolute;
   @include phone {
     width: 80vw;
     height: 80vh;
   }
+}
+.video-subTitle {
+  top: -30px;
+  width: 100%;
 }
 .scroll-down {
   position: fixed;
@@ -384,6 +406,47 @@
       top: 120%;
     }
   }
+  &-phone {
+    position: fixed;
+    right: 4vw;
+    bottom: 1.25vw;
+    &::before {
+      position: absolute;
+      content: "";
+      width: 1px;
+      height: 150%;
+      background-color: $secondary;
+      right: -2px;
+      top: 0;
+    }
+    &::after {
+      animation: scrollDown 2s ease-in-out infinite;
+      position: absolute;
+      content: "";
+      width: 1px;
+      height: 0%;
+      background-color: $secondary-darker;
+      right: -2px;
+      top: 0;
+    }
+    @keyframes scrollDown {
+      0% {
+        height: 0%;
+        top: 0%;
+      }
+      50% {
+        height: 100%;
+        top: 0%;
+      }
+      100% {
+        height: 100%;
+        top: 120%;
+      }
+    }
+  }
+}
+.index-About {
+  transform: translateY(-130%);
 }
 </style>
 
@@ -397,6 +460,7 @@ gsap.registerPlugin(gsap, ScrollTrigger);
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Autoplay } from "swiper";
 import { Toast } from "../../utils/toast.js";
+import SplitType from "split-type";
 import "swiper/css";
 // ScrollTrigger.defaults({
 //   markers: true,
@@ -468,39 +532,96 @@ export default {
   },
 
   mounted() {
+    ScrollTrigger.refresh();
+    const myText1 = this.$refs.myText1;
+    const myText2 = this.$refs.myText2;
+    // new SplitType(myText1);
+    // new SplitType(myText2);
+    // 使用 Vue 的生命周期钩子确保 DOM 元素已经渲染完毕
+    this.$nextTick(() => {
+      new SplitType(myText1);
+      new SplitType(myText2);
+      gsap.registerPlugin(ScrollTrigger);
+      const lineList = gsap.utils.toArray(".line");
+      console.log(lineList);
+      gsap.utils.toArray(".line").forEach((line) => {
+        gsap.to(".char", {
+          scrollTrigger: {
+            trigger: line,
+            start: "50px bottom",
+            end: "bottom top",
+            markers: true,
+          },
+          y: 0,
+          stagger: 0.05,
+          delay: 0.2,
+          duration: 0.1,
+        });
+      });
+    });
+    // gsap.to(".char", {
+    //   scrollTrigger: {
+    //     trigger: "myText2",
+    //     start: "top bottom",
+    //     markers: true,
+    //   },
+    //   y: 0,
+    //   stagger: 0.05, //延遲每個字母出現
+    //   delay: 0.2,
+    //   duration: 0.1,
+    // });
     const maskList = gsap.utils.toArray(".mask");
-    maskList.forEach((mask) => {
-      gsap.from(mask.querySelector(".mask-bg"), {
+    const maskBgElements = document.querySelectorAll(".mask-bg");
+    const maskBgArray = gsap.utils.toArray(maskBgElements);
+    console.log(maskList);
+    maskBgArray.forEach((element) => {
+      gsap.to(element, {
         scrollTrigger: {
-          trigger: mask,
+          trigger: element,
           start: "top bottom",
-          // markers: true,
+          markers: true,
           refreshPositions: true,
         },
         duration: 1,
-        width: "100%",
+        width: "0%",
         ease: "power3.inOut",
       });
     });
-    // gsap.from(".mask-bg", {
-    //   scrollTrigger: {
-    //     trigger: ".mask-bg",
-    //     start: "50px bottom",
-    //     markers: true,
-    //   },
-    //   duration: 1,
-    //   width: "100%",
-    //   ease: "power3.inOut",
-    // });
 
+    gsap.to(".video-subTitle", {
+      scrollTrigger: {
+        trigger: ".videoCanvas",
+        // trigger element - viewport
+        start: "top top",
+        end: "bottom top",
+        scrub: true,
+      },
+      opacity: 0,
+      height: 0,
+      width: 0,
+      duration: 1,
+    });
     this.scrollDown = gsap.timeline({
       scrollTrigger: {
         trigger: ".video-wrap",
-        start: "bottom bottom",
+        start: "bottom-=500 bottom",
+        markers: true,
         scrub: true,
       },
     });
     this.scrollDown.to(".scroll-down", {
+      opacity: 0,
+      x: 100,
+    });
+
+    this.scrollDown = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".video-wrap",
+        start: "bottom-=500 bottom",
+        scrub: true,
+      },
+    });
+    this.scrollDown.to(".scroll-down-phone", {
       opacity: 0,
       x: 100,
     });
@@ -514,24 +635,32 @@ export default {
         scrub: true,
       },
     });
-
+    const mediaQuery = window.matchMedia("(max-width: 767px)");
     this.videoMotion
       .to(".videoCanvas", {
-        width: "90vw",
+        // width: "90vw",
+        width: mediaQuery.matches ? "100vw" : "90vw", // 如果是手機版則使用100vw，否則使
         height: "75vh",
-        duration: 10,
-        ease: "ease",
+        duration: 2,
+        ease: "cubic-bezier(.5, .1, .2, 1)",
       })
       .to(".videoCanvas", {
-        width: "90vw",
+        // width: "90vw",
+        width: mediaQuery.matches ? "100vw" : "90vw", // 如果是手機版則使用100vw，否則使用90vw
         height: "75vh",
         duration: 40,
+        ease: "none",
+      })
+      .to(".videoCanvas", {
+        width: "100vw",
+        height: "100vh",
+        duration: 5,
         ease: "ease",
       })
       .to(".videoCanvas", {
         width: "100vw",
         height: "100vh",
-        duration: 30,
+        duration: 20,
         ease: "ease",
       })
       .to(".videoCanvas", {
@@ -592,7 +721,6 @@ export default {
     this.getCartList();
     this.getProductList();
     this.getArticleList();
-
     // this.videoLoading();
   },
 
