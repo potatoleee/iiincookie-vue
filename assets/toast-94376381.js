@@ -1,1 +1,0 @@
-import{S as e}from"./sweetalert2-761b07dd.js";const r=e.mixin({toast:!0,position:"top-end",showConfirmButton:!1,timer:1400,background:"#ECE9E3",color:"#594637",iconColor:"#594637",timerProgressBar:!1,didOpen:o=>{o.addEventListener("mouseenter",e.stopTimer),o.addEventListener("mouseleave",e.resumeTimer)},customClass:{popup:"swal-custom"}});export{r as T};
