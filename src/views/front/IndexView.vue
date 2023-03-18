@@ -245,11 +245,7 @@
           class="swiper-index"
         >
           <swiper-slide v-for="product in productList" :key="product.id">
-            <RouterLink
-              :to="`/product/${product.id}`"
-              class="mb-7 imgHover mask"
-            >
-              <div class="mask-bg"></div>
+            <RouterLink :to="`/product/${product.id}`" class="mb-7 imgHover">
               <img :src="product.imageUrl" alt="" />
             </RouterLink>
             <p class="fw-medium mb-2 font-serifTc">{{ product.title }}</p>
@@ -465,6 +461,7 @@ import { mapState, mapActions } from "pinia";
 import LoadingComponent from "../../components/LoadingComponent.vue";
 import cartStore from "../../stores/cartStore.js";
 import { gsap, ScrollTrigger } from "gsap/all";
+gsap.registerPlugin(SplitType, ScrollTrigger);
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Autoplay } from "swiper";
 import { Toast } from "../../utils/toast.js";
@@ -540,8 +537,8 @@ export default {
   },
 
   mounted() {
-    gsap.registerPlugin(SplitType, ScrollTrigger);
-    ScrollTrigger.refresh();
+    // ScrollTrigger.refresh();
+
     const myText1 = this.$refs.myText1;
     const myText2 = this.$refs.myText2;
     const myText3 = this.$refs.myText3;
@@ -558,6 +555,7 @@ export default {
           scrollTrigger: {
             trigger: element,
             start: "top bottom",
+            end: "bottom top",
             markers: true,
             refreshPositions: true,
           },

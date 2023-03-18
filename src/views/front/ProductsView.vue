@@ -49,7 +49,11 @@
             :key="product.id"
           >
             <div class="position-relative">
-              <RouterLink :to="`/product/${product.id}`" class="mb-6 imgHover">
+              <RouterLink
+                :to="`/product/${product.id}`"
+                class="mb-6 imgHover mask"
+              >
+                <div class="mask-bg"></div>
                 <img :src="product.imageUrl" alt="" />
               </RouterLink>
               <div class="position-absolute z-2 end-4n top-4n">
@@ -174,6 +178,9 @@ import { RouterLink } from "vue-router"; // import PaginationComponent from "../
 import LoadingComponent from "../../components/LoadingComponent.vue";
 import cartStore from "../../stores/cartStore.js";
 import favoriteStore from "../../stores/favoriteStore.js";
+import { gsap, ScrollTrigger } from "gsap/all";
+gsap.registerPlugin(gsap, SplitType, ScrollTrigger);
+import SplitType from "split-type";
 // import loadingStore from "../../stores/loadingStore.js";
 
 import { mapState, mapActions } from "pinia";
@@ -274,6 +281,16 @@ export default {
     },
   },
   mounted() {
+    this.$nextTick(() => {
+      const maskBgElements = document.querySelectorAll(".mask-bg");
+      maskBgElements.forEach((element) => {
+        gsap.to(element, {
+          duration: 1,
+          width: "0%",
+          ease: "power3.inOut",
+        });
+      });
+    });
     this.getCategory("", 1);
     this.getAllProducts();
   },
