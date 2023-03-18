@@ -235,7 +235,6 @@ import LoadingComponent from "../../components/LoadingComponent.vue";
 // Import Swiper styles
 import "swiper/css";
 
-import { RouterLink } from "vue-router";
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
 import cartStore from "../../stores/cartStore.js";
 import favoriteStore from "../../stores/favoriteStore.js";
@@ -256,7 +255,6 @@ export default {
   components: {
     Swiper,
     SwiperSlide,
-    RouterLink,
     LoadingComponent,
   },
   methods: {

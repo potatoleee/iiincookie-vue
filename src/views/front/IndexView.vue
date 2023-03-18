@@ -245,7 +245,11 @@
           class="swiper-index"
         >
           <swiper-slide v-for="product in productList" :key="product.id">
-            <RouterLink :to="`/product/${product.id}`" class="mb-7 imgHover">
+            <RouterLink
+              :to="`/product/${product.id}`"
+              class="mb-7 imgHover mask"
+            >
+              <div class="mask-bg"></div>
               <img :src="product.imageUrl" alt="" />
             </RouterLink>
             <p class="fw-medium mb-2 font-serifTc">{{ product.title }}</p>
@@ -542,20 +546,14 @@ export default {
     const myText2 = this.$refs.myText2;
     const myText3 = this.$refs.myText3;
     const myText4 = this.$refs.myText4;
-    // new SplitType(myText1);
-    // new SplitType(myText2);
-    // 使用 Vue 的生命周期钩子确保 DOM 元素已经渲染完毕
 
     new SplitType(myText1);
     new SplitType(myText2);
     new SplitType(myText3);
     new SplitType(myText4);
     this.$nextTick(() => {
-      const maskList = gsap.utils.toArray(".mask");
       const maskBgElements = document.querySelectorAll(".mask-bg");
-      const maskBgArray = gsap.utils.toArray(maskBgElements);
-      console.log(maskList);
-      maskBgArray.forEach((element) => {
+      maskBgElements.forEach((element) => {
         gsap.to(element, {
           scrollTrigger: {
             trigger: element,
@@ -610,34 +608,6 @@ export default {
         duration: 0.1,
       });
     });
-    // const lineList = gsap.utils.toArray(".line");
-    // console.log(lineList);
-    // gsap.utils.toArray(".line").forEach((line) => {
-    //   gsap.to(".char", {
-    //     scrollTrigger: {
-    //       trigger: line,
-    //       start: "50px bottom",
-    //       end: "bottom top",
-    //       markers: true,
-    //     },
-    //     y: 0,
-    //     stagger: 0.05,
-    //     delay: 0.2,
-    //     duration: 0.1,
-    //   });
-    // });
-
-    // gsap.to(".char", {
-    //   scrollTrigger: {
-    //     trigger: "myText2",
-    //     start: "top bottom",
-    //     markers: true,
-    //   },
-    //   y: 0,
-    //   stagger: 0.05, //延遲每個字母出現
-    //   delay: 0.2,
-    //   duration: 0.1,
-    // });
 
     gsap.to(".video-subTitle", {
       scrollTrigger: {
@@ -721,26 +691,6 @@ export default {
         ease: "ease",
       });
 
-    // this.logoTop = gsap
-    //   .timeline({
-    //     scrollTrigger: {
-    //       trigger: ".videoCanvas",
-    //       // trigger element - viewport
-    //       start: "top top",
-    //       end: "bottom top",
-    //       scrub: true,
-    //     },
-    //   })
-    //   .from(".logo", {
-    //     width: "80%",
-    //     // scale: 5,
-    //     xPercent: "-50",
-    //     y: "70vh",
-    //     duration: 2,
-    //     opacity: 0.6,
-    //     ease: "ease",
-    //   });
-
     this.logoTop = gsap.timeline({
       scrollTrigger: {
         trigger: ".videoCanvas",
@@ -775,7 +725,7 @@ export default {
     // this.videoLoading();
   },
   updated() {
-    ScrollTrigger.refresh();
+    ScrollTrigger.refresh(); //必須要加這個trigger才會正確
   },
 
   beforeRouteLeave(to, from, next) {
