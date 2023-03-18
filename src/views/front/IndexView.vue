@@ -12,8 +12,8 @@
     </p>
     <div class="video-content d-flex justify-content-center align-items-center">
       <div class="position-relative">
-        <p class="position-absolute video-subTitle fs-xl">
-          餅乾生產餡，呈現最驚艷的味。
+        <p class="position-absolute video-subTitle fs-xl font-serifTc">
+          人生很難了，來一塊甜的吧！
         </p>
 
         <video
@@ -91,7 +91,7 @@
           <p class="vertical-rl lines letter-spacing-4">招牌商品</p>
           <div>
             <h3
-              class="fs-2xl fs-lg-3xl font-serifTc py-5 py-lg-7 letter-spacing-2 clip-path"
+              class="fs-2xl fs-lg-3xl font-serifTc py-5 py-lg-7 letter-spacing-2 clip-path split-text"
               ref="myText1"
             >
               夾餡系列餅乾
@@ -142,7 +142,7 @@
             <p class="vertical-rl lines letter-spacing-4">季節商品</p>
             <div>
               <h3
-                class="fs-2xl fs-lg-3xl font-serifTc py-5 py-lg-7 clip-path"
+                class="fs-2xl fs-lg-3xl font-serifTc py-5 py-lg-7 clip-path split-text"
                 ref="myText2"
               >
                 綜合鐵盒餅乾
@@ -174,7 +174,10 @@
         <div class="col-12 col-md-5 d-flex flex-row-reverse gap-10 mb-10">
           <p class="vertical-rl lines letter-spacing-4">特色商品</p>
           <div>
-            <h3 class="fs-2xl fs-lg-3xl font-serifTc py-5 py-lg-7">
+            <h3
+              class="fs-2xl fs-lg-3xl font-serifTc py-5 py-lg-7 clip-path split-text"
+              ref="myText3"
+            >
               大人味焦糖布丁
             </h3>
             <p>
@@ -214,7 +217,9 @@
   <div class="bg-secondary py-17">
     <div class="container-fluid p-0">
       <div class="text-center pt-12 pb-10">
-        <p class="font-english fs-5xl fs-md-7xl">More Products</p>
+        <p class="font-english fs-5xl fs-md-7xl clip-path" ref="myText4">
+          More Products
+        </p>
         <p class="font-serifTc fs-lg fs-md-xl fw-medium">更多商品</p>
       </div>
       <div class="mb-16">
@@ -456,7 +461,6 @@ import { mapState, mapActions } from "pinia";
 import LoadingComponent from "../../components/LoadingComponent.vue";
 import cartStore from "../../stores/cartStore.js";
 import { gsap, ScrollTrigger } from "gsap/all";
-gsap.registerPlugin(gsap, ScrollTrigger);
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Autoplay } from "swiper";
 import { Toast } from "../../utils/toast.js";
@@ -532,33 +536,97 @@ export default {
   },
 
   mounted() {
+    gsap.registerPlugin(SplitType, ScrollTrigger);
     ScrollTrigger.refresh();
     const myText1 = this.$refs.myText1;
     const myText2 = this.$refs.myText2;
+    const myText3 = this.$refs.myText3;
+    const myText4 = this.$refs.myText4;
     // new SplitType(myText1);
     // new SplitType(myText2);
     // 使用 Vue 的生命周期钩子确保 DOM 元素已经渲染完毕
+
+    new SplitType(myText1);
+    new SplitType(myText2);
+    new SplitType(myText3);
+    new SplitType(myText4);
     this.$nextTick(() => {
-      new SplitType(myText1);
-      new SplitType(myText2);
-      gsap.registerPlugin(ScrollTrigger);
-      const lineList = gsap.utils.toArray(".line");
-      console.log(lineList);
-      gsap.utils.toArray(".line").forEach((line) => {
-        gsap.to(".char", {
+      const maskList = gsap.utils.toArray(".mask");
+      const maskBgElements = document.querySelectorAll(".mask-bg");
+      const maskBgArray = gsap.utils.toArray(maskBgElements);
+      console.log(maskList);
+      maskBgArray.forEach((element) => {
+        gsap.to(element, {
           scrollTrigger: {
-            trigger: line,
-            start: "50px bottom",
-            end: "bottom top",
+            trigger: element,
+            start: "top bottom",
             markers: true,
+            refreshPositions: true,
           },
-          y: 0,
-          stagger: 0.05,
-          delay: 0.2,
-          duration: 0.1,
+          duration: 1,
+          width: "0%",
+          ease: "power3.inOut",
         });
       });
+      gsap.to(myText1.querySelectorAll(".char"), {
+        scrollTrigger: {
+          trigger: myText1,
+          start: "bottom bottom",
+        },
+        y: 0,
+        stagger: 0.05,
+        delay: 0.2,
+        duration: 0.1,
+      });
+      gsap.to(myText2.querySelectorAll(".char"), {
+        scrollTrigger: {
+          trigger: myText2,
+          start: "bottom bottom",
+        },
+        y: 0,
+        stagger: 0.05,
+        delay: 0.2,
+        duration: 0.1,
+      });
+      gsap.to(myText3.querySelectorAll(".char"), {
+        scrollTrigger: {
+          trigger: myText3,
+          start: "bottom bottom",
+        },
+        y: 0,
+        stagger: 0.05,
+        delay: 0.2,
+        duration: 0.1,
+      });
+      gsap.to(myText4.querySelectorAll(".char"), {
+        scrollTrigger: {
+          trigger: myText4,
+          markers: true,
+          start: "bottom bottom",
+        },
+        y: 0,
+        stagger: 0.05,
+        delay: 0.2,
+        duration: 0.1,
+      });
     });
+    // const lineList = gsap.utils.toArray(".line");
+    // console.log(lineList);
+    // gsap.utils.toArray(".line").forEach((line) => {
+    //   gsap.to(".char", {
+    //     scrollTrigger: {
+    //       trigger: line,
+    //       start: "50px bottom",
+    //       end: "bottom top",
+    //       markers: true,
+    //     },
+    //     y: 0,
+    //     stagger: 0.05,
+    //     delay: 0.2,
+    //     duration: 0.1,
+    //   });
+    // });
+
     // gsap.to(".char", {
     //   scrollTrigger: {
     //     trigger: "myText2",
@@ -570,23 +638,6 @@ export default {
     //   delay: 0.2,
     //   duration: 0.1,
     // });
-    const maskList = gsap.utils.toArray(".mask");
-    const maskBgElements = document.querySelectorAll(".mask-bg");
-    const maskBgArray = gsap.utils.toArray(maskBgElements);
-    console.log(maskList);
-    maskBgArray.forEach((element) => {
-      gsap.to(element, {
-        scrollTrigger: {
-          trigger: element,
-          start: "top bottom",
-          markers: true,
-          refreshPositions: true,
-        },
-        duration: 1,
-        width: "0%",
-        ease: "power3.inOut",
-      });
-    });
 
     gsap.to(".video-subTitle", {
       scrollTrigger: {
@@ -605,7 +656,7 @@ export default {
       scrollTrigger: {
         trigger: ".video-wrap",
         start: "bottom-=500 bottom",
-        markers: true,
+
         scrub: true,
       },
     });
@@ -722,6 +773,9 @@ export default {
     this.getProductList();
     this.getArticleList();
     // this.videoLoading();
+  },
+  updated() {
+    ScrollTrigger.refresh();
   },
 
   beforeRouteLeave(to, from, next) {
