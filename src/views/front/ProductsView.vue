@@ -6,7 +6,12 @@
       class="title-sub fs-10xl fw-light font-english text-secondary text-opacity-50 d-block text-end"
       >All Products
     </span>
-    <h1 class="title-main font-serifTc fw-black fs-xl fs-lg-3xl">商品ㄧ覽</h1>
+    <h1
+      class="title-main font-serifTc fw-black fs-xl fs-lg-3xl clip-path"
+      ref="myTextAllProducts"
+    >
+      商品ㄧ覽
+    </h1>
   </div>
 
   <div class="container">
@@ -49,11 +54,7 @@
             :key="product.id"
           >
             <div class="position-relative">
-              <RouterLink
-                :to="`/product/${product.id}`"
-                class="mb-6 imgHover mask"
-              >
-                <div class="mask-bg"></div>
+              <RouterLink :to="`/product/${product.id}`" class="mb-6 imgHover">
                 <img :src="product.imageUrl" alt="" />
               </RouterLink>
               <div class="position-absolute z-2 end-4n top-4n">
@@ -179,7 +180,7 @@ import LoadingComponent from "../../components/LoadingComponent.vue";
 import cartStore from "../../stores/cartStore.js";
 import favoriteStore from "../../stores/favoriteStore.js";
 import { gsap, ScrollTrigger } from "gsap/all";
-gsap.registerPlugin(gsap, SplitType, ScrollTrigger);
+gsap.registerPlugin(SplitType, ScrollTrigger);
 import SplitType from "split-type";
 // import loadingStore from "../../stores/loadingStore.js";
 
@@ -281,18 +282,31 @@ export default {
     },
   },
   mounted() {
-    this.$nextTick(() => {
-      const maskBgElements = document.querySelectorAll(".mask-bg");
-      maskBgElements.forEach((element) => {
-        gsap.to(element, {
-          duration: 1,
-          width: "0%",
-          ease: "power3.inOut",
-        });
-      });
-    });
     this.getCategory("", 1);
     this.getAllProducts();
+    const myTextAllProducts = this.$refs.myTextAllProducts;
+    new SplitType(myTextAllProducts);
+    myTextAllProducts.querySelectorAll(".line").forEach((line) => {
+      line.style.textAlign = "end";
+    });
+
+    this.$nextTick(() => {
+      gsap.to(myTextAllProducts.querySelectorAll(".char"), {
+        y: 0,
+        stagger: 0.05,
+        delay: 1,
+        duration: 0.2,
+      });
+      const maskBgElements = document.querySelectorAll(".mask-bg");
+      gsap.to(maskBgElements, {
+        duration: 1,
+        width: "0%",
+        ease: "power3.inOut",
+      });
+    });
+  },
+  updated() {
+    ScrollTrigger.refresh(); //必須要加這個trigger才會正確
   },
   components: {
     RouterLink,

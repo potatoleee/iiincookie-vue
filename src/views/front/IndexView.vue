@@ -12,7 +12,7 @@
     </p>
     <div class="video-content d-flex justify-content-center align-items-center">
       <div class="position-relative">
-        <p class="position-absolute video-subTitle fs-xl font-serifTc">
+        <p class="position-absolute video-subTitle fs-sm fs-lg-xl font-serifTc">
           人生很難了，來一塊甜的吧！
         </p>
 
@@ -91,7 +91,7 @@
           <p class="vertical-rl lines letter-spacing-4">招牌商品</p>
           <div>
             <h3
-              class="fs-2xl fs-lg-3xl font-serifTc py-5 py-lg-7 letter-spacing-2 clip-path split-text"
+              class="fs-2xl fs-lg-3xl font-serifTc py-5 py-lg-7 letter-spacing-2 clip-path"
               ref="myText1"
             >
               夾餡系列餅乾
@@ -142,7 +142,7 @@
             <p class="vertical-rl lines letter-spacing-4">季節商品</p>
             <div>
               <h3
-                class="fs-2xl fs-lg-3xl font-serifTc py-5 py-lg-7 clip-path split-text"
+                class="fs-2xl fs-lg-3xl font-serifTc py-5 py-lg-7 clip-path"
                 ref="myText2"
               >
                 綜合鐵盒餅乾
@@ -175,7 +175,7 @@
           <p class="vertical-rl lines letter-spacing-4">特色商品</p>
           <div>
             <h3
-              class="fs-2xl fs-lg-3xl font-serifTc py-5 py-lg-7 clip-path split-text"
+              class="fs-2xl fs-lg-3xl font-serifTc py-5 py-lg-7 clip-path"
               ref="myText3"
             >
               大人味焦糖布丁
@@ -372,7 +372,7 @@
 }
 .video-subTitle {
   top: -30px;
-  width: 100%;
+  // width: 100%;
 }
 .scroll-down {
   position: fixed;
@@ -617,8 +617,8 @@ export default {
       },
       opacity: 0,
       height: 0,
-      width: 0,
-      duration: 1,
+
+      duration: 0.1,
     });
     this.scrollDown = gsap.timeline({
       scrollTrigger: {
