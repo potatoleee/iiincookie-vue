@@ -176,14 +176,12 @@
 </style>
 
 <script>
-import { RouterLink } from "vue-router"; // import PaginationComponent from "../../components/PaginationComponent.vue";
 import LoadingComponent from "../../components/LoadingComponent.vue";
 import cartStore from "../../stores/cartStore.js";
 import favoriteStore from "../../stores/favoriteStore.js";
 import { gsap, ScrollTrigger } from "gsap/all";
 import SplitType from "split-type";
 gsap.registerPlugin(SplitType, ScrollTrigger);
-
 import { mapState, mapActions } from "pinia";
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
 
@@ -196,7 +194,7 @@ export default {
       selectCategory: "",
       nowCategory: "",
       allProducts: [],
-      isLoading: true,
+      isLoading: false,
       loadingItem: "",
     };
   },
@@ -208,12 +206,10 @@ export default {
         .then((res) => {
           this.productList = res.data.products;
           this.page = res.data.pagination;
+          this.isLoading = false;
         })
         .catch((error) => {
           alert(error.data.message);
-        })
-        .finally(() => {
-          this.isLoading = false;
         });
     },
     getAllProducts() {
@@ -221,19 +217,15 @@ export default {
       this.$http
         .get(`${VITE_APP_URL}/api/${VITE_APP_PATH}/products/all`)
         .then((res) => {
-          console.log(res.data.products);
           this.allProducts = res.data.products;
+          this.isLoading = false;
         })
         .catch((error) => {
           alert(error.data.message);
-        })
-        .finally(() => {
-          this.isLoading = false;
         });
     },
 
     getCategory(category, page = 1) {
-      this.$http;
       this.$http
         .get(
           `${VITE_APP_URL}/api/${VITE_APP_PATH}/products?page=${page}&category=${category}`
@@ -256,7 +248,6 @@ export default {
     ]),
   },
   computed: {
-    // ...mapState(loadingStore, ["isLoading", "loadingItem"]),
     ...mapState(favoriteStore, ["myFavoriteList"]),
     filterProduct() {
       return this.productList.filter((item) => {
@@ -337,7 +328,6 @@ export default {
     ScrollTrigger.refresh(); //必須要加這個trigger才會正確
   },
   components: {
-    RouterLink,
     LoadingComponent,
   },
 };

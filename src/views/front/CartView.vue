@@ -221,7 +221,6 @@ export default {
       this.$http
         .post(`${VITE_APP_URL}/api/${VITE_APP_PATH}/coupon`, { data })
         .then((res) => {
-          console.log(res);
           Toast.fire({
             icon: "success",
             title: `${res.data.message}`,

@@ -148,10 +148,8 @@ export default {
       this.$http
         .get(`${VITE_APP_URL}/api/${VITE_APP_PATH}/article/${id}`)
         .then((res) => {
-          console.log(res.data.article);
           this.article = res.data.article;
           this.articleContent = res.data.article.content;
-          console.log(this.articleContent);
         });
     },
     getArticleList() {
@@ -159,7 +157,6 @@ export default {
       this.$http
         .get(`${VITE_APP_URL}/api/${VITE_APP_PATH}/articles`)
         .then((res) => {
-          console.log(res.data.articles);
           this.articlesList = res.data.articles;
           this.isLoading = false;
         })

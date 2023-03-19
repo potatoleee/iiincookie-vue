@@ -580,6 +580,7 @@ export default {
       deleteAllModalFavorites: null,
       deleteAllModalCart: null,
       paddingRight: 0,
+      loadingItem: "",
     };
   },
   components: {

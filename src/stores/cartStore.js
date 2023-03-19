@@ -43,7 +43,6 @@ const cartStore = defineStore("cartStore", {
         .then((res) => {
           this.totalQty = 0;
           this.cartList = res.data.data;
-          console.log(this.cartList);
           this.cartList.carts.forEach((item) => {
             this.totalQty += item.qty;
           });
@@ -66,8 +65,7 @@ const cartStore = defineStore("cartStore", {
         .put(`${VITE_APP_URL}/api/${VITE_APP_PATH}/cart/${cartItem.id}`, {
           data,
         }) //{data:data}同名可以縮寫
-        .then((res) => {
-          console.log(res);
+        .then(() => {
           this.getCartList();
           loading.loadingItem = "";
         })
@@ -85,8 +83,7 @@ const cartStore = defineStore("cartStore", {
         .put(`${VITE_APP_URL}/api/${VITE_APP_PATH}/cart/${cartItem.id}`, {
           data,
         }) //{data:data}同名可以縮寫
-        .then((res) => {
-          console.log(res);
+        .then(() => {
           this.getCartList();
           loading.loadingItem = "";
         })
@@ -104,8 +101,7 @@ const cartStore = defineStore("cartStore", {
         .put(`${VITE_APP_URL}/api/${VITE_APP_PATH}/cart/${cartItem.id}`, {
           data,
         }) //{data:data}同名可以縮寫
-        .then((res) => {
-          console.log(res);
+        .then(() => {
           this.getCartList();
           loading.loadingItem = "";
         })

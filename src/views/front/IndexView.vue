@@ -504,7 +504,6 @@ export default {
       productList: [],
       articlesList: [],
       isLoading: true,
-      isFirstLoad: false,
     };
   },
 
@@ -520,9 +519,7 @@ export default {
 
     videoLoaded() {
       console.log("影片載入完畢");
-      setTimeout(() => {
-        this.isLoading = false;
-      }, 8000);
+      this.isLoading = false;
     },
     formatDate(timestamp) {
       const date = new Date(timestamp * 1000);
@@ -825,7 +822,6 @@ export default {
     this.getCartList();
     this.getProductList();
     this.getArticleList();
-    // this.videoLoading();
   },
   updated() {
     ScrollTrigger.refresh(); //必須要加這個trigger才會正確
@@ -841,11 +837,14 @@ export default {
       opacity: 1,
       yPercent: "-50",
       duration: 1,
-      onComplete: next, // 等待動畫完成後再跳轉到目標路由頁面
+      onComplete: () => {
+        this.logoTop.pause();
+        this.logoTop.kill();
+        // 等待動畫完成後再跳轉到目標路由頁面
+        next();
+      },
     });
-    this.logoTop.pause();
-    this.logoTop.kill();
-    next();
+
     // 啟動新的動畫
     resetLogo.play();
   },

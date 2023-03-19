@@ -220,6 +220,13 @@
       </RouterLink>
     </div>
   </div>
+  <button
+    type="button"
+    class="d-md-none z-1 position-fixed bottom-0 start-0 btn btn-primary text-secondary-light w-100 py-4 rounded-0 letter-spacing-2"
+    @click="addToCart(product.id, qty)"
+  >
+    加入購物車
+  </button>
 </template>
 
 <style lang="scss">
@@ -268,10 +275,8 @@ export default {
       this.$http
         .get(`${VITE_APP_URL}/api/${VITE_APP_PATH}/product/${id}`)
         .then((res) => {
-          console.log(this.product);
           this.product = res.data.product;
           this.images = this.product.imagesUrl;
-          console.log(this.product);
         });
     },
     getProductList() {
@@ -280,7 +285,6 @@ export default {
         .get(`${VITE_APP_URL}/api/${VITE_APP_PATH}/products/all`)
         .then((res) => {
           this.productList = res.data.products;
-          console.log(this.productList);
         })
         .catch((error) => {
           alert(error.data.message);
@@ -304,7 +308,6 @@ export default {
     ...mapActions(cartStore, ["addToCart", "addNum", "decreaseNum"]),
   },
   computed: {
-    // ...mapState(loadingStore, ["isLoading", "loadingItem"]),
     id() {
       return this.$route.params.id;
     },
