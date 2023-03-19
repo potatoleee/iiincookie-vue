@@ -22,7 +22,6 @@
           ></button>
         </div>
         <div class="modal-body">
-          <p>{{ tempCoupon }}</p>
           <div class="row">
             <div class="mb-3 col-12">
               <label for="coupon_title" class="form-label">優惠券名稱</label>
@@ -66,7 +65,7 @@
               >
               <input
                 id="coupon_endDate"
-                type="datetime-local"
+                type="date"
                 class="form-control"
                 placeholder="請選擇優惠券到期日"
                 v-model="due_date"
@@ -153,14 +152,10 @@ export default {
     innerTempCoupon() {
       this.tempCoupon = this.innerTempCoupon;
       //將外面傳進來的時間轉成 YYYY-MM-DD
-      const timeStampToDate = new Date(this.tempCoupon.due_date * 1000);
-      this.due_date = timeStampToDate.toLocaleString();
-      console.log(this.due_date);
-      // .toISOString()
-      // .split("T");
-      // .split('T') : 使用 "T" 分隔符將日期和時間拆分為一個數組，例如 ["2023-02-20", "13:42:30.000Z"]。
-      // this.due_date = timeStampToDate[0];
-      //[this.due_data] = timeStampToDate;
+      const timeStampToDate = new Date(this.tempCoupon.due_date * 1000)
+        .toISOString()
+        .split("T");
+      this.due_date = timeStampToDate[0];
     },
     due_date() {
       //監聽modal裡面的日期 轉換成 timeStamp

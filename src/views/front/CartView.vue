@@ -3,9 +3,15 @@
   <div class="title my-10 my-lg-15">
     <span
       class="title-sub fs-10xl fw-light font-english text-secondary text-opacity-50 d-block text-end"
+      ref="splitCart"
       >Shopping Cart
     </span>
-    <h1 class="title-main font-serifTc fw-black fs-xl fs-lg-3xl">購物車</h1>
+    <h1
+      class="title-main font-serifTc fw-black fs-xl fs-lg-3xl"
+      ref="splitCartCh"
+    >
+      購物車
+    </h1>
   </div>
   <div
     class="container d-flex flex-column align-items-center gap-6 mt-12"
@@ -66,7 +72,7 @@
               <p class="fs-lg">購物車品項</p>
               <button
                 v-if="cartList.carts?.length > 0"
-                class="btn border border-dark border-opacity-40 py-2 px-8 rounded-pill fs-sm"
+                class="py-2 px-8 rounded-pill fs-sm bg-secondary-light py-2 px-6 rounded-pill d-inline-block btn btn-outline-dark hover-text-primary hover-border-primary"
                 type="button"
                 @click="deleteAllCartItem()"
               >
@@ -179,8 +185,10 @@
 
 <script>
 import cartStore from "../../stores/cartStore.js";
-
 import LoadingComponent from "../../components/LoadingComponent.vue";
+import { gsap } from "gsap/all";
+import SplitType from "split-type";
+gsap.registerPlugin(SplitType);
 import { mapActions, mapState } from "pinia";
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
 import { Toast } from "../../utils/toast.js";
@@ -232,6 +240,53 @@ export default {
     ...mapState(cartStore, ["cartList", "totalQty"]),
   },
   mounted() {
+    const splitCart = this.$refs.splitCart;
+    const splitCartCh = this.$refs.splitCartCh;
+    new SplitType(splitCart);
+    new SplitType(splitCartCh);
+
+    splitCartCh.querySelectorAll(".line").forEach((line) => {
+      line.style.textAlign = "end";
+    });
+
+    this.$nextTick(() => {
+      gsap.fromTo(
+        splitCartCh.querySelectorAll(".char"),
+        {
+          y: 0,
+          opacity: 0,
+        },
+        {
+          y: 0,
+          x: 0,
+          opacity: 1,
+          stagger: 0.05,
+          delay: 1,
+          duration: 0.2,
+        }
+      );
+      gsap.fromTo(
+        splitCart.querySelectorAll(".char"),
+        {
+          y: 0,
+          opacity: 0,
+        },
+        {
+          y: 0,
+          x: 0,
+          opacity: 1,
+          stagger: 0.05,
+          delay: 1,
+          duration: 0.2,
+        }
+      );
+      const maskBgElements = document.querySelectorAll(".mask-bg");
+      gsap.to(maskBgElements, {
+        duration: 1,
+        width: "0%",
+        ease: "power3.inOut",
+      });
+    });
     this.getCartList();
     this.isLoading = false;
   },

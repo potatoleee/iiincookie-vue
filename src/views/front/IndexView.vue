@@ -62,7 +62,10 @@
   <!-- 影片區 end-->
   <!-- about start-->
   <div class="container mb-17 index-About">
-    <p class="fs-6xl fs-md-7xl font-english fw-light lh-sm text-center mb-17">
+    <p
+      class="fs-6xl fs-md-7xl font-english fw-light lh-sm text-center mb-17 clip-path"
+      ref="splitIndexAbout"
+    >
       About iiin
     </p>
     <p class="fs-2xl font-serifTc text-center mb-9">更多有關於我們的故事</p>
@@ -81,8 +84,18 @@
   <div class="my-17">
     <div class="container">
       <div class="mb-13">
-        <p class="fs-6xl fs-md-7xl font-english fw-light lh-sm">Products</p>
-        <p class="font-serifTc fs-lg fs-md-xl fw-medium">商品一覽</p>
+        <p
+          class="fs-6xl fs-md-7xl font-english fw-light lh-sm clip-path"
+          ref="splitIndexProducts"
+        >
+          Products
+        </p>
+        <p
+          class="font-serifTc fs-lg fs-md-xl fw-medium clip-path"
+          ref="splitIndexProductsCh"
+        >
+          商品一覽
+        </p>
       </div>
       <div
         class="row flex-column flex-md-row align-items-end align-items-md-start mb-md-0 pb-17"
@@ -217,10 +230,18 @@
   <div class="bg-secondary py-17">
     <div class="container-fluid p-0">
       <div class="text-center pt-12 pb-10">
-        <p class="font-english fs-5xl fs-md-7xl clip-path" ref="myText4">
+        <p
+          class="font-english fs-5xl fs-md-7xl clip-path"
+          ref="splitIndexMoreProducts"
+        >
           More Products
         </p>
-        <p class="font-serifTc fs-lg fs-md-xl fw-medium">更多商品</p>
+        <p
+          class="font-serifTc fs-lg fs-md-xl fw-medium clip-path"
+          ref="splitIndexMoreProductsCh"
+        >
+          更多商品
+        </p>
       </div>
       <div class="mb-16">
         <swiper
@@ -274,8 +295,15 @@
   <div class="container mb-10">
     <div class="d-flex justify-content-between align-items-center my-10">
       <div>
-        <p class="fs-6xl fs-md-7xl font-english lh-sm">News</p>
-        <p class="fs-lg fs-md-xl font-serifTc">最新消息</p>
+        <p
+          class="fs-6xl fs-md-7xl font-english lh-sm clip-path"
+          ref="splitIndexNews"
+        >
+          News
+        </p>
+        <p class="fs-lg fs-md-xl font-serifTc clip-path" ref="splitIndexNewsCh">
+          最新消息
+        </p>
       </div>
       <RouterLink
         to="/articles"
@@ -288,7 +316,7 @@
     <div class="mb-10">
       <ul class="d-flex flex-column gap-7">
         <li v-for="article in articlesList.slice(0, 3)" :key="article.id">
-          <RouterLink :to="`/article/${article.id}`">
+          <RouterLink :to="`/article/${article.id}`" class="hover-text-primary">
             <div
               class="d-flex justify-content-between border-bottom border-dark border-opacity-50"
             >
@@ -299,9 +327,7 @@
                   >
                     {{ article.tag }}
                   </p>
-                  <p
-                    class="fs-lg fs-lg-xl fw-medium mb-3 text-dark font-serifTc"
-                  >
+                  <p class="fs-lg fs-lg-xl fw-medium mb-3 font-serifTc">
                     {{ article.title }}
                   </p>
                   <div>
@@ -539,30 +565,53 @@ export default {
   mounted() {
     // ScrollTrigger.refresh();
 
+    const splitIndexAbout = this.$refs.splitIndexAbout;
+    const splitIndexProducts = this.$refs.splitIndexProducts;
+    const splitIndexProductsCh = this.$refs.splitIndexProductsCh;
     const myText1 = this.$refs.myText1;
     const myText2 = this.$refs.myText2;
     const myText3 = this.$refs.myText3;
-    const myText4 = this.$refs.myText4;
+    const splitIndexMoreProducts = this.$refs.splitIndexMoreProducts;
+    const splitIndexMoreProductsCh = this.$refs.splitIndexMoreProductsCh;
+    const splitIndexNews = this.$refs.splitIndexNews;
+    const splitIndexNewsCh = this.$refs.splitIndexNewsCh;
+
+    new SplitType(splitIndexAbout);
+    new SplitType(splitIndexProducts);
+    new SplitType(splitIndexProductsCh);
 
     new SplitType(myText1);
     new SplitType(myText2);
     new SplitType(myText3);
-    new SplitType(myText4);
+    new SplitType(splitIndexMoreProducts);
+    new SplitType(splitIndexMoreProductsCh);
+    new SplitType(splitIndexNews);
+    new SplitType(splitIndexNewsCh);
+
     this.$nextTick(() => {
       const maskBgElements = document.querySelectorAll(".mask-bg");
       maskBgElements.forEach((element) => {
         gsap.to(element, {
           scrollTrigger: {
             trigger: element,
-            start: "top bottom",
-            end: "bottom top",
-            markers: true,
+            start: "center bottom",
             refreshPositions: true,
           },
           duration: 1,
           width: "0%",
           ease: "power3.inOut",
         });
+      });
+
+      gsap.to(splitIndexAbout.querySelectorAll(".char"), {
+        scrollTrigger: {
+          trigger: splitIndexAbout,
+          start: "bottom bottom",
+        },
+        y: 0,
+        stagger: 0.05,
+        delay: 0.2,
+        duration: 0.1,
       });
       gsap.to(myText1.querySelectorAll(".char"), {
         scrollTrigger: {
@@ -594,10 +643,66 @@ export default {
         delay: 0.2,
         duration: 0.1,
       });
-      gsap.to(myText4.querySelectorAll(".char"), {
+      gsap.to(splitIndexMoreProducts.querySelectorAll(".char"), {
         scrollTrigger: {
-          trigger: myText4,
-          markers: true,
+          trigger: splitIndexMoreProducts,
+
+          start: "bottom bottom",
+        },
+        y: 0,
+        stagger: 0.05,
+        delay: 0.2,
+        duration: 0.1,
+      });
+      gsap.to(splitIndexMoreProductsCh.querySelectorAll(".char"), {
+        scrollTrigger: {
+          trigger: splitIndexMoreProductsCh,
+
+          start: "bottom bottom",
+        },
+        y: 0,
+        stagger: 0.05,
+        delay: 0.2,
+        duration: 0.1,
+      });
+
+      gsap.to(splitIndexProducts.querySelectorAll(".char"), {
+        scrollTrigger: {
+          trigger: splitIndexProducts,
+
+          start: "bottom bottom",
+        },
+        y: 0,
+        stagger: 0.05,
+        delay: 0.2,
+        duration: 0.1,
+      });
+      gsap.to(splitIndexProductsCh.querySelectorAll(".char"), {
+        scrollTrigger: {
+          trigger: splitIndexProductsCh,
+
+          start: "bottom bottom",
+        },
+        y: 0,
+        stagger: 0.05,
+        delay: 0.2,
+        duration: 0.1,
+      });
+      gsap.to(splitIndexNews.querySelectorAll(".char"), {
+        scrollTrigger: {
+          trigger: splitIndexNews,
+
+          start: "bottom bottom",
+        },
+        y: 0,
+        stagger: 0.05,
+        delay: 0.2,
+        duration: 0.1,
+      });
+      gsap.to(splitIndexNewsCh.querySelectorAll(".char"), {
+        scrollTrigger: {
+          trigger: splitIndexNewsCh,
+
           start: "bottom bottom",
         },
         y: 0,

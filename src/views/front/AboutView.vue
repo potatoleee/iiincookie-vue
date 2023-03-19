@@ -1,11 +1,16 @@
 <template>
-  <VueLoading v-model:active="isLoading"></VueLoading>
   <div class="title my-10 my-lg-15">
     <span
       class="title-sub fs-10xl fw-light font-english text-secondary text-opacity-50 d-block text-end"
+      ref="splitAbout"
       >About iiin
     </span>
-    <h1 class="title-main font-serifTc fw-black fs-xl fs-lg-3xl">關於我們</h1>
+    <h1
+      class="title-main font-serifTc fw-black fs-xl fs-lg-3xl"
+      ref="splitAboutCh"
+    >
+      關於我們
+    </h1>
   </div>
 
   <div class="container mb-17">
@@ -49,9 +54,10 @@
 <script>
 import cartStore from "../../stores/cartStore.js";
 import favoriteStore from "../../stores/favoriteStore.js";
-import loadingStore from "../../stores/loadingStore.js";
-import { gsap, ScrollTrigger } from "gsap/all";
 
+import { gsap, ScrollTrigger } from "gsap/all";
+import SplitType from "split-type";
+gsap.registerPlugin(SplitType);
 import { mapState, mapActions } from "pinia";
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
 
@@ -66,6 +72,7 @@ export default {
       allProducts: [],
     };
   },
+
   methods: {
     getProductList(page = 1) {
       this.isLoading = true;
@@ -131,10 +138,8 @@ export default {
       "toggleFavorite",
       "isFavorite",
     ]),
-    // ...mapActions(productsStore, ["getProductList"]),
   },
   computed: {
-    ...mapState(loadingStore, ["isLoading", "loadingItem"]),
     ...mapState(favoriteStore, ["myFavoriteList"]),
     // ...mapState(productsStore, ["sortProducts"]),
     filterProduct() {
@@ -149,19 +154,53 @@ export default {
     },
   },
   mounted() {
+    const splitAbout = this.$refs.splitAbout;
+    const splitAboutCh = this.$refs.splitAboutCh;
+    new SplitType(splitAbout);
+    new SplitType(splitAboutCh);
+
+    splitAboutCh.querySelectorAll(".line").forEach((line) => {
+      line.style.textAlign = "end";
+    });
     this.$nextTick(() => {
-      window.dispatchEvent(new Event("resize"));
-      gsap.registerPlugin(ScrollTrigger);
-      const maskList = gsap.utils.toArray(".mask");
+      gsap.fromTo(
+        splitAboutCh.querySelectorAll(".char"),
+        {
+          y: 0,
+          opacity: 0,
+        },
+        {
+          y: 0,
+          x: 0,
+          opacity: 1,
+          stagger: 0.05,
+          delay: 1.5,
+          duration: 0.2,
+        }
+      );
+
+      gsap.fromTo(
+        splitAbout.querySelectorAll(".char"),
+        {
+          y: 0,
+          opacity: 0,
+        },
+        {
+          y: 0,
+          x: 0,
+          opacity: 1,
+          stagger: 0.05,
+          delay: 1.5,
+          duration: 0.2,
+        }
+      );
       const maskBgElements = document.querySelectorAll(".mask-bg");
-      const maskBgArray = gsap.utils.toArray(maskBgElements);
-      console.log(maskList);
-      maskBgArray.forEach((element) => {
+
+      maskBgElements.forEach((element) => {
         gsap.to(element, {
           scrollTrigger: {
             trigger: element,
             start: "top bottom",
-            markers: true,
             refreshPositions: true,
           },
           duration: 1,

@@ -2,9 +2,15 @@
   <div class="title my-10 my-lg-15">
     <span
       class="title-sub fs-10xl fw-light font-english text-secondary text-opacity-50 d-block text-end"
+      ref="splitNews"
       >News
     </span>
-    <h1 class="title-main font-serifTc fw-black fs-xl fs-lg-3xl">最新消息</h1>
+    <h1
+      class="title-main font-serifTc fw-black fs-xl fs-lg-3xl"
+      ref="splitNewsCh"
+    >
+      最新消息
+    </h1>
   </div>
   <div class="container">
     <div
@@ -45,7 +51,7 @@
   <div class="container mb-12">
     <ul class="d-flex flex-column gap-7">
       <li v-for="article in filterArticles" :key="article.id">
-        <RouterLink :to="`/article/${article.id}`">
+        <RouterLink :to="`/article/${article.id}`" class="hover-text-primary">
           <div
             class="d-flex justify-content-between border-bottom border-dark border-opacity-50"
           >
@@ -56,7 +62,7 @@
                 >
                   {{ article.tag }}
                 </p>
-                <p class="fs-lg fs-lg-xl fw-medium mb-3 text-dark font-serifTc">
+                <p class="fs-lg fs-lg-xl fw-medium mb-3 font-serifTc">
                   {{ article.title }}
                 </p>
                 <div>
@@ -80,6 +86,9 @@
 
 <script>
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
+import { gsap } from "gsap/all";
+import SplitType from "split-type";
+gsap.registerPlugin(SplitType);
 import { Toast } from "../../utils/toast.js";
 
 export default {
@@ -123,6 +132,67 @@ export default {
   },
 
   mounted() {
+    const splitNews = this.$refs.splitNews;
+    const splitNewsCh = this.$refs.splitNewsCh;
+    new SplitType(splitNews);
+    new SplitType(splitNewsCh);
+    splitNewsCh.querySelectorAll(".line").forEach((line) => {
+      line.style.textAlign = "end";
+    });
+    this.$nextTick(() => {
+      gsap.fromTo(
+        splitNewsCh.querySelectorAll(".char"),
+        {
+          y: 0,
+          opacity: 0,
+        },
+        {
+          y: 0,
+          x: 0,
+          opacity: 1,
+          stagger: 0.05,
+          delay: 1.5,
+          duration: 0.2,
+        }
+      );
+
+      gsap.fromTo(
+        splitNews.querySelectorAll(".char"),
+        {
+          y: 0,
+          opacity: 0,
+        },
+        {
+          y: 0,
+          x: 0,
+          opacity: 1,
+          stagger: 0.05,
+          delay: 1.5,
+          duration: 0.2,
+        }
+      );
+      const maskBgElements = document.querySelectorAll(".mask-bg");
+
+      maskBgElements.forEach((element) => {
+        gsap.to(element, {
+          scrollTrigger: {
+            trigger: element,
+            start: "top bottom",
+            markers: true,
+            refreshPositions: true,
+          },
+          duration: 1,
+          width: "0%",
+          ease: "power3.inOut",
+        });
+      });
+      gsap.to(".mask-bg", {
+        duration: 1,
+        width: "0%",
+        ease: "power3.inOut",
+        delay: 2,
+      });
+    });
     this.getArticleList();
   },
 };

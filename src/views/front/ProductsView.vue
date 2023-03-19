@@ -4,11 +4,12 @@
   <div class="title my-10 my-lg-15">
     <span
       class="title-sub fs-10xl fw-light font-english text-secondary text-opacity-50 d-block text-end"
+      ref="splitAllProducts"
       >All Products
     </span>
     <h1
       class="title-main font-serifTc fw-black fs-xl fs-lg-3xl clip-path"
-      ref="myTextAllProducts"
+      ref="splitAllProductsCh"
     >
       商品ㄧ覽
     </h1>
@@ -180,9 +181,8 @@ import LoadingComponent from "../../components/LoadingComponent.vue";
 import cartStore from "../../stores/cartStore.js";
 import favoriteStore from "../../stores/favoriteStore.js";
 import { gsap, ScrollTrigger } from "gsap/all";
-gsap.registerPlugin(SplitType, ScrollTrigger);
 import SplitType from "split-type";
-// import loadingStore from "../../stores/loadingStore.js";
+gsap.registerPlugin(SplitType, ScrollTrigger);
 
 import { mapState, mapActions } from "pinia";
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
@@ -197,6 +197,7 @@ export default {
       nowCategory: "",
       allProducts: [],
       isLoading: true,
+      loadingItem: "",
     };
   },
   methods: {
@@ -284,19 +285,46 @@ export default {
   mounted() {
     this.getCategory("", 1);
     this.getAllProducts();
-    const myTextAllProducts = this.$refs.myTextAllProducts;
-    new SplitType(myTextAllProducts);
-    myTextAllProducts.querySelectorAll(".line").forEach((line) => {
+    const splitAllProducts = this.$refs.splitAllProducts;
+    const splitAllProductsCh = this.$refs.splitAllProductsCh;
+    new SplitType(splitAllProducts);
+    new SplitType(splitAllProductsCh);
+
+    splitAllProductsCh.querySelectorAll(".line").forEach((line) => {
       line.style.textAlign = "end";
     });
 
     this.$nextTick(() => {
-      gsap.to(myTextAllProducts.querySelectorAll(".char"), {
-        y: 0,
-        stagger: 0.05,
-        delay: 1,
-        duration: 0.2,
-      });
+      gsap.fromTo(
+        splitAllProductsCh.querySelectorAll(".char"),
+        {
+          y: 0,
+          opacity: 0,
+        },
+        {
+          y: 0,
+          x: 0,
+          opacity: 1,
+          stagger: 0.05,
+          delay: 1,
+          duration: 0.2,
+        }
+      );
+      gsap.fromTo(
+        splitAllProducts.querySelectorAll(".char"),
+        {
+          y: 0,
+          opacity: 0,
+        },
+        {
+          y: 0,
+          x: 0,
+          opacity: 1,
+          stagger: 0.05,
+          delay: 1,
+          duration: 0.2,
+        }
+      );
       const maskBgElements = document.querySelectorAll(".mask-bg");
       gsap.to(maskBgElements, {
         duration: 1,

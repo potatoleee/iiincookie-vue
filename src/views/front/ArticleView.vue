@@ -1,10 +1,17 @@
 <template>
+  <LoadingComponent :isLoading="isLoading"></LoadingComponent>
   <div class="title my-10 my-lg-15">
     <span
       class="title-sub fs-10xl fw-light font-english text-secondary text-opacity-50 d-block text-end"
+      ref="splitNewsContent"
       >News Content
     </span>
-    <h1 class="title-main font-serifTc fw-black fs-xl fs-lg-3xl">消息內容</h1>
+    <h1
+      class="title-main font-serifTc fw-black fs-xl fs-lg-3xl"
+      ref="splitNewsContentCh"
+    >
+      消息內容
+    </h1>
   </div>
   <div class="container">
     <div
@@ -115,6 +122,10 @@
 <script>
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
 import { Toast } from "../../utils/toast.js";
+import LoadingComponent from "../../components/LoadingComponent.vue";
+import { gsap } from "gsap/all";
+import SplitType from "split-type";
+gsap.registerPlugin(SplitType);
 
 export default {
   data() {
@@ -122,7 +133,11 @@ export default {
       article: [],
       articlesList: [],
       articleContent: "",
+      isLoading: true,
     };
+  },
+  components: {
+    LoadingComponent,
   },
   methods: {
     formatDate(timestamp) {
@@ -140,11 +155,13 @@ export default {
         });
     },
     getArticleList() {
+      this.isLoading = true;
       this.$http
         .get(`${VITE_APP_URL}/api/${VITE_APP_PATH}/articles`)
         .then((res) => {
           console.log(res.data.articles);
           this.articlesList = res.data.articles;
+          this.isLoading = false;
         })
         .catch((error) => {
           Toast.fire({
@@ -172,6 +189,53 @@ export default {
     },
   },
   mounted() {
+    const splitNewsContent = this.$refs.splitNewsContent;
+    const splitNewsContentCh = this.$refs.splitNewsContentCh;
+    new SplitType(splitNewsContent);
+    new SplitType(splitNewsContentCh);
+
+    splitNewsContentCh.querySelectorAll(".line").forEach((line) => {
+      line.style.textAlign = "end";
+    });
+
+    this.$nextTick(() => {
+      gsap.fromTo(
+        splitNewsContentCh.querySelectorAll(".char"),
+        {
+          y: 0,
+          opacity: 0,
+        },
+        {
+          y: 0,
+          x: 0,
+          opacity: 1,
+          stagger: 0.05,
+          delay: 1,
+          duration: 0.2,
+        }
+      );
+      gsap.fromTo(
+        splitNewsContent.querySelectorAll(".char"),
+        {
+          y: 0,
+          opacity: 0,
+        },
+        {
+          y: 0,
+          x: 0,
+          opacity: 1,
+          stagger: 0.05,
+          delay: 1,
+          duration: 0.2,
+        }
+      );
+      const maskBgElements = document.querySelectorAll(".mask-bg");
+      gsap.to(maskBgElements, {
+        duration: 1,
+        width: "0%",
+        ease: "power3.inOut",
+      });
+    });
     this.routeID = this.$route.params.id;
     this.getArticle(this.routeID);
     this.getArticleList();

@@ -1,12 +1,17 @@
 <template>
-  <!-- <VueLoading v-model:active="isLoading"></VueLoading> -->
   <LoadingComponent :isLoading="isLoading"></LoadingComponent>
   <div class="title my-10 my-lg-15">
     <span
       class="title-sub fs-10xl fw-light font-english text-secondary text-opacity-50 d-block text-end"
+      ref="splitProductDetail"
       >Product Detail
     </span>
-    <h2 class="title-main font-serifTc fw-black fs-xl fs-lg-3xl">產品細節</h2>
+    <h2
+      class="title-main font-serifTc fw-black fs-xl fs-lg-3xl"
+      ref="splitProductDetailCh"
+    >
+      產品細節
+    </h2>
   </div>
 
   <div class="container my-md-13 my-10">
@@ -230,9 +235,9 @@
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Autoplay } from "swiper";
 import LoadingComponent from "../../components/LoadingComponent.vue";
-
-// import loadingStore from "../../stores/loadingStore.js";
-// Import Swiper styles
+import { gsap } from "gsap/all";
+import SplitType from "split-type";
+gsap.registerPlugin(SplitType);
 import "swiper/css";
 
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
@@ -313,6 +318,53 @@ export default {
     },
   },
   mounted() {
+    const splitProductDetail = this.$refs.splitProductDetail;
+    const splitProductDetailCh = this.$refs.splitProductDetailCh;
+    new SplitType(splitProductDetail);
+    new SplitType(splitProductDetailCh);
+
+    splitProductDetailCh.querySelectorAll(".line").forEach((line) => {
+      line.style.textAlign = "end";
+    });
+
+    this.$nextTick(() => {
+      gsap.fromTo(
+        splitProductDetailCh.querySelectorAll(".char"),
+        {
+          y: 0,
+          opacity: 0,
+        },
+        {
+          y: 0,
+          x: 0,
+          opacity: 1,
+          stagger: 0.05,
+          delay: 1,
+          duration: 0.2,
+        }
+      );
+      gsap.fromTo(
+        splitProductDetail.querySelectorAll(".char"),
+        {
+          y: 0,
+          opacity: 0,
+        },
+        {
+          y: 0,
+          x: 0,
+          opacity: 1,
+          stagger: 0.05,
+          delay: 1,
+          duration: 0.2,
+        }
+      );
+      const maskBgElements = document.querySelectorAll(".mask-bg");
+      gsap.to(maskBgElements, {
+        duration: 1,
+        width: "0%",
+        ease: "power3.inOut",
+      });
+    });
     this.routeID = this.$route.params.id;
     this.getProduct(this.routeID);
     this.getProductList();
