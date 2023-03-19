@@ -388,8 +388,6 @@
 .videoCanvas {
   width: 45em;
   height: 45em;
-  // width: 80vw;
-  // height: 45vh;
   object-fit: cover;
   @include phone {
     width: 80vw;
@@ -560,7 +558,7 @@ export default {
   },
 
   mounted() {
-    // ScrollTrigger.refresh();
+    // 啟動影片載入
 
     const splitIndexAbout = this.$refs.splitIndexAbout;
     const splitIndexProducts = this.$refs.splitIndexProducts;
@@ -781,6 +779,7 @@ export default {
       .to(".videoCanvas", {
         width: "100vw",
         height: "100vh",
+
         duration: 20,
         ease: "ease",
       })
