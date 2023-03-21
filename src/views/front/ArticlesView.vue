@@ -95,6 +95,7 @@ export default {
   data() {
     return {
       articlesList: [],
+      sortedArticles: [],
       currentTag: "全部消息",
     };
   },
@@ -108,6 +109,7 @@ export default {
         .get(`${VITE_APP_URL}/api/${VITE_APP_PATH}/articles`)
         .then((res) => {
           this.articlesList = res.data.articles;
+          console.log(this.articlesList);
         })
         .catch((error) => {
           Toast.fire({
@@ -120,12 +122,22 @@ export default {
   computed: {
     filterArticles() {
       if (this.currentTag === "全部消息") {
-        return this.articlesList;
+        return this.sortedArticles;
       } else {
-        return this.articlesList.filter((article) => {
+        return this.sortedArticles.filter((article) => {
           return article.tag === this.currentTag;
         });
       }
+    },
+  },
+  watch: {
+    articlesList: {
+      handler(newArticles) {
+        this.sortedArticles = newArticles.sort((a, b) => {
+          return new Date(b.create_at) - new Date(a.create_at);
+        });
+      },
+      immediate: true,
     },
   },
 

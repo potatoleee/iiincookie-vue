@@ -40,9 +40,7 @@
   <div class="container">
     <div class="row justify-content-end">
       <div class="col-lg-8 font-serifTc my-11 mt-lg-17 mb-lg-14">
-        <div>
-          {{ contentWithoutPTag }}
-        </div>
+        <div v-html="articleContent"></div>
       </div>
     </div>
     <div class="row justify-content-end mb-17">
@@ -171,10 +169,6 @@ export default {
   computed: {
     id() {
       return this.$route.params.id;
-    },
-    contentWithoutPTag() {
-      // 移除 <p> 與 </p> 標籤
-      return this.articleContent.replace(/<\/?p>/g, "");
     },
   },
   watch: {

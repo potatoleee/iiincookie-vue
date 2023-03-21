@@ -20,7 +20,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="article in articles" :key="article.id">
+      <tr v-for="article in sortedArticles" :key="article.id">
         <td>{{ article.title }}</td>
         <td>{{ article.tag }}</td>
         <td>{{ formatDate(article.create_at) }}</td>
@@ -78,6 +78,7 @@ export default {
   data() {
     return {
       articles: [],
+      sortedArticles: [],
       pagination: {},
       isNew: false,
       tempArticle: {},
@@ -113,6 +114,7 @@ export default {
         .then((res) => {
           this.pagination = res.data.pagination;
           this.articles = res.data.articles;
+          console.log(this.articles);
         })
         .catch((error) => {
           Toast.fire({
@@ -158,6 +160,16 @@ export default {
             title: `${error.response.data.message}`,
           });
         });
+    },
+  },
+  watch: {
+    articles: {
+      handler(newArticles) {
+        this.sortedArticles = newArticles.sort((a, b) => {
+          return new Date(b.create_at) - new Date(a.create_at);
+        });
+      },
+      immediate: true,
     },
   },
   mounted() {
