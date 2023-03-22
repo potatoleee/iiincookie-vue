@@ -1,4 +1,4 @@
-![專案封面圖](https://fakeimg.pl/500/)
+![專案封面圖](https://github.com/potatoleee/iiincookie-vue/blob/main/src/assets/images/iiincookie-01.png)
 # 餅乾生產餡 iiincookie
 > 餅乾生產餡電商網站
 - [線上觀看連結](https://potatoleee.github.io/iiincookie-vue/#/)
@@ -7,9 +7,9 @@
 
 > 可提供 1~3 張圖片，讓觀看者透過 README 了解整體畫面
 
-![範例圖片 1](https://fakeimg.pl/500/)
-![範例圖片 2](https://fakeimg.pl/500/)
-![範例圖片 3](https://fakeimg.pl/500/)
+![範例圖片 1](https://github.com/potatoleee/iiincookie-vue/blob/main/src/assets/images/iiincookie-02.png)
+![範例圖片 2](https://github.com/potatoleee/iiincookie-vue/blob/main/src/assets/images/iiincookie-03.png)
+![範例圖片 3](https://github.com/potatoleee/iiincookie-vue/blob/main/src/assets/images/iiincookie-04.png)
 
 ## 網站功能
 
