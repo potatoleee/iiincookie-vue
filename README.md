@@ -42,6 +42,5 @@
 ## 聯絡我
 
 你可以透過以下方式與我聯絡
-
-- [Email](dean19990226@gmail.com)
+* Email：dean19990226@gmail.com
 ...
