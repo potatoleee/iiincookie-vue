@@ -1,12 +1,4 @@
 // 使footer置底 start
-// #app{
-//     height: 100%;
-//     margin: 0;
-// }
-// #app {
-//     display: flex; /*使物件依序排列*/
-//     flex-direction: column; /*使物件垂直排列*/
-//   }
 #app{
     display: flex;
     flex-direction: column;
@@ -14,9 +6,6 @@
 }
 main{
     margin-top: 84px;
-        // flex-grow: 1; /*可佔滿垂直剩餘的空間*/
-        // background-color: $body-bg;
-        // height: calc(100vh - 84px - 154px);
 }
 // 使footer置底 end
 
@@ -33,13 +22,6 @@ a{
     color: inherit;
     display: block;
 }     
-// a{  
-//     display: block;
-//     color: inherit;
-//     &:hover{
-//         color: inherit;
-//     }
-// }
 
 img{
     max-width: 100%;

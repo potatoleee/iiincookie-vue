@@ -77,21 +77,27 @@
             <p class="font-serifTc fs-base mb-4 text-center letterSpace-2">
               NT$ {{ product.price }}
             </p>
-            <button
-              type="button"
-              class="btn btn-outline-primary rounded-0"
-              @click="addToCart(product.id)"
-            >
-              加入購物車
-
-              <div
-                v-if="product.id === loadingItem"
-                class="spinner-border text-light spinner-border-sm"
-                role="status"
+            <div class="position-relative">
+              <button
+                type="button"
+                class="btn btn-outline-primary rounded-0"
+                :class="{ disabled: product.id === loadingItem }"
+                @click="addToCart(product.id)"
               >
-                <span class="sr-only"></span>
+                加入購物車
+              </button>
+              <div
+                class="position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center bg-secondary-light border border-primary"
+                v-if="product.id === loadingItem"
+              >
+                <div
+                  class="spinner-border text-primary spinner-border-sm"
+                  role="status"
+                >
+                  <span class="sr-only"></span>
+                </div>
               </div>
-            </button>
+            </div>
           </li>
         </ul>
       </div>
@@ -195,7 +201,6 @@ export default {
       nowCategory: "",
       allProducts: [],
       isLoading: false,
-      loadingItem: "",
     };
   },
   methods: {
@@ -249,6 +254,7 @@ export default {
   },
   computed: {
     ...mapState(favoriteStore, ["myFavoriteList"]),
+    ...mapState(cartStore, ["loadingItem"]),
     filterProduct() {
       return this.productList.filter((item) => {
         return item.title.match(this.search);

@@ -1,14 +1,13 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import { Toast } from "../utils/toast.js";
-import loadingStore from "./loadingStore.js";
-const loading = loadingStore();
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
 const cartStore = defineStore("cartStore", {
   state: () => {
     return {
       cartList: [],
       totalQty: 0,
+      loadingItem: "",
     };
   },
   actions: {
@@ -17,8 +16,7 @@ const cartStore = defineStore("cartStore", {
         product_id,
         qty,
       };
-      loading.loadingItem = product_id;
-      // loading.isLoading = true;
+      this.loadingItem = product_id;
       axios
         .post(`${VITE_APP_URL}/api/${VITE_APP_PATH}/cart`, { data }) //{data:data}同名可以縮寫
         .then((res) => {
@@ -27,7 +25,7 @@ const cartStore = defineStore("cartStore", {
             title: `${res.data.message}`,
           });
           this.getCartList();
-          loading.loadingItem = ""; //清空loading暫存
+          this.loadingItem = ""; //清空loading暫存
         })
         .catch((error) => {
           Toast.fire({
@@ -37,7 +35,6 @@ const cartStore = defineStore("cartStore", {
         });
     },
     getCartList() {
-      loading.isLoading = true;
       axios
         .get(`${VITE_APP_URL}/api/${VITE_APP_PATH}/cart`)
         .then((res) => {
@@ -49,9 +46,6 @@ const cartStore = defineStore("cartStore", {
         })
         .catch((error) => {
           alert(error.response.data.message);
-        })
-        .finally(() => {
-          loading.isLoading = false;
         });
     },
     updateCartItem(cartItem) {
@@ -60,14 +54,14 @@ const cartStore = defineStore("cartStore", {
         product_id: cartItem.product_id,
         qty: cartItem.qty,
       };
-      loading.loadingItem = cartItem.id;
+      this.loadingItem = cartItem.id;
       axios
         .put(`${VITE_APP_URL}/api/${VITE_APP_PATH}/cart/${cartItem.id}`, {
           data,
         }) //{data:data}同名可以縮寫
         .then(() => {
           this.getCartList();
-          loading.loadingItem = "";
+          this.loadingItem = "";
         })
         .catch((error) => {
           alert(error.response.data.message);
@@ -78,14 +72,14 @@ const cartStore = defineStore("cartStore", {
         product_id: cartItem.product_id,
         qty: cartItem.qty + 1,
       };
-      loading.loadingItem = cartItem.id;
+      this.loadingItem = cartItem.id;
       axios
         .put(`${VITE_APP_URL}/api/${VITE_APP_PATH}/cart/${cartItem.id}`, {
           data,
         }) //{data:data}同名可以縮寫
         .then(() => {
           this.getCartList();
-          loading.loadingItem = "";
+          this.loadingItem = "";
         })
         .catch((error) => {
           alert(error.response.data.message);
@@ -96,21 +90,20 @@ const cartStore = defineStore("cartStore", {
         product_id: cartItem.product_id,
         qty: cartItem.qty - 1,
       };
-      loading.loadingItem = cartItem.id;
+      this.loadingItem = cartItem.id;
       axios
         .put(`${VITE_APP_URL}/api/${VITE_APP_PATH}/cart/${cartItem.id}`, {
           data,
         }) //{data:data}同名可以縮寫
         .then(() => {
           this.getCartList();
-          loading.loadingItem = "";
+          this.loadingItem = "";
         })
         .catch((error) => {
           alert(error.response.data.message);
         });
     },
     deleteCartItem(cartItem) {
-      loading.isLoading = true;
       this.loadingItem = cartItem.id;
       axios
         .delete(`${VITE_APP_URL}/api/${VITE_APP_PATH}/cart/${cartItem.id}`) //{data:data}同名可以縮寫
@@ -127,9 +120,6 @@ const cartStore = defineStore("cartStore", {
             icon: "error",
             title: `${error.response.data.message}`,
           });
-        })
-        .finally(() => {
-          loading.isLoading = false;
         });
     },
     deleteAllCartItem() {
@@ -150,11 +140,6 @@ const cartStore = defineStore("cartStore", {
         });
     },
   },
-  // getters: {
-  //   cartList: ({ cart }) => {
-  //     return cart;
-  //   },
-  // },
 });
 
 export default cartStore;

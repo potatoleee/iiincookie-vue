@@ -88,7 +88,7 @@
                   </button>
                 </div>
                 <div
-                  class="d-flex align-items-center border border-secondary-dark px-3"
+                  class="d-flex align-items-center border border-secondary-dark px-3 cursor-pointer"
                 >
                   <i
                     v-if="isFavorite(product)"
@@ -102,14 +102,26 @@
                   ></i>
                 </div>
               </div>
-              <div>
+              <div class="position-relative">
                 <button
                   type="button"
                   class="btn btn-primary text-secondary-light w-100 py-4 rounded-0 letter-spacing-2"
+                  :class="{ disabled: product.id === loadingItem }"
                   @click="addToCart(product.id, qty)"
                 >
                   加入購物車
                 </button>
+                <div
+                  class="position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center bg-primary border border-primary"
+                  v-if="product.id === loadingItem"
+                >
+                  <div
+                    class="spinner-border text-light spinner-border-sm"
+                    role="status"
+                  >
+                    <span class="sr-only"></span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -220,12 +232,22 @@
       </RouterLink>
     </div>
   </div>
+
   <button
     type="button"
     class="d-md-none z-1 position-fixed bottom-0 start-0 btn btn-primary text-secondary-light w-100 py-4 rounded-0 letter-spacing-2"
+    :class="{ disabled: product.id === loadingItem }"
     @click="addToCart(product.id, qty)"
   >
     加入購物車
+    <div
+      class="position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center bg-primary border border-primary"
+      v-if="product.id === loadingItem"
+    >
+      <div class="spinner-border text-light spinner-border-sm" role="status">
+        <span class="sr-only"></span>
+      </div>
+    </div>
   </button>
 </template>
 
@@ -250,7 +272,7 @@ import "swiper/css";
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
 import cartStore from "../../stores/cartStore.js";
 import favoriteStore from "../../stores/favoriteStore.js";
-import { mapActions } from "pinia";
+import { mapActions, mapState } from "pinia";
 export default {
   data() {
     return {
@@ -308,6 +330,7 @@ export default {
     ...mapActions(cartStore, ["addToCart", "addNum", "decreaseNum"]),
   },
   computed: {
+    ...mapState(cartStore, ["loadingItem"]),
     id() {
       return this.$route.params.id;
     },
