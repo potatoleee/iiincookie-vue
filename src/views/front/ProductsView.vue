@@ -56,7 +56,7 @@
           >
             <div class="position-relative">
               <RouterLink :to="`/product/${product.id}`" class="mb-6 imgHover">
-                <img :src="product.imageUrl" alt="" />
+                <img :src="product.imageUrl" :alt="product.title" />
               </RouterLink>
               <div class="position-absolute z-2 end-4n top-4n">
                 <i
@@ -104,11 +104,6 @@
     </div>
   </div>
   <div class="container d-flex justify-content-center py-9">
-    <!-- <PaginationComponent
-      :pageIn="page"
-      @getPages="getCategory"
-    ></PaginationComponent> -->
-
     <div>
       <ul class="d-flex align-items-center gap-7">
         <li class="page-item" :class="{ disabled: page.has_pre === false }">
@@ -121,13 +116,16 @@
           </a>
         </li>
         <li
-          class=""
-          :class="{ active: pages === page.current_page }"
+          class="page-item"
+          :class="{
+            active: pages === page.current_page,
+            disabled: pages === page.current_page,
+          }"
           v-for="pages in page.total_pages"
           :key="pages + 'pages'"
         >
           <a
-            class="font-english fs-3xl fs-lg-5xl pb-2"
+            class="page-link font-english fs-3xl fs-lg-5xl pb-2"
             href="#"
             @click.prevent="getCategory(nowCategory, pages)"
             >{{ pages }}</a
@@ -141,15 +139,13 @@
             @click.prevent="getCategory(nowCategory, page.current_page + 1)"
           >
             <i class="bi bi-arrow-right fs-xl fs-lg-3xl"></i>
-            <!-- <span class="material-symbols-outlined fs-4xl">
-              arrow_right_alt
-            </span> -->
           </a>
         </li>
       </ul>
     </div>
   </div>
 </template>
+
 <style lang="scss">
 @import "../../assets/style/all.scss";
 .title {

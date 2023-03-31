@@ -56,7 +56,7 @@
           <div
             class="d-flex py-7 gap-3 border-bottom border-dark border-opacity-40"
           >
-            <img class="w-20n" :src="favorite.imageUrl" alt="" />
+            <img class="w-20n" :src="favorite.imageUrl" :alt="favorite.title" />
             <div class="w-100 d-flex flex-column justify-content-between">
               <div class="d-flex justify-content-between align-items-center">
                 <p class="fs-md-lg font-serifTc">{{ favorite.title }}</p>
@@ -145,7 +145,11 @@
           <div
             class="d-flex py-7 gap-3 border-bottom border-dark border-opacity-10"
           >
-            <img class="w-20n" :src="cartItem.product.imageUrl" alt="" />
+            <img
+              class="w-20n"
+              :src="cartItem.product.imageUrl"
+              :alt="cartItem.product.title"
+            />
             <div class="w-100 d-flex flex-column justify-content-between">
               <div
                 class="d-flex justify-content-between align-items-start font-serifTc fs-md-lg"
@@ -229,7 +233,12 @@
           >{{ myFavoriteList.length }}</span
         >
       </div>
-      <div class="position-relative cursor-pointer" @click="toggleCart">
+      <!-- 購物車icon -->
+      <div
+        v-if="!$route.meta.hideCartIcon"
+        class="position-relative cursor-pointer"
+        @click="toggleCart"
+      >
         <i class="bi bi-bag fs-xl fs-md-2xl"></i>
         <span
           v-if="totalQty > 0"
@@ -674,6 +683,9 @@ export default {
   computed: {
     ...mapState(cartStore, ["cartList", "totalQty"]),
     ...mapState(favoriteStore, ["myFavoriteList"]),
+    shouldShowCartIcon() {
+      return !this.$route.meta.hideCartIcon;
+    },
   },
   watch: {
     // 因為是陣列，所以用深層監聽

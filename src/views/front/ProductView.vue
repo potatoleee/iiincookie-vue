@@ -27,13 +27,13 @@
                 class="opacity-75"
                 :class="{ 'opacity-100': index === activeIndex }"
               >
-                <img :src="image" alt="" />
+                <img :src="image" :alt="product.title" />
               </li>
             </ul>
           </div>
           <div class="col-lg-6 mb-7 mb-lg-0">
             <div class="product__img">
-              <img :src="images[activeIndex]" alt="" />
+              <img :src="images[activeIndex]" :alt="product.title" />
             </div>
           </div>
           <div class="d-lg-none mb-7">
@@ -45,7 +45,7 @@
                 class="opacity-75 w-20"
                 :class="{ 'opacity-100': index === activeIndex }"
               >
-                <img :src="image" alt="" />
+                <img :src="image" :alt="product.title" />
               </li>
             </ul>
           </div>
@@ -73,7 +73,11 @@
                 <div
                   class="count border border-secondary-dark d-flex justify-content-between w-100"
                 >
-                  <button class="btn rounded-0" @click="decreaseQty">
+                  <button
+                    class="btn rounded-0"
+                    @click="qty--"
+                    :disabled="qty === 1"
+                  >
                     <i class="bi bi-dash-lg"></i>
                   </button>
                   <input
@@ -83,21 +87,21 @@
                     v-model="qty"
                     readonly
                   />
-                  <button class="btn rounded-0" @click="addQty">
+                  <button class="btn rounded-0" @click="qty++">
                     <i class="bi bi-plus-lg"></i>
                   </button>
                 </div>
                 <div
-                  class="d-flex align-items-center border border-secondary-dark px-3 cursor-pointer"
+                  class="d-flex align-items-center border border-secondary-dark cursor-pointer"
                 >
                   <i
                     v-if="isFavorite(product)"
-                    class="bi bi-heart-fill text-primary"
+                    class="bi bi-heart-fill text-primary py-2 px-3"
                     @click="toggleFavorite(product)"
                   ></i>
                   <i
                     v-else
-                    class="bi bi-heart text-dark"
+                    class="bi bi-heart text-dark py-2 px-3"
                     @click="toggleFavorite(product)"
                   ></i>
                 </div>
@@ -129,7 +133,7 @@
       </div>
     </div>
 
-    <div class="row justify-content-lg-end">
+    <div id="productDetail" class="row justify-content-lg-end">
       <div class="col-12 col-lg-5">
         <div class="w-100 h-1 bg-dark bg-opacity-20 mb-6"></div>
         <p class="fw-medium mb-6">詳細資訊</p>
@@ -195,9 +199,9 @@
           },
         }"
       >
-        <swiper-slide v-for="product in productList" :key="product.id">
-          <RouterLink :to="`/product/${product.id}`" class="mb-7">
-            <img :src="product.imageUrl" alt="" />
+        <swiper-slide v-for="product in filteredProducts" :key="product.id">
+          <RouterLink :to="`/product/${product.id}`" class="mb-7 imgHover">
+            <img :src="product.imageUrl" :alt="product.title" />
           </RouterLink>
           <p class="fw-medium mb-2 font-serifTc">{{ product.title }}</p>
           <p
@@ -234,6 +238,7 @@
   </div>
 
   <button
+    v-if="showAddToCartBtn"
     type="button"
     class="d-md-none z-1 position-fixed bottom-0 start-0 btn btn-primary text-secondary-light w-100 py-4 rounded-0 letter-spacing-2"
     :class="{ disabled: product.id === loadingItem }"
@@ -278,12 +283,13 @@ export default {
     return {
       product: {},
       activeIndex: 0,
-      images: [],
-      qty: 1, //必須要定義原始值
+      images: [], //小圖片娶回來的陣列
+      qty: 1, //定義購物車數量
       productList: [],
       modules: [Autoplay],
       routeID: "",
       isLoading: true,
+      showAddToCartBtn: false, // 是否顯示加入購物車按鈕
     };
   },
   components: {
@@ -293,12 +299,19 @@ export default {
   },
   methods: {
     ...mapActions(favoriteStore, ["toggleFavorite", "isFavorite"]),
+    handleScroll() {
+      const productDetail = document.querySelector("#productDetail");
+      const top = productDetail.getBoundingClientRect().top;
+      this.showAddToCartBtn = top <= 0;
+    },
     getProduct(id) {
       this.$http
         .get(`${VITE_APP_URL}/api/${VITE_APP_PATH}/product/${id}`)
         .then((res) => {
           this.product = res.data.product;
           this.images = this.product.imagesUrl;
+          this.activeIndex = 0;
+          this.getProductList();
         });
     },
     getProductList() {
@@ -306,7 +319,10 @@ export default {
       this.$http
         .get(`${VITE_APP_URL}/api/${VITE_APP_PATH}/products/all`)
         .then((res) => {
-          this.productList = res.data.products;
+          this.productList = this.filterCurrentProduct(
+            res.data.products.reverse(),
+            this.product.id
+          );
         })
         .catch((error) => {
           alert(error.data.message);
@@ -315,17 +331,12 @@ export default {
           this.isLoading = false;
         });
     },
+    filterCurrentProduct(products, currentProductId) {
+      return products.filter((product) => product.id !== currentProductId);
+    },
     switchImage(index) {
       // 當用戶點擊小圖時，切換至對應的大圖
       this.activeIndex = index;
-    },
-    addQty() {
-      this.qty++;
-    },
-    decreaseQty() {
-      if (this.qty > 1) {
-        this.qty--;
-      }
     },
     ...mapActions(cartStore, ["addToCart", "addNum", "decreaseNum"]),
   },
@@ -333,6 +344,10 @@ export default {
     ...mapState(cartStore, ["loadingItem"]),
     id() {
       return this.$route.params.id;
+    },
+    //過濾輪播產品陣列
+    filteredProducts() {
+      return this.filterCurrentProduct(this.productList, this.product.id);
     },
   },
   watch: {
@@ -393,7 +408,10 @@ export default {
     });
     this.routeID = this.$route.params.id;
     this.getProduct(this.routeID);
-    this.getProductList();
+    window.addEventListener("scroll", this.handleScroll);
+  },
+  beforeUnmount() {
+    window.removeEventListener("scroll", this.handleScroll);
   },
 };
 </script>

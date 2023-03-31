@@ -54,21 +54,33 @@ const router = createRouter({
           path: "/cart",
           name: "cart",
           component: () => import("../views/front/CartView.vue"),
+          meta: {
+            hideCartIcon: true, // 設定此路由不顯示購物車 icon
+          },
         },
         {
           path: "/order",
           name: "order",
           component: () => import("../views/front/OrderView.vue"),
+          meta: {
+            hideCartIcon: true, // 設定此路由不顯示購物車 icon
+          },
         },
         {
           path: "/pay/:id",
           name: "pay",
           component: () => import("../views/front/PayView.vue"),
+          meta: {
+            hideCartIcon: true, // 設定此路由不顯示購物車 icon
+          },
         },
         {
           path: "/complete/:id",
           name: "complete",
           component: () => import("../views/front/OrderComplete.vue"),
+          meta: {
+            hideCartIcon: true, // 設定此路由不顯示購物車 icon
+          },
         },
       ],
     },

@@ -19,7 +19,7 @@
     >
       <div class="col-lg-7 ps-lg-0 mb-6">
         <div>
-          <img :src="article.image" alt="" />
+          <img :src="article.image" :alt="article.title" />
         </div>
       </div>
       <div class="col-lg-5">

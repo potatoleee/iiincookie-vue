@@ -59,9 +59,7 @@
         <div class="col-lg-7 mb-8 mb-lg-0">
           <div class="p-lg-7 rounded-2 shadow-lg-lg">
             <div class="d-flex justify-content-between mb-5">
-              <RouterLink
-                to="/products"
-                class="d-flex align-items-center gap-2 gap-lg-6"
+              <RouterLink to="/products" class="d-flex align-items-center gap-2"
                 ><i class="bi bi-chevron-left fs-xl"></i
                 >還有想要購買的商品嗎？</RouterLink
               >

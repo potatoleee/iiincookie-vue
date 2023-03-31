@@ -35,6 +35,9 @@
       <!-- 購物車 start -->
       <div class="col-lg-7 mb-8 mb-lg-0">
         <div class="p-lg-7 rounded-2 shadow-lg-lg">
+          <RouterLink to="/cart" class="d-flex align-items-center gap-2 mb-5"
+            ><i class="bi bi-chevron-left fs-xl"></i>返回購物車</RouterLink
+          >
           <div
             class="d-flex justify-content-between align-items-center pb-4 border-bottom border-dark border-opacity-10"
           >

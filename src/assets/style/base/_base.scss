@@ -53,6 +53,9 @@ input[type="radio"]{
     appearance: radio;
 }
 
+.btn:disabled{
+    border: 0;
+}
 
 .material-symbols-outlined {
   font-variation-settings:

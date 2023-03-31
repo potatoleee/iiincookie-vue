@@ -126,14 +126,11 @@
             <div class="mask-bg"></div>
             <img
               src="https://storage.googleapis.com/vue-course-api.appspot.com/week3dean/1678759838512.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=Wj3ExWAXlZp4063bH3EYYO4qi2a7xP9gayJTFwNkoTv1XLJEJh%2FChHMkjyIA1T0Cv%2Fc0yxun67LEZFSYzM7btpuZ2LVfw%2BgsvLqb2JrC6nPngeFZwx90coEqKE%2FvaqL3%2Bo25dPtVp1lBc9NJMwpPud1NjaZXRgpC5HlWvrHQ6zYYE%2FiRB5AQklVQltBDPzTZHdTSH7cyBHYnsu5%2FGwj6J47ThZ%2Fh%2Bm25q4y6vC%2FMFjNkUH%2BGYzMFOR5qK0flc8%2FDtUHhZYJwo7YhdCSC%2FrRy1jDLkKtcvWerl0hC0K%2FcvnhnTo1kVLyuALzxO67ghpM70RRsGkdaZL9moP3TPTZ1wA%3D%3D"
-              alt=""
+              alt="伯爵巧克力夾餡餅乾"
             />
           </RouterLink>
         </div>
       </div>
-      <!-- <div class="w-50">
-      <img src="../../assets/images/motcha02.jpg" alt="" />
-    </div> -->
     </div>
     <div class="container-fluid p-0 mb-17">
       <div class="w-80 w-md-40 mt-md-m10 mt-0">
@@ -141,7 +138,7 @@
           <div class="mask-bg"></div>
           <img
             src="https://storage.googleapis.com/vue-course-api.appspot.com/week3dean/1678760260375.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=J0xfHnX%2FcMxXd8z3Nubhmjq6jbDnO%2FUTQ%2F%2FtMYXT1RU789510uwQVMoqt0NP1UziDDKS3YiKOlgeFDIzk0vZLJljN%2B0CwU6hdjz4kafrdwzBZ%2BYrqPkIsE4NhNOpZ5zSpC3chwgKgxz%2FhXaGCf%2BoZFCBr7X%2FO2vMIGM7%2FxLJ2XGCuZVejyDfLumZLMK4IahFWh54MuPkNK5niKN0eIwAjN6uctA1Jz01yTyb4KmtAgmj%2Bp2ImF09qSKfLErXEncv8tBXgxpVRuGJ7LyDh9DBol6RrvZSeF72XofLvEngPOltJdTVCvT3ZFNpgPd8SEvaP5rlPSog4XBSAA2E6wHQaA%3D%3D"
-            alt=""
+            alt="小山園抹茶夾餡餅乾"
           />
         </RouterLink>
       </div>
@@ -173,7 +170,7 @@
               <div class="mask-bg"></div>
               <img
                 src="https://storage.googleapis.com/vue-course-api.appspot.com/week3dean/1678760490256.JPG?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=CHLnOCv8b0K71K1rAL%2FZAYdMZM6BafwIlky6AE6ICD%2BNWXFSZIyis8pZJdubTt%2BgbFVjpvfSo8pNRYulZbrIC3%2BahlnjmIOrBFANo%2FJXDNLZwPQ5506kxEhKQnHLNX3wmBk4U9HDaXwT9lV5a%2Bndwm5U9GgRFv6o%2FXIHsUG9UCIV%2F8TJoF1qFGimbxMa4x8HRJtlqUxSwyY1TlbagEJeGAJCpmfCg31bjmqZ9ZfMut1UTKsCyF%2Ftqnf%2B3SgEKusmjwoFp3ACTo3ImGemyv%2Bj7SZLPAr%2FRg2Hsjqt3Z9h3%2Bt%2B93lASSuhhgDwWJPZPqtcA%2FIgGmD65hbiJWa89gqHqg%3D%3D"
-                alt=""
+                alt="綜合鐵盒餅乾"
               />
             </RouterLink>
           </div>
@@ -207,7 +204,7 @@
             <img
               class="d-none d-lg-block"
               src="https://storage.googleapis.com/vue-course-api.appspot.com/week3dean/1678761911221.JPG?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=cfU4iq0JgtoN6QYivwb7LoDaqX4n9Dk9QOEPTCJTsuotezm%2BOMxzeqwWDaupAa3PsVCR1p39VJdqM1hAp8YifA7orW4NDFqUiZGidZuu8UrxKs5Eml8QbWqjMRwoJAmhFzCw8wQzrDW%2F2k8SCVt%2BTnDz%2BZotIB5UIQhlnPuY1Q%2BkAKRdoHYCOwkvkx8AGqs6WZMuGwdajHg6jjwTj9JzSPSgVSQxeLgrqCTQBrpzOmDUGT56fOWu%2Fzlz4VPRdGHUCukBYcN2TEHwKE3mDIeUp5Fa0%2BdwLu0OnQDD9vOUaAVGRjkbMN2dxjKcvCuiXEI3Hrr0VjYZ59%2Fa4GM0sxAI4Q%3D%3D"
-              alt=""
+              alt="大人味焦糖布丁"
             />
           </RouterLink>
           <RouterLink
@@ -218,7 +215,7 @@
             <img
               class="d-lg-none"
               src="https://storage.googleapis.com/vue-course-api.appspot.com/week3dean/1678762743183.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=Kz9JxZKYDBZ%2BjNFRCxPYV8UeIskjVO9g6qn16CJZ7wxTCw8v1CSAVZb3%2F4Kta4%2B8UEY9tRX%2BFQx21MfooWlYgwCOSG24i%2FI12K5uyYXTtdPzAxnXwBba3CgQtf%2B%2FU54jCXqtYTgRutKZlNpiibLMUv7jNTIolD92UOR57Yw5I%2Fw8FamxRgCu7HoPOBDI0XcE6RXAYOSXOnLhwcXZQ94m2DZITAnpP0rMVfNBhND8d33X%2BHPrT46mUGe3Xv0QyH6C7zaPlkVlREY%2FSk0m1ecyyvD5ziuSwK8iqCuiB%2FgHEZPsAUltOTO168pD2hY%2FpxokLxAwh8S9Cq8OAprOkB8wKw%3D%3D"
-              alt=""
+              alt="大人味焦糖布丁"
             />
           </RouterLink>
         </div>
@@ -267,7 +264,7 @@
         >
           <swiper-slide v-for="product in productList" :key="product.id">
             <RouterLink :to="`/product/${product.id}`" class="mb-7 imgHover">
-              <img :src="product.imageUrl" alt="" />
+              <img :src="product.imageUrl" :alt="product.title" />
             </RouterLink>
             <p class="fw-medium mb-2 font-serifTc">{{ product.title }}</p>
             <p
@@ -528,7 +525,7 @@ export default {
       this.$http
         .get(`${VITE_APP_URL}/api/${VITE_APP_PATH}/products/all`)
         .then((res) => {
-          this.productList = res.data.products;
+          this.productList = res.data.products.reverse();
           this.isLoading = false;
         })
         .catch((error) => {
