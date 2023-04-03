@@ -7,34 +7,36 @@
     aria-hidden="true"
     ref="deleteModal"
   >
-    <div class="modal-dialog">
-      <div class="modal-content border-0">
-        <div class="modal-header bg-danger text-white">
-          <h5 id="deleteModalLabel" class="modal-title">
-            <span>刪除產品</span>
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 bg-secondary py-5">
+        <div class="modal-header justify-content-center border-0 pb-0">
+          <h5 id="deleteAllModalLabel" class="modal-title">
+            <span>刪除{{ deleteModalTitle }}</span>
           </h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body text-center mb-7">
           是否刪除
-          <strong class="text-danger">{{ deleteItem.title }}</strong>
+          <strong class="text-primary">{{ deleteItem.title }}</strong>
+          <strong class="text-primary" v-if="!deleteItem.title">{{
+            deleteItem.id
+          }}</strong>
           (刪除後將無法恢復)。
         </div>
-        <div class="modal-footer">
+        <div class="border-0 d-flex flex-column flex-lg-row p-5 gap-6">
           <button
             type="button"
-            class="btn btn-outline-secondary"
-            data-bs-dismiss="modal"
+            class="btn btn-primary text-secondary-light w-lg-50"
+            @click="deleteConfirm"
           >
-            取消
-          </button>
-          <button type="button" class="btn btn-danger" @click="deleteConfirm">
             確認刪除
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-dark w-lg-50"
+            data-bs-dismiss="modal"
+            @click="hide"
+          >
+            不要刪除
           </button>
         </div>
       </div>
@@ -46,7 +48,7 @@
 import { Modal } from "bootstrap";
 // const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
 export default {
-  props: ["deleteItem"],
+  props: ["deleteItem", "deleteModalTitle"],
   data() {
     return {
       deleteModal: "",

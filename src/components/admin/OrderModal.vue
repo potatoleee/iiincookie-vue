@@ -78,7 +78,11 @@
           <button type="button" class="btn btn-outline-secondary" @click="hide">
             取消
           </button>
-          <button type="button" class="btn btn-primary" @click="orderConfirm">
+          <button
+            type="button"
+            class="btn btn-primary text-light"
+            @click="orderConfirm"
+          >
             確認
           </button>
         </div>

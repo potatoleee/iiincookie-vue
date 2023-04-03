@@ -3,8 +3,8 @@
     <!-- 左側導覽列 -->
     <div class="bg-secondary h-100vh p-7 dashboard-nav">
       <nav class="d-flex flex-column align-items-start gap-9">
-        <img src="../assets/images/logo.svg" alt="" />
-        <RouterLink to="/admin/products" class="fs-1">產品管理</RouterLink>
+        <img src="../assets/images/logo.svg" alt="餅乾生產餡後台" />
+        <RouterLink to="/admin" class="fs-1">產品管理</RouterLink>
         <RouterLink to="/admin/orders">訂單管理</RouterLink>
         <RouterLink to="/admin/coupons">優惠券管理</RouterLink>
         <RouterLink to="/admin/articles">文章管理</RouterLink>
@@ -14,17 +14,22 @@
     <!-- 左側導覽列 -->
     <!-- 主要內榮-->
     <div class="dashboard-content p-7 px-10">
-      <RouterView></RouterView>
+      <RouterView v-if="check"></RouterView>
     </div>
     <!-- 主要內榮-->
   </div>
 </template>
-<style lang="scss"></style>
+
 <script>
 import { RouterView } from "vue-router";
 import { Toast } from "../utils/toast.js";
 const { VITE_APP_URL } = import.meta.env;
 export default {
+  data() {
+    return {
+      check: false,
+    };
+  },
   methods: {
     logout() {
       this.$http.post(`${VITE_APP_URL}/logout`).then(() => {
@@ -48,8 +53,9 @@ export default {
 
       this.$http
         .post(`${VITE_APP_URL}/api/user/check`)
-        .then((res) => {
-          console.log(res);
+        .then(() => {
+          this.check = true;
+
           Toast.fire({
             icon: "success",
             title: "登入成功",

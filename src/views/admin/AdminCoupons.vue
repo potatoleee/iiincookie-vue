@@ -3,7 +3,7 @@
   <div class="text-end mt-4">
     <button
       type="button"
-      class="btn btn-primary"
+      class="btn btn-primary text-light"
       @click="openModal('new', coupon)"
     >
       建立新優惠券
@@ -64,6 +64,7 @@
 
   <DeleteModal
     :deleteItem="tempCoupon"
+    :deleteModalTitle="'優惠券'"
     @del-item="deleteCoupon"
     ref="deleteModal"
   ></DeleteModal>
@@ -152,12 +153,6 @@ export default {
     },
   },
   mounted() {
-    //取出Token
-    const token = document.cookie.replace(
-      /(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/,
-      "$1"
-    );
-    this.$http.defaults.headers.common["Authorization"] = token;
     this.getCouponList();
   },
   components: {

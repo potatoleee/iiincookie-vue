@@ -21,80 +21,111 @@
             aria-label="Close"
           ></button>
         </div>
-        <div class="modal-body">
-          <div class="row">
-            <div class="mb-3 col-12">
-              <label for="coupon_title" class="form-label">優惠券名稱</label>
-              <input
-                id="coupon_title"
-                type="text"
-                class="form-control"
-                placeholder="請輸入優惠券名稱"
-                v-model="tempCoupon.title"
-              />
-            </div>
-          </div>
-          <div class="row">
-            <div class="mb-3 col-12">
-              <label for="coupon_code" class="form-label">優惠券代碼</label>
-              <input
-                id="coupon_code"
-                type="text"
-                class="form-control"
-                placeholder="請輸入優惠券代碼"
-                v-model="tempCoupon.code"
-              />
-            </div>
-          </div>
-          <div class="row">
-            <div class="mb-3 col-12">
-              <label for="coupon_percent" class="form-label">優惠折扣</label>
-              <input
-                id="coupon_percent"
-                type="number"
-                class="form-control"
-                placeholder="請輸入優惠百分比"
-                v-model.number="tempCoupon.percent"
-              />
-            </div>
-          </div>
-          <div class="row">
-            <div class="mb-3 col-12">
-              <label for="coupon_endDate" class="form-label"
-                >優惠券到期日</label
-              >
-              <input
-                id="coupon_endDate"
-                type="date"
-                class="form-control"
-                placeholder="請選擇優惠券到期日"
-                v-model="due_date"
-              />
-            </div>
-          </div>
+        <VForm ref="form" v-slot="{ errors }" @submit="confirm">
+          <div class="modal-body">
+            <div class="row">
+              <div class="mb-3 col-12">
+                <label for="coupon_title" class="form-label">優惠券名稱</label>
 
-          <div class="form-check">
-            <input
-              id="is_enabled"
-              class="form-check-input"
-              type="checkbox"
-              v-model="tempCoupon.is_enabled"
-              :true-value="1"
-              :false-value="0"
-            />
-            <label class="form-check-label" for="is_enabled">{{
-              tempCoupon.is_enabled ? "啟用" : "不啟用"
-            }}</label>
+                <VField
+                  id="coupon_title"
+                  name="優惠券名稱"
+                  type="text"
+                  class="form-control"
+                  :class="{ 'is-invalid': errors['優惠券名稱'] }"
+                  placeholder="請輸入優惠券名稱"
+                  v-model="tempCoupon.title"
+                  rules="required"
+                ></VField>
+                <ErrorMessage
+                  name="優惠券名稱"
+                  class="invalid-feedback"
+                ></ErrorMessage>
+              </div>
+            </div>
+            <div class="row">
+              <div class="mb-3 col-12">
+                <label for="coupon_code" class="form-label">優惠券代碼</label>
+                <VField
+                  id="coupon_code"
+                  name="優惠券代碼"
+                  type="text"
+                  class="form-control"
+                  :class="{ 'is-invalid': errors['優惠券代碼'] }"
+                  rules="required"
+                  placeholder="請輸入優惠券代碼"
+                  v-model="tempCoupon.code"
+                >
+                </VField>
+                <ErrorMessage
+                  name="優惠券代碼"
+                  class="invalid-feedback"
+                ></ErrorMessage>
+              </div>
+            </div>
+            <div class="row">
+              <div class="mb-3 col-12">
+                <label for="coupon_percent" class="form-label">優惠折扣</label>
+                <VField
+                  id="coupon_percent"
+                  name="優惠折扣"
+                  type="number"
+                  class="form-control"
+                  :class="{ 'is-invalid': errors['優惠折扣'] }"
+                  rules="required|between:1,100"
+                  placeholder="請輸入優惠百分比 (60 = 6折)"
+                  v-model.number="tempCoupon.percent"
+                  min="1"
+                  max="100"
+                ></VField>
+                <ErrorMessage
+                  name="優惠折扣"
+                  class="invalid-feedback"
+                ></ErrorMessage>
+              </div>
+            </div>
+            <div class="row">
+              <div class="mb-3 col-12">
+                <label for="coupon_endDate" class="form-label"
+                  >優惠券到期日</label
+                >
+                <input
+                  id="coupon_endDate"
+                  type="date"
+                  class="form-control"
+                  placeholder="請選擇優惠券到期日"
+                  v-model="due_date"
+                  :min="minDate"
+                />
+              </div>
+            </div>
+            <div class="form-check">
+              <input
+                id="is_enabled"
+                class="form-check-input"
+                type="checkbox"
+                v-model="tempCoupon.is_enabled"
+                :true-value="1"
+                :false-value="0"
+              />
+              <label class="form-check-label" for="is_enabled">{{
+                tempCoupon.is_enabled ? "啟用" : "不啟用"
+              }}</label>
+            </div>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-outline-secondary" @click="hide">
-            取消
-          </button>
-          <button type="button" class="btn btn-primary" @click="confirm">
-            {{ this.isNew ? "新增優惠券" : "更新優惠券" }}
-          </button>
-        </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              @click="hide"
+            >
+              取消
+            </button>
+            <button type="submit" class="btn btn-primary text-light">
+              {{ this.isNew ? "新增優惠券" : "更新優惠券" }}
+            </button>
+          </div>
+        </VForm>
       </div>
     </div>
   </div>
@@ -125,7 +156,7 @@ export default {
         http = "put";
         url = `${VITE_APP_URL}/api/${VITE_APP_PATH}/admin/coupon/${this.tempCoupon.id}`;
       }
-      this.$http[http](url, { data: this.tempCoupon }) //這邊格式比較特別本來，要對照文件給的格式放入data
+      this.$http[http](url, { data: this.tempCoupon })
         .then((res) => {
           Toast.fire({
             icon: "success",
@@ -146,6 +177,16 @@ export default {
     },
     hide() {
       this.couponsModal.hide();
+    },
+  },
+  computed: {
+    minDate() {
+      // 取得今天的日期
+      const today = new Date();
+      // 設定日期格式為 "YYYY-MM-DD"
+      const formattedDate = today.toISOString().substr(0, 10);
+      // 回傳今天的日期
+      return formattedDate;
     },
   },
   watch: {

@@ -24,7 +24,7 @@
           <label for="password">請輸入密碼 Password</label>
         </div>
         <button
-          class="btn btn-primary w-100 py-2 d-block mx-auto loginBtn"
+          class="btn btn-primary text-light w-100 py-2 d-block mx-auto"
           type="submit"
           @click="login"
         >
@@ -73,7 +73,7 @@ export default {
             )};`;
 
             //跳轉至後台頁面
-            this.$router.push("/admin/products");
+            this.$router.push("/admin");
           })
           .catch((error) => {
             alert(error.response.data.message);

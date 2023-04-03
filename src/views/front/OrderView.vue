@@ -46,8 +46,8 @@
             </p>
             <p class="fs-lg">
               總金額：
-              <span class="text-primary font-arimo"
-                >NT$ {{ cartList.final_total }}</span
+              <span class="text-primary font-arimo">
+                NT$ {{ Math.round(cartList.final_total) }}</span
               >
             </p>
           </div>
@@ -87,7 +87,9 @@
           </p>
           <VForm ref="form" v-slot="{ errors }" @submit="createOrder">
             <div class="mb-3">
-              <label for="email" class="form-label">Email</label>
+              <label for="email" class="form-label"
+                >Email<span class="text-danger">*</span></label
+              >
               <VField
                 id="email"
                 name="email"
@@ -105,7 +107,9 @@
             </div>
 
             <div class="mb-3">
-              <label for="name" class="form-label">收件人姓名</label>
+              <label for="name" class="form-label"
+                >收件人姓名<span class="text-danger">*</span></label
+              >
               <VField
                 id="name"
                 name="姓名"
@@ -120,7 +124,9 @@
             </div>
 
             <div class="mb-3">
-              <label for="tel" class="form-label">收件人電話</label>
+              <label for="tel" class="form-label"
+                >收件人電話<span class="text-danger">*</span></label
+              >
               <VField
                 id="tel"
                 name="電話"
@@ -135,7 +141,9 @@
             </div>
 
             <div class="mb-3">
-              <label for="address" class="form-label">收件人地址</label>
+              <label for="address" class="form-label"
+                >收件人地址 <span class="text-danger">*</span></label
+              >
               <VField
                 id="address"
                 name="地址"

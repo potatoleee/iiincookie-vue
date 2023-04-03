@@ -44,9 +44,9 @@
 
             <p class="fs-lg">
               總金額：
-              <span class="text-primary"
-                ><span class="font-arimo">NT$ {{ orderInfo.total }}</span></span
-              >
+              <span class="text-primary font-arimo"
+                >NT$ {{ Math.round(orderInfo.total) }}
+              </span>
             </p>
           </div>
 
@@ -92,10 +92,12 @@
               class="d-flex ps-0 p-2 border-bottom border-dark border-opacity-20"
             >
               <p class="fw-regular d-md-none">
-                訂單金額： NT$ {{ orderInfo.total }}
+                訂單金額： NT$ {{ Math.round(orderInfo.total) }}
               </p>
               <p class="fw-regular d-none d-md-block col-4">訂單金額：</p>
-              <p class="col d-none d-md-block col">NT$ {{ orderInfo.total }}</p>
+              <p class="col d-none d-md-block col">
+                NT$ {{ Math.round(orderInfo.total) }}
+              </p>
             </li>
             <li
               class="d-flex ps-0 p-2 border-bottom border-dark border-opacity-20"

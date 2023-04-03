@@ -21,197 +21,270 @@
             aria-label="Close"
           ></button>
         </div>
-        <div class="modal-body">
-          <div class="row">
-            <div class="col-sm-4">
-              <!-- 主要圖片 start-->
-              <UploadImages></UploadImages>
-              <div class="mb-3">
-                <label for="imageUrl" class="form-label">主要圖片</label>
-                <input
-                  v-model="tempData.imageUrl"
-                  type="text"
-                  class="form-control mb-2"
-                  placeholder="請輸入圖片連結"
-                />
-                <img class="img-fluid" :src="tempData.imageUrl" />
-              </div>
-              <!-- 主要圖片 end-->
-              <!-- 次要圖片 start -->
-              <h3 class="mb-3">次要圖片</h3>
-              <!-- 判斷是否已經有建立 次要照片 陣列-->
-              <div v-if="Array.isArray(tempData.imagesUrl)">
-                <div
-                  class="mb-1"
-                  v-for="(image, key) in tempData.imagesUrl"
-                  :key="key"
-                >
-                  <div class="mb-3">
-                    <label for="imageUrl"> 圖片網址</label>
-                    <input
-                      type="text"
-                      v-model="tempData.imagesUrl[key]"
-                      class="form-control"
-                      placeholder="請輸入圖片連結"
-                    />
-                  </div>
-                  <img class="img-fluid" :src="image" alt="" />
+        <VForm ref="form" v-slot="{ errors }" @submit="confirm">
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-sm-4">
+                <!-- 主要圖片 start-->
+                <UploadImages></UploadImages>
+                <div class="mb-3">
+                  <label for="imageUrl" class="form-label">主要圖片</label>
+                  <VField
+                    v-model="tempData.imageUrl"
+                    type="text"
+                    name="主要圖片"
+                    class="form-control mb-2"
+                    :class="{ 'is-invalid': errors['主要圖片'] }"
+                    rules="required"
+                    placeholder="請輸入圖片連結"
+                  ></VField>
+                  <ErrorMessage
+                    name="主要圖片"
+                    class="invalid-feedback"
+                  ></ErrorMessage>
+
+                  <img class="img-fluid" :src="tempData.imageUrl" />
                 </div>
-                <!-- 前面判斷陣列為空的時後 後面 tempData.imagesUrl[tempData.imagesUrl.length - 1] 的原因是因為當長度1時 會得到 tempData.imagesUrl[0] 再來長度為2時 tempData.imagesUrl[1]第二筆-->
-                <div
-                  v-if="
-                    tempData.imagesUrl.length == 0 ||
-                    tempData.imagesUrl[tempData.imagesUrl.length - 1]
-                  "
-                >
-                  <button
-                    class="btn btn-outline-primary btn-sm d-block w-100"
-                    @click="tempData.imagesUrl.push('')"
+                <!-- 主要圖片 end-->
+                <!-- 次要圖片 start -->
+                <h3 class="mb-3">次要圖片</h3>
+                <!-- 判斷是否已經有建立 次要照片 陣列-->
+                <div v-if="Array.isArray(tempData.imagesUrl)">
+                  <div
+                    class="mb-1"
+                    v-for="(image, key) in tempData.imagesUrl"
+                    :key="key"
                   >
-                    新增圖片2
-                  </button>
+                    <div class="mb-3">
+                      <label for="imageUrl"> 圖片網址</label>
+                      <input
+                        type="text"
+                        v-model="tempData.imagesUrl[key]"
+                        class="form-control"
+                        placeholder="請輸入圖片連結"
+                      />
+                    </div>
+                    <img class="img-fluid" :src="image" alt="" />
+                  </div>
+                  <!-- 前面判斷陣列為空的時後 後面 tempData.imagesUrl[tempData.imagesUrl.length - 1] 的原因是因為當長度1時 會得到 tempData.imagesUrl[0] 再來長度為2時 tempData.imagesUrl[1]第二筆-->
+                  <div
+                    v-if="
+                      tempData.imagesUrl.length == 0 ||
+                      tempData.imagesUrl[tempData.imagesUrl.length - 1]
+                    "
+                  >
+                    <button
+                      type="button"
+                      class="btn btn-outline-primary btn-sm d-block w-100"
+                      @click="tempData.imagesUrl.push('')"
+                    >
+                      新增圖片2
+                    </button>
+                  </div>
+                  <div v-else>
+                    <button
+                      type="button"
+                      class="btn btn-outline-danger btn-sm d-block w-100"
+                      @click="tempData.imagesUrl.pop()"
+                    >
+                      刪除圖片
+                    </button>
+                  </div>
                 </div>
+                <!-- 當判斷 tempData.imagesUrl 不存在時開啟 可能新建產品時就沒有新增次要照片-->
                 <div v-else>
                   <button
                     type="button"
-                    class="btn btn-outline-danger btn-sm d-block w-100"
-                    @click="tempData.imagesUrl.pop()"
+                    class="btn btn-outline-primary btn-sm d-block w-100"
+                    @click="createImage"
                   >
-                    刪除圖片
+                    新增圖片1
                   </button>
                 </div>
+                <!-- 次要圖片 end -->
               </div>
-              <!-- 當判斷 tempData.imagesUrl 不存在時開啟 可能新建產品時就沒有新增次要照片-->
-              <div v-else>
-                <button
-                  class="btn btn-outline-primary btn-sm d-block w-100"
-                  @click="createImage"
-                >
-                  新增圖片1
-                </button>
-              </div>
-              <!-- 次要圖片 end -->
-            </div>
-            <div class="col-sm-8">
-              <div class="mb-3">
-                <label for="title" class="form-label">標題</label>
-                <input
-                  id="title"
-                  type="text"
-                  class="form-control"
-                  placeholder="請輸入標題"
-                  v-model="tempData.title"
-                />
-              </div>
+              <div class="col-sm-8">
+                <div class="mb-3">
+                  <label for="title" class="form-label">產品名稱</label>
+                  <VField
+                    id="title"
+                    type="text"
+                    class="form-control"
+                    name="產品名稱"
+                    :class="{ 'is-invalid': errors['產品名稱'] }"
+                    rules="required"
+                    placeholder="請輸入產品名稱"
+                    v-model="tempData.title"
+                  ></VField>
+                  <ErrorMessage
+                    name="產品名稱"
+                    class="invalid-feedback"
+                  ></ErrorMessage>
+                </div>
 
-              <div class="row">
-                <div class="mb-3 col-md-6">
-                  <label for="category" class="form-label">分類</label>
-                  <input
-                    id="category"
-                    type="text"
-                    class="form-control"
-                    placeholder="請輸入分類"
-                    v-model="tempData.category"
-                  />
+                <div class="row">
+                  <div class="mb-3 col-md-6">
+                    <label for="category" class="form-label">分類</label>
+                    <VField
+                      id="category"
+                      type="text"
+                      class="form-control"
+                      name="分類"
+                      :class="{ 'is-invalid': errors['分類'] }"
+                      rules="required"
+                      placeholder="請輸入分類"
+                      v-model="tempData.category"
+                    ></VField>
+                    <ErrorMessage
+                      name="分類"
+                      class="invalid-feedback"
+                    ></ErrorMessage>
+                  </div>
+                  <div class="mb-3 col-md-6">
+                    <label for="price" class="form-label">單位</label>
+                    <VField
+                      id="unit"
+                      type="text"
+                      class="form-control"
+                      name="單位"
+                      :class="{ 'is-invalid': errors['單位'] }"
+                      rules="required"
+                      placeholder="請輸入單位"
+                      v-model="tempData.unit"
+                    ></VField>
+                    <ErrorMessage
+                      name="單位"
+                      class="invalid-feedback"
+                    ></ErrorMessage>
+                  </div>
                 </div>
-                <div class="mb-3 col-md-6">
-                  <label for="price" class="form-label">單位</label>
-                  <input
-                    id="unit"
-                    type="text"
-                    class="form-control"
-                    placeholder="請輸入單位"
-                    v-model="tempData.unit"
-                  />
-                </div>
-              </div>
 
-              <div class="row">
-                <div class="mb-3 col-md-6">
-                  <label for="origin_price" class="form-label">原價</label>
-                  <input
-                    id="origin_price"
-                    type="number"
-                    min="0"
-                    class="form-control"
-                    placeholder="請輸入原價"
-                    v-model.number="tempData.origin_price"
-                  />
+                <div class="row">
+                  <div class="mb-3 col-md-6">
+                    <label for="origin_price" class="form-label">原價</label>
+                    <VField
+                      id="origin_price"
+                      type="number"
+                      min="0"
+                      class="form-control"
+                      name="原價"
+                      :class="{ 'is-invalid': errors['原價'] }"
+                      rules="required"
+                      placeholder="請輸入原價"
+                      v-model.number="tempData.origin_price"
+                    ></VField>
+                    <ErrorMessage
+                      name="原價"
+                      class="invalid-feedback"
+                    ></ErrorMessage>
+                  </div>
+                  <div class="mb-3 col-md-6">
+                    <label for="price" class="form-label">售價</label>
+                    <VField
+                      id="price"
+                      type="number"
+                      min="0"
+                      class="form-control"
+                      name="售價"
+                      :class="{ 'is-invalid': errors['售價'] }"
+                      rules="required"
+                      placeholder="請輸入售價"
+                      v-model.number="tempData.price"
+                    ></VField>
+                    <ErrorMessage
+                      name="售價"
+                      class="invalid-feedback"
+                    ></ErrorMessage>
+                  </div>
                 </div>
-                <div class="mb-3 col-md-6">
-                  <label for="price" class="form-label">售價</label>
-                  <input
-                    id="price"
-                    type="number"
-                    min="0"
-                    class="form-control"
-                    placeholder="請輸入售價"
-                    v-model.number="tempData.price"
-                  />
+                <div class="row">
+                  <div class="mb-3 col-md-12">
+                    <label for="flavor" class="form-label">口味</label>
+                    <VField
+                      id="flavor"
+                      type="text"
+                      class="form-control"
+                      name="口味"
+                      :class="{ 'is-invalid': errors['口味'] }"
+                      rules="required"
+                      placeholder="請輸入口味"
+                      v-model.number="tempData.flavor"
+                    ></VField>
+                    <ErrorMessage
+                      name="口味"
+                      class="invalid-feedback"
+                    ></ErrorMessage>
+                  </div>
                 </div>
-              </div>
-              <hr />
-              <div class="row">
-                <div class="mb-3 col-md-12">
-                  <label for="flavor" class="form-label">口味</label>
-                  <input
-                    id="flavor"
+                <div class="mb-3">
+                  <label for="description" class="form-label">產品描述</label>
+                  <VField
+                    id="description"
                     type="text"
                     class="form-control"
-                    placeholder="請輸入口味"
-                    v-model.number="tempData.flavor"
-                  />
+                    name="產品描述"
+                    :class="{ 'is-invalid': errors['產品描述'] }"
+                    rules="required"
+                    as="textarea"
+                    placeholder="請輸入產品描述"
+                    v-model="tempData.description"
+                  >
+                  </VField>
+                  <ErrorMessage
+                    name="產品描述"
+                    class="invalid-feedback"
+                  ></ErrorMessage>
                 </div>
-              </div>
-              <div class="mb-3">
-                <label for="description" class="form-label">產品描述</label>
-                <textarea
-                  id="description"
-                  type="text"
-                  class="form-control"
-                  placeholder="請輸入產品描述"
-                  v-model="tempData.description"
-                >
-                </textarea>
-              </div>
-              <div class="mb-3">
-                <label for="content" class="form-label">說明內容</label>
-                <textarea
-                  id="description"
-                  type="text"
-                  class="form-control"
-                  placeholder="請輸入說明內容"
-                  v-model="tempData.content"
-                >
-                </textarea>
-              </div>
-              <div class="mb-3">
-                <div class="form-check">
-                  <input
-                    id="is_enabled"
-                    class="form-check-input"
-                    type="checkbox"
-                    v-model="tempData.is_enabled"
-                    :true-value="1"
-                    :false-value="0"
-                  />
-                  <label class="form-check-label" for="is_enabled">{{
-                    tempData.is_enabled ? "啟用" : "不啟用"
-                  }}</label>
+                <div class="mb-3">
+                  <label for="content" class="form-label">說明內容</label>
+                  <VField
+                    id="content"
+                    type="text"
+                    class="form-control"
+                    name="說明內容"
+                    :class="{ 'is-invalid': errors['說明內容'] }"
+                    rules="required"
+                    as="textarea"
+                    placeholder="請輸入說明內容"
+                    v-model="tempData.content"
+                  >
+                  </VField>
+                  <ErrorMessage
+                    name="說明內容"
+                    class="invalid-feedback"
+                  ></ErrorMessage>
+                </div>
+                <div class="mb-3">
+                  <div class="form-check">
+                    <input
+                      id="is_enabled"
+                      class="form-check-input"
+                      type="checkbox"
+                      v-model="tempData.is_enabled"
+                      :true-value="1"
+                      :false-value="0"
+                    />
+                    <label class="form-check-label" for="is_enabled">{{
+                      tempData.is_enabled ? "啟用" : "不啟用"
+                    }}</label>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-outline-secondary" @click="hide">
-            取消
-          </button>
-          <button type="button" class="btn btn-primary" @click="confirm">
-            確認
-          </button>
-        </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              @click="hide"
+            >
+              取消
+            </button>
+            <button type="submit" class="btn btn-primary text-light">
+              確認
+            </button>
+          </div>
+        </VForm>
       </div>
     </div>
   </div>
@@ -281,7 +354,6 @@ export default {
   },
   mounted() {
     this.editProductModal = new Modal(this.$refs.editProductModal);
-    console.log(this.tempData);
   },
 };
 </script>

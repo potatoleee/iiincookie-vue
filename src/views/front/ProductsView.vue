@@ -50,7 +50,7 @@
         </div>
         <ul class="row gy-13">
           <li
-            class="col-6 col-lg-4 d-flex flex-column align-items-center"
+            class="col-sm-6 col-lg-4 d-flex flex-column align-items-center"
             v-for="product in selectCategoryList"
             :key="product.id"
           >

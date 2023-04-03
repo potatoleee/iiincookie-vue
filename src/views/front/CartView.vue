@@ -166,8 +166,28 @@
             </div>
             <div class="d-flex justify-content-between mb-6">
               <p>總計</p>
-              <p class="font-arimo">NT$ {{ cartList.final_total }}</p>
+
+              <p class="font-arimo">NT$ {{ Math.round(cartList.total) }}</p>
             </div>
+            <div class="d-flex justify-content-between mb-6">
+              <p>優惠券折抵</p>
+
+              <p class="font-arimo text-primary">
+                NT$
+                {{
+                  Math.round(cartList.total) - Math.round(cartList.final_total)
+                }}
+              </p>
+            </div>
+
+            <div class="d-flex justify-content-between mb-6">
+              <p>折扣後金額</p>
+
+              <p class="font-arimo text-primary">
+                NT$ {{ Math.round(cartList.final_total) }}
+              </p>
+            </div>
+
             <RouterLink to="/order" class="btn btn-primary text-light w-100"
               >去買單</RouterLink
             >

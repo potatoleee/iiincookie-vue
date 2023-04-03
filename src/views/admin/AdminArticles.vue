@@ -3,7 +3,7 @@
   <div class="text-end mt-4">
     <button
       type="button"
-      class="btn btn-primary"
+      class="btn btn-primary text-light"
       @click="openModal('new', article)"
     >
       建立新文章
@@ -60,9 +60,9 @@
     @update="getArticleList"
   >
   </ArticleModal>
-
   <DeleteModal
     :deleteItem="tempArticle"
+    :deleteModalTitle="'文章'"
     @del-item="deleteArticle"
     ref="deleteModal"
   ></DeleteModal>
@@ -114,7 +114,6 @@ export default {
         .then((res) => {
           this.pagination = res.data.pagination;
           this.articles = res.data.articles;
-          console.log(this.articles);
         })
         .catch((error) => {
           Toast.fire({
@@ -173,12 +172,6 @@ export default {
     },
   },
   mounted() {
-    //取出Token
-    const token = document.cookie.replace(
-      /(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/,
-      "$1"
-    );
-    this.$http.defaults.headers.common["Authorization"] = token;
     this.getArticleList();
   },
   components: {

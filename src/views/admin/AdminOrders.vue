@@ -55,9 +55,11 @@
     @orderConfirm="editOrderModal"
     ref="orderModal"
   ></OrderModal>
+
   <!-- 刪除 Modal start-->
   <DeleteModal
     :deleteItem="tempOrder"
+    :deleteModalTitle="'訂單'"
     @del-item="deleteOrder"
     ref="deleteModal"
   ></DeleteModal>
@@ -153,12 +155,6 @@ export default {
     },
   },
   mounted() {
-    //取出Token
-    const token = document.cookie.replace(
-      /(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/,
-      "$1"
-    );
-    this.$http.defaults.headers.common["Authorization"] = token;
     this.getOrderList();
   },
   components: {

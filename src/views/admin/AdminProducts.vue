@@ -4,7 +4,7 @@
     <div class="text-end mt-4">
       <button
         type="button"
-        class="btn btn-primary"
+        class="btn btn-primary text-light"
         @click="openModal('new', product)"
       >
         建立新產品
@@ -72,7 +72,7 @@
   <!-- 刪除 Modal start-->
   <DeleteModal
     :deleteItem="tempData"
-    @update="getProductList"
+    :deleteModalTitle="'產品'"
     @del-item="deleteProduct"
     ref="deleteModal"
   ></DeleteModal>
@@ -103,11 +103,13 @@ export default {
   methods: {
     //取得後台產品列表
     getProductList(currentPage = 1) {
+      // this.isLoading = true;
       this.$http
         .get(
           `${VITE_APP_URL}/api/${VITE_APP_PATH}/admin/products/?page=${currentPage}`
         )
         .then((res) => {
+          // this.isLoading = false;
           this.pagination = res.data.pagination;
           this.products = res.data.products;
         })
@@ -143,12 +145,18 @@ export default {
           `${VITE_APP_URL}/api/${VITE_APP_PATH}/admin/product/${this.tempData.id}`
         )
         .then((res) => {
-          alert(res.data.message);
+          Toast.fire({
+            icon: "success",
+            title: `${res.data.message}`,
+          });
           this.$refs.deleteModal.hide();
           this.getProductList();
         })
         .catch((error) => {
-          alert(error.response.data.message);
+          Toast.fire({
+            icon: "error",
+            title: `${error.response.data.message}`,
+          });
         });
     },
   },
@@ -159,12 +167,6 @@ export default {
     PaginationComponent,
   },
   mounted() {
-    //取出Token
-    const token = document.cookie.replace(
-      /(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/,
-      "$1"
-    );
-    this.$http.defaults.headers.common["Authorization"] = token;
     this.getProductList();
   },
 };

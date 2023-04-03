@@ -28,7 +28,7 @@
 
           <button
             v-if="myFavoriteList.length > 0"
-            class="btn btn-outline-dark rounded-0 py-1 px-2 text-opacity-50 border-opacity-50 rounded-0"
+            class="btn btn-outline-dark py-1 px-2 text-opacity-50 border-opacity-50"
             @click="openDeleteAllModalFavorites"
           >
             清除全部
@@ -85,10 +85,7 @@
           <p>收藏品項｜{{ myFavoriteList.length }}項</p>
         </div>
         <RouterLink to="/cart">
-          <button
-            class="btn btn-primary text-light rounded-0"
-            @click="toggleFavorites"
-          >
+          <button class="btn btn-primary text-light" @click="toggleFavorites">
             購物車
           </button>
         </RouterLink>
@@ -117,7 +114,7 @@
 
           <button
             v-if="totalQty > 0"
-            class="btn btn-outline-dark rounded-0 py-1 px-2 text-opacity-50 border-opacity-50"
+            class="btn btn-outline-dark py-1 px-2 text-opacity-50 border-opacity-50"
             @click="openDeleteAllModalCart"
           >
             清除全部
@@ -204,10 +201,7 @@
           <p>NT$ {{ cartList.total }}</p>
         </div>
         <RouterLink to="/cart">
-          <button
-            class="btn btn-primary text-light rounded-0"
-            @click="toggleCart"
-          >
+          <button class="btn btn-primary text-light" @click="toggleCart">
             前往結帳
           </button>
         </RouterLink>
@@ -665,6 +659,11 @@ export default {
     toggleMenu() {
       this.isOpen = !this.isOpen;
       this.navMotion.reversed(!this.navMotion.reversed());
+      if (this.isOpen) {
+        document.body.style.overflowY = "hidden";
+      } else {
+        document.body.style.overflowY = "auto";
+      }
     },
     toggleShow(refName) {
       this.$refs[refName].classList.toggle("show");
@@ -710,12 +709,12 @@ export default {
     this.navMotion = gsap.timeline({ paused: true });
     // 開啟動畫
     this.navMotion.to(".menu", {
-      duration: 1,
+      duration: 0.7,
       width: "100%",
       ease: "expo.in",
     });
     this.navMotion.from(".menu ul li", {
-      duration: 1,
+      duration: 0.8,
       y: 20,
       opacity: 0,
       ease: "expo.inOut",
@@ -725,10 +724,10 @@ export default {
     this.navMotion.to(
       ".images",
       {
-        duration: 1,
+        duration: 0.7,
         width: "45%",
         ease: "expo.inOut",
-        delay: -1,
+        delay: -0.7,
       },
       "-=1"
     );

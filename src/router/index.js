@@ -94,7 +94,7 @@ const router = createRouter({
       component: () => import("../views/DashBoard.vue"),
       children: [
         {
-          path: "products",
+          path: "",
           component: () => import("../views/admin/AdminProducts.vue"),
         },
         {

@@ -21,117 +21,151 @@
             aria-label="Close"
           ></button>
         </div>
-        <div class="modal-body">
-          <UploadImages></UploadImages>
-          <div class="row">
-            <div class="mb-3 col-md-12">
-              <label for="article_image" class="form-label">文章圖片網址</label>
+        <VForm ref="form" v-slot="{ errors }" @submit="confirm">
+          <div class="modal-body">
+            <UploadImages></UploadImages>
+            <div class="row">
+              <div class="mb-3 col-md-12">
+                <label for="article_image" class="form-label"
+                  >文章圖片網址</label
+                >
+                <VField
+                  id="article_image"
+                  type="text"
+                  class="form-control"
+                  name="圖片網址"
+                  :class="{ 'is-invalid': errors['圖片網址'] }"
+                  rules="required"
+                  placeholder="請輸入文章圖片網址"
+                  v-model="tempArticle.image"
+                ></VField>
+                <ErrorMessage
+                  name="圖片網址"
+                  class="invalid-feedback"
+                ></ErrorMessage>
+              </div>
+              <img class="img-fluid" :src="tempArticle.image" />
+            </div>
+            <div class="row">
+              <div class="mb-3 col-md-12">
+                <label for="article_title" class="form-label">文章標題</label>
+                <VField
+                  id="article_title"
+                  type="text"
+                  class="form-control"
+                  name="文章標題"
+                  :class="{ 'is-invalid': errors['文章標題'] }"
+                  rules="required"
+                  placeholder="請輸入文章標題"
+                  v-model="tempArticle.title"
+                ></VField>
+                <ErrorMessage
+                  name="文章標題"
+                  class="invalid-feedback"
+                ></ErrorMessage>
+              </div>
+            </div>
+            <div class="row">
+              <div class="mb-3 col-md-12">
+                <label for="article_create_at" class="form-label"
+                  >創立時間</label
+                >
+                <input
+                  id="article_create_at"
+                  type="date"
+                  class="form-control"
+                  placeholder="請輸入文章標題"
+                  v-model="create_at"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <div class="mb-3 col-md-12">
+                <label for="article_author" class="form-label">文章作者</label>
+                <VField
+                  id="article_author"
+                  type="text"
+                  class="form-control"
+                  name="文章作者"
+                  :class="{ 'is-invalid': errors['文章作者'] }"
+                  rules="required"
+                  placeholder="請輸入文章作者"
+                  v-model="tempArticle.author"
+                ></VField>
+                <ErrorMessage
+                  name="文章作者"
+                  class="invalid-feedback"
+                ></ErrorMessage>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="mb-3 col-md-12">
+                <label for="article_content" class="form-label">文章內容</label>
+                <div class="w-100">
+                  <VField
+                    name="文章內容"
+                    rules="required"
+                    :class="{ 'is-invalid': errors['文章內容'] }"
+                    :editor="editor"
+                    v-model="tempArticle.content"
+                    :config="editorConfig"
+                    as="ckeditor"
+                  >
+                  </VField>
+                  <ErrorMessage
+                    name="文章內容"
+                    class="invalid-feedback"
+                  ></ErrorMessage>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="mb-3 col-md-12">
+                <label for="article_tag" class="form-label">文章標籤</label>
+                <VField
+                  id="article_tag"
+                  type="text"
+                  class="form-control"
+                  name="文章標籤"
+                  :class="{ 'is-invalid': errors['文章標籤'] }"
+                  rules="required"
+                  placeholder="請輸入文章標籤"
+                  v-model="tempArticle.tag"
+                ></VField>
+                <ErrorMessage
+                  name="文章標籤"
+                  class="invalid-feedback"
+                ></ErrorMessage>
+              </div>
+            </div>
+            <div class="form-check">
               <input
-                id="article_image"
-                type="text"
-                class="form-control"
-                placeholder="請輸入文章圖片網址"
-                v-model="tempArticle.image"
+                id="isPublic"
+                class="form-check-input"
+                type="checkbox"
+                v-model="tempArticle.isPublic"
+                :true-value="true"
+                :false-value="false"
               />
-            </div>
-            <img class="img-fluid" :src="tempArticle.image" />
-          </div>
-          <div class="row">
-            <div class="mb-3 col-md-12">
-              <label for="article_title" class="form-label">文章標題</label>
-              <input
-                id="article_title"
-                type="text"
-                class="form-control"
-                placeholder="請輸入文章標題"
-                v-model="tempArticle.title"
-              />
+              <label class="form-check-label" for="isPublic">{{
+                tempArticle.isPublic ? "啟用" : "不啟用"
+              }}</label>
             </div>
           </div>
-          <div class="row">
-            <div class="mb-3 col-md-12">
-              <label for="article_create_at" class="form-label">創立時間</label>
-              <input
-                id="article_create_at"
-                type="date"
-                class="form-control"
-                placeholder="請輸入文章標題"
-                v-model="create_at"
-              />
-            </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              @click="hide"
+            >
+              取消
+            </button>
+            <button type="submit" class="btn btn-primary text-light">
+              {{ this.isNew ? "新增文章" : "更新文章" }}
+            </button>
           </div>
-          <div class="row">
-            <div class="mb-3 col-md-12">
-              <label for="article_author" class="form-label">文章作者</label>
-              <input
-                id="article_author"
-                type="text"
-                class="form-control"
-                placeholder="請輸入文章作者"
-                v-model="tempArticle.author"
-              />
-            </div>
-          </div>
-          <div class="row">
-            <div class="mb-3 col-md-12">
-              <label for="article_description" class="form-label"
-                >文章描述</label
-              >
-              <input
-                id="article_description"
-                type="text"
-                class="form-control"
-                placeholder="請輸入文章標題"
-                v-model="tempArticle.description"
-              />
-            </div>
-          </div>
-          <div class="row">
-            <div class="mb-3 col-md-12">
-              <p>文章內容</p>
-            </div>
-            <div class="w-100">
-              <ckeditor
-                :editor="editor"
-                v-model="tempArticle.content"
-                :config="editorConfig"
-              ></ckeditor>
-            </div>
-          </div>
-          <div class="row">
-            <div class="mb-3 col-md-12">
-              <label for="article_tag" class="form-label">文章標籤</label>
-              <input
-                id="article_tag"
-                type="text"
-                class="form-control"
-                placeholder="請輸入文章標題"
-                v-model="tempArticle.tag"
-              />
-            </div>
-          </div>
-          <div class="form-check">
-            <input
-              id="isPublic"
-              class="form-check-input"
-              type="checkbox"
-              v-model="tempArticle.isPublic"
-              :true-value="true"
-              :false-value="false"
-            />
-            <label class="form-check-label" for="isPublic">{{
-              tempArticle.isPublic ? "啟用" : "不啟用"
-            }}</label>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-outline-secondary" @click="hide">
-            取消
-          </button>
-          <button type="button" class="btn btn-primary" @click="confirm">
-            {{ this.isNew ? "新增文章" : "更新文章" }}
-          </button>
-        </div>
+        </VForm>
       </div>
     </div>
   </div>

@@ -33,9 +33,18 @@
     <div class="text-center">
       <p class="text-center fs-xl fs-lg-5xl mb-5">感謝你的支持！</p>
       <p class="mb-1">
-        謝謝你對於本店的支持，我們會盡快將產品寄出讓你品嚐到的 ，希望你會喜歡～
+        謝謝你對於本店的支持，我們會盡快將產品送到您的手上，希望您會喜歡！
       </p>
-      <p class="mb-6">如有任何問題，可以私訊 ig:iiincookie</p>
+      <p class="mb-6">
+        如有任何問題，可以私訊 ig:
+        <a
+          class="d-inline text-primary"
+          href="https://www.instagram.com/iiin.cookies/"
+          target="_blank"
+          >iiincookie
+        </a>
+      </p>
+
       <div class="d-flex flex-column flex-lg-row justify-content-center gap-5">
         <RouterLink
           to="/"
@@ -70,7 +79,7 @@
             <p class="fs-lg">
               總金額：
               <span class="text-primary font-arimo"
-                >NT$ {{ orderInfo.total }}</span
+                >NT$ {{ Math.round(orderInfo.total) }}</span
               >
             </p>
           </div>
@@ -116,10 +125,12 @@
               class="d-flex ps-0 p-2 border-bottom border-dark border-opacity-20"
             >
               <p class="fw-regular d-md-none">
-                訂單金額： NT$ {{ orderInfo.total }}
+                訂單金額： NT$ {{ Math.round(orderInfo.total) }}
               </p>
               <p class="fw-regular d-none d-md-block col-4">訂單金額：</p>
-              <p class="col d-none d-md-block col">NT$ {{ orderInfo.total }}</p>
+              <p class="col d-none d-md-block col">
+                NT$ {{ Math.round(orderInfo.total) }}
+              </p>
             </li>
             <li
               class="d-flex ps-0 p-2 border-bottom border-dark border-opacity-20"
