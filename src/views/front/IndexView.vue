@@ -435,7 +435,7 @@
   &-phone {
     position: fixed;
     right: 4vw;
-    bottom: 1.25vw;
+    bottom: 4.25vw;
     &::before {
       position: absolute;
       content: "";
@@ -754,14 +754,12 @@ export default {
     const mediaQuery = window.matchMedia("(max-width: 767px)");
     this.videoMotion
       .to(".videoCanvas", {
-        // width: "90vw",
-        width: mediaQuery.matches ? "100vw" : "90vw", // 如果是手機版則使用100vw，否則使
+        width: mediaQuery.matches ? "100vw" : "90vw", // 如果是手機版則使用100vw，否則使用90vw
         height: "75vh",
         duration: 2,
         ease: "cubic-bezier(.5, .1, .2, 1)",
       })
       .to(".videoCanvas", {
-        // width: "90vw",
         width: mediaQuery.matches ? "100vw" : "90vw", // 如果是手機版則使用100vw，否則使用90vw
         height: "75vh",
         duration: 40,
@@ -800,7 +798,6 @@ export default {
       ".logo",
       {
         width: "80%",
-        // scale: 5,
         xPercent: "-50",
         y: "75vh",
         yPercent: "-50",
@@ -809,7 +806,8 @@ export default {
         ease: "ease",
       },
       {
-        width: "140",
+        width: mediaQuery.matches ? "110px" : "130px", // 如果是手機版則使用100vw，否則使用90vw
+        // width: "130px",
         y: "0vh",
         opacity: 1,
         yPercent: "-50",
@@ -827,8 +825,9 @@ export default {
     // 在離開路由之前，暫停動畫並刪除它
     // 設定一個回到預設狀態的動畫
     const resetLogo = gsap.timeline();
+    const mediaQuery = window.matchMedia("(max-width: 767px)");
     resetLogo.to(".logo", {
-      width: "auto",
+      width: mediaQuery.matches ? "110px" : "130px", // 如果是手機版則使用100vw，否則使用90vw
       y: "0vh",
       opacity: 1,
       yPercent: "-50",

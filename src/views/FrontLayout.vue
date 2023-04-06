@@ -509,6 +509,7 @@
 }
 .logo {
   position: absolute;
+  width: 130px;
   top: 50%;
   left: 50%;
   z-index: -1;

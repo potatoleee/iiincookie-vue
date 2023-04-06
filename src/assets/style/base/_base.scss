@@ -1,72 +1,70 @@
 // 使footer置底 start
-#app{
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
-main{
-    margin-top: 84px;
+main {
+  margin-top: 84px;
 }
 // 使footer置底 end
 
-body{
-    font-weight: 400;
-    line-height: 1.5;
-    letter-spacing: 0.1em;
-    overflow-x: hidden;//影片滿版原因加上
+body {
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.1em;
+  overflow-x: hidden; //影片滿版原因加上
 }
 
-
-a{
-    text-decoration: none;
-    color: inherit;
-    display: block;
-}     
-
-img{
-    max-width: 100%;
-    height: auto;
-    display: block;
+a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
 }
 
-h1, h2, h3, h4, h5, h6,ul,ol,p{
-    margin: 0;
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
-ol, ul {
-	list-style: none;
-    padding-left: 0;
-}
-textarea{
-    resize: none;
-}
-
-input{
-    // 取消ios預設樣式
-    appearance: none;
-}
-input[type="checkbox"]{
-    appearance: checkbox;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ul,
+ol,
+p {
+  margin: 0;
 }
 
-input[type="radio"]{
-    appearance: radio;
+ol,
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+textarea {
+  resize: none;
 }
 
-.btn:disabled{
-    border: 0;
+input {
+  // 取消ios預設樣式
+  appearance: none;
+}
+input[type="checkbox"] {
+  appearance: checkbox;
+}
+
+input[type="radio"] {
+  appearance: radio;
+}
+
+.btn:disabled {
+  border: 0;
 }
 
 .material-symbols-outlined {
-  font-variation-settings:
-  'FILL' 0,
-  'wght' 100,
-  'GRAD' 0,
-  'opsz' 48
+  font-variation-settings: "FILL" 0, "wght" 100, "GRAD" 0, "opsz" 48;
 }
-
-
-
-
-
-

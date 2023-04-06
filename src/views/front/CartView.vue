@@ -166,28 +166,28 @@
             </div>
             <div class="d-flex justify-content-between mb-6">
               <p>總計</p>
-
               <p class="font-arimo">NT$ {{ Math.round(cartList.total) }}</p>
             </div>
-            <div class="d-flex justify-content-between mb-6">
-              <p>優惠券折抵</p>
+            <div v-if="isCouponUsed">
+              <div class="d-flex justify-content-between mb-6">
+                <p>優惠券折抵</p>
 
-              <p class="font-arimo text-primary">
-                NT$
-                {{
-                  Math.round(cartList.total) - Math.round(cartList.final_total)
-                }}
-              </p>
+                <p class="font-arimo text-primary">
+                  NT$
+                  {{
+                    Math.round(cartList.total) -
+                    Math.round(cartList.final_total)
+                  }}
+                </p>
+              </div>
+              <div class="d-flex justify-content-between mb-6">
+                <p>折扣後金額</p>
+
+                <p class="font-arimo text-primary">
+                  NT$ {{ Math.round(cartList.final_total) }}
+                </p>
+              </div>
             </div>
-
-            <div class="d-flex justify-content-between mb-6">
-              <p>折扣後金額</p>
-
-              <p class="font-arimo text-primary">
-                NT$ {{ Math.round(cartList.final_total) }}
-              </p>
-            </div>
-
             <RouterLink to="/order" class="btn btn-primary text-light w-100"
               >去買單</RouterLink
             >
@@ -217,6 +217,7 @@ export default {
       productId: "",
       loadingItem: "", //loading效果項目暫存區
       couponCode: "iiincookienew",
+      isCouponUsed: false,
       isLoading: true,
     };
   },
@@ -244,6 +245,7 @@ export default {
             title: `${res.data.message}`,
           });
           this.getCartList();
+          this.isCouponUsed = true;
         })
         .catch((error) => {
           Toast.fire({

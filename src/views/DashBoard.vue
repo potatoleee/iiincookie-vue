@@ -20,6 +20,15 @@
   </div>
 </template>
 
+<style lang="scss">
+.dashboard-nav {
+  width: 200px;
+}
+.dashboard-content {
+  width: calc(100vw - 200px);
+}
+</style>
+
 <script>
 import { RouterView } from "vue-router";
 import { Toast } from "../utils/toast.js";

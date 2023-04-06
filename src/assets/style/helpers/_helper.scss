@@ -1,40 +1,40 @@
-.break-word{
-    word-break: break-word;
-  }
-  .active{
-    color:$primary;
-  }
+.break-word {
+  word-break: break-word;
+}
+.active {
+  color: $primary;
+}
 
-  .title {
+.title {
+  position: relative;
+  &-sub {
     position: relative;
-    &-sub {
-      position: relative;
-      line-height: 0.63;
-      padding-right: 6.2vw;
-      &::before {
-        position: absolute;
-        content: "";
-        width: 100%;
-        height: 1px;
-        bottom: 0;
-        left: 0;
-        background: $secondary;
-      }
-    }
-    &-main {
+    line-height: 0.63;
+    padding-right: 6.2vw;
+    &::before {
       position: absolute;
+      content: "";
       width: 100%;
-      height: 100%;
-      right: 8vw;
-      top: 0;
-      display: flex;
-      justify-content: end;
-      align-items: center;
+      height: 1px;
+      bottom: 0;
+      left: 0;
+      background: $secondary;
     }
   }
-  .lines{
-    position: relative;
-   &::before{
+  &-main {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    right: 8vw;
+    top: 0;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+  }
+}
+.lines {
+  position: relative;
+  &::before {
     position: absolute;
     content: "";
     width: 1px;
@@ -46,13 +46,12 @@
       top: 40%;
     }
     @include phone {
-     top: 60%;
-   }
-   } 
-
+      top: 60%;
+    }
   }
-.btn{
-  .disabled{
+}
+.btn {
+  .disabled {
     border: 0;
   }
 }
@@ -63,36 +62,34 @@
   height: 0;
   padding-bottom: 100%;
   overflow: hidden;
- 
-  
 }
 
-.imgHover{
+.imgHover {
   position: relative;
-  
-  &::before{
-      position: absolute;
-      content: "more detail";
-      color: $light;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background:$dark;
-      opacity: 0;
-      transition: all .4s;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      font-family: 'Noto Serif TC', serif;
-      letter-spacing: 4px;
+
+  &::before {
+    position: absolute;
+    content: "more detail";
+    color: $light;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: $dark;
+    opacity: 0;
+    transition: all 0.4s;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    font-family: "Noto Serif TC", serif;
+    letter-spacing: 4px;
   }
-  &:hover{
-      &::before{
-      background:rgba(27, 24, 23);
+  &:hover {
+    &::before {
+      background: rgba(27, 24, 23);
       opacity: 0.6;
       letter-spacing: 2px;
-      }
+    }
   }
 }
 
@@ -110,71 +107,65 @@
 }
 
 //讀取動畫start
-.loading-overlay{
+.loading-overlay {
   position: fixed;
-          top: 0;
-          width: 100vw;
-          height: 100vh;
-          background-color: $secondary;
-          z-index: 2000;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          opacity: 0;
-          visibility: hidden;
-          transition: opacity 1s, visibility 1s;
-          &.active{
-            visibility: visible;
-            opacity: 1;
-        
-          }
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: $secondary;
+  z-index: 2000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1s, visibility 1s;
+  &.active {
+    visibility: visible;
+    opacity: 1;
+  }
 }
 
-.loading-logo{
+.loading-logo {
   animation: loading 2s linear infinite;
 }
-@keyframes loading{
-  0%{
-      opacity: 0;
-    
+@keyframes loading {
+  0% {
+    opacity: 0;
   }
- 
-  100%{
-      opacity:1;
-     
+
+  100% {
+    opacity: 1;
   }
 }
 
-.btn-outline-primary{
-  &:hover{
-    color:$light;
+.btn-outline-primary {
+  &:hover {
+    color: $light;
   }
 }
 
-
-
-
-.hover-text-primary{
-  transition: all .3s;
-  &:hover{
+.hover-text-primary {
+  transition: all 0.3s;
+  &:hover {
     color: $primary;
   }
-} 
-.hover-border-primary{
-  &:hover{
+}
+.hover-border-primary {
+  &:hover {
     border-color: $primary;
   }
-} 
+}
 
 .swal-custom {
   top: 64px !important;
   right: 0 !important;
 }
 
-.char{
-  transform:translateY(80px);
-  transition: transform .5s;
+.char {
+  transform: translateY(80px);
+  transition: transform 0.5s;
 }
-.clip-path{
+.clip-path {
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
 }
