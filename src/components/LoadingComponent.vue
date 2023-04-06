@@ -9,7 +9,7 @@ export default {
   props: {
     isLoading: {
       type: Boolean,
-      default: true,
+      default: false,
     },
   },
 };

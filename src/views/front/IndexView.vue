@@ -488,9 +488,7 @@ import { Autoplay } from "swiper";
 import { Toast } from "../../utils/toast.js";
 import SplitType from "split-type";
 import "swiper/css";
-// ScrollTrigger.defaults({
-//   markers: true,
-// });
+
 export default {
   data() {
     return {
@@ -504,41 +502,32 @@ export default {
 
   methods: {
     ...mapActions(cartStore, ["getCartList"]),
-    videoLoading() {
-      console.log("影片載入中");
-      this.isLoading = true;
-      // setTimeout(() => {
-      //   this.isLoading = false;
-      // }, 5000);
-    },
 
     videoLoaded() {
-      console.log("影片載入完畢");
-      this.isLoading = false;
+      this.isLoading = true;
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 1500);
     },
     formatDate(timestamp) {
       const date = new Date(timestamp * 1000);
       return date.toLocaleDateString();
     },
     getProductList() {
-      this.isLoading = true;
       this.$http
         .get(`${VITE_APP_URL}/api/${VITE_APP_PATH}/products/all`)
         .then((res) => {
           this.productList = res.data.products.reverse();
-          this.isLoading = false;
         })
         .catch((error) => {
           alert(error.data.message);
         });
     },
     getArticleList() {
-      this.isLoading = true;
       this.$http
         .get(`${VITE_APP_URL}/api/${VITE_APP_PATH}/articles`)
         .then((res) => {
           this.articlesList = res.data.articles;
-          this.isLoading = false;
         })
         .catch((error) => {
           Toast.fire({
@@ -553,10 +542,11 @@ export default {
     SwiperSlide,
     LoadingComponent,
   },
-
+  computed: {
+    ...mapState(cartStore, ["cartList"]),
+  },
   mounted() {
     // 啟動影片載入
-
     const splitIndexAbout = this.$refs.splitIndexAbout;
     const splitIndexProducts = this.$refs.splitIndexProducts;
     const splitIndexProductsCh = this.$refs.splitIndexProductsCh;
@@ -820,7 +810,6 @@ export default {
   updated() {
     ScrollTrigger.refresh(); //必須要加這個trigger才會正確
   },
-
   beforeRouteLeave(to, from, next) {
     // 在離開路由之前，暫停動畫並刪除它
     // 設定一個回到預設狀態的動畫
@@ -842,10 +831,6 @@ export default {
 
     // 啟動新的動畫
     resetLogo.play();
-  },
-
-  computed: {
-    ...mapState(cartStore, ["cartList"]),
   },
 };
 </script>

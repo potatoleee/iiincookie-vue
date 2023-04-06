@@ -109,7 +109,6 @@ export default {
         .get(`${VITE_APP_URL}/api/${VITE_APP_PATH}/articles`)
         .then((res) => {
           this.articlesList = res.data.articles;
-          console.log(this.articlesList);
         })
         .catch((error) => {
           Toast.fire({
