@@ -211,86 +211,90 @@
   <div class="overlay" :class="{ open: showCart }" @click="toggleCart"></div>
   <!-- 購物車預覽 end -->
   <!-- 導覽列 -->
-  <div class="menu-btn" @click="toggleMenu" :class="{ open: isOpen }"></div>
-  <div
-    class="container-fluid d-flex w-100 justify-content-between align-items-center position-fixed top-0 left-0 z-3 py-7 px-7"
-  >
-    <RouterLink to="/" exact native>
-      <img class="logo" src="../assets/images/logo.svg" alt="餅乾生產餡" />
-    </RouterLink>
-    <div class="d-flex align-items-center gap-5">
-      <div class="position-relative cursor-pointer" @click="toggleFavorites">
-        <i class="bi bi-heart fs-xl fs-md-2xl"> </i>
-        <span
-          v-if="myFavoriteList.length > 0"
-          class="badge bg-primary text-light position-absolute top-0 start-100 translate-middle"
-          >{{ myFavoriteList.length }}</span
+  <header>
+    <div class="menu-btn" @click="toggleMenu" :class="{ open: isOpen }"></div>
+    <div
+      class="container-fluid d-flex w-100 justify-content-between align-items-center position-fixed top-0 left-0 z-3 py-7 px-7 header"
+      :class="{ 'bg-secondary-light': isHeaderBackgroundVisible }"
+    >
+      <RouterLink to="/" exact native>
+        <img class="logo" src="../assets/images/logo.svg" alt="餅乾生產餡" />
+      </RouterLink>
+      <div class="d-flex align-items-center gap-5">
+        <div class="position-relative cursor-pointer" @click="toggleFavorites">
+          <i class="bi bi-heart fs-xl fs-md-2xl"> </i>
+          <span
+            v-if="myFavoriteList.length > 0"
+            class="badge bg-primary text-light position-absolute top-0 start-100 translate-middle"
+            >{{ myFavoriteList.length }}</span
+          >
+        </div>
+        <!-- 購物車icon -->
+        <div
+          v-if="!$route.meta.hideCartIcon"
+          class="position-relative cursor-pointer"
+          @click="toggleCart"
         >
-      </div>
-      <!-- 購物車icon -->
-      <div
-        v-if="!$route.meta.hideCartIcon"
-        class="position-relative cursor-pointer"
-        @click="toggleCart"
-      >
-        <i class="bi bi-bag fs-xl fs-md-2xl"></i>
-        <span
-          v-if="totalQty > 0"
-          class="badge bg-primary text-light position-absolute top-0 start-100 translate-middle"
-          >{{ totalQty }}</span
-        >
+          <i class="bi bi-bag fs-xl fs-md-2xl"></i>
+          <span
+            v-if="totalQty > 0"
+            class="badge bg-primary text-light position-absolute top-0 start-100 translate-middle"
+            >{{ totalQty }}</span
+          >
+        </div>
       </div>
     </div>
-  </div>
+    <!-- 導覽列展開內容 -->
+    <nav class="position-relative">
+      <div class="images">
+        <span ref="bg1" class="bg bg1"></span>
+        <span ref="bg2" class="bg bg2"></span>
+        <span ref="bg3" class="bg bg3"></span>
+      </div>
+      <div class="menu">
+        <ul class="d-flex flex-column gap-14">
+          <RouterLink to="/about">
+            <li
+              @mouseenter="toggleShow('bg1')"
+              @mouseleave="toggleShow('bg1')"
+              @click="toggleMenu"
+            >
+              <p class="fs-6xl fs-md-7xl fs-lg-8xl font-english lh-sm">ABOUT</p>
+              <p class="fs-2xl font-serifTc fw-medium">關於我們</p>
+            </li>
+          </RouterLink>
+          <RouterLink to="/products" class="menu-item-2">
+            <li
+              @mouseenter="toggleShow('bg2')"
+              @mouseleave="toggleShow('bg2')"
+              @click="toggleMenu"
+            >
+              <p class="fs-6xl fs-md-7xl fs-lg-8xl font-english lh-sm">
+                PRODUCTS
+              </p>
+              <p class="fs-2xl font-serifTc fw-medium">產品ㄧ覽</p>
+            </li>
+          </RouterLink>
+          <RouterLink to="/articles" class="menu-item-3">
+            <li
+              @mouseenter="toggleShow('bg3')"
+              @mouseleave="toggleShow('bg3')"
+              @click="toggleMenu"
+            >
+              <p class="fs-6xl fs-md-7xl fs-lg-8xl font-english lh-sm">NEWS</p>
+              <p class="fs-2xl font-serifTc fw-medium">最新消息</p>
+            </li>
+          </RouterLink>
+        </ul>
+      </div>
+    </nav>
+    <!-- 導覽列展開內容 -->
+  </header>
   <!-- 導覽列 -->
-  <!-- 導覽列展開內容 -->
-  <div class="position-relative">
-    <div class="images">
-      <span ref="bg1" class="bg bg1"></span>
-      <span ref="bg2" class="bg bg2"></span>
-      <span ref="bg3" class="bg bg3"></span>
-    </div>
-    <div class="menu">
-      <ul class="d-flex flex-column gap-14">
-        <RouterLink to="/about">
-          <li
-            @mouseenter="toggleShow('bg1')"
-            @mouseleave="toggleShow('bg1')"
-            @click="toggleMenu"
-          >
-            <p class="fs-6xl fs-md-7xl fs-lg-8xl font-english lh-sm">ABOUT</p>
-            <p class="fs-2xl font-serifTc fw-medium">關於我們</p>
-          </li>
-        </RouterLink>
-        <RouterLink to="/products" class="menu-item-2">
-          <li
-            @mouseenter="toggleShow('bg2')"
-            @mouseleave="toggleShow('bg2')"
-            @click="toggleMenu"
-          >
-            <p class="fs-6xl fs-md-7xl fs-lg-8xl font-english lh-sm">
-              PRODUCTS
-            </p>
-            <p class="fs-2xl font-serifTc fw-medium">產品ㄧ覽</p>
-          </li>
-        </RouterLink>
-        <RouterLink to="/articles" class="menu-item-3">
-          <li
-            @mouseenter="toggleShow('bg3')"
-            @mouseleave="toggleShow('bg3')"
-            @click="toggleMenu"
-          >
-            <p class="fs-6xl fs-md-7xl fs-lg-8xl font-english lh-sm">NEWS</p>
-            <p class="fs-2xl font-serifTc fw-medium">最新消息</p>
-          </li>
-        </RouterLink>
-      </ul>
-    </div>
-  </div>
-  <!-- 導覽列展開內容 -->
+
   <!-- 主要內容 -->
   <main class="mb-16">
-    <RouterView></RouterView>
+    <RouterView @split-index-products="onSplitIndexProducts"></RouterView>
   </main>
   <!-- 主要內容 -->
   <!-- footer -->
@@ -426,13 +430,14 @@
     transform: translateX(0%);
   }
 }
+
 // 漢堡start
 .menu-btn {
   position: fixed;
   width: 28px;
   height: 28px;
   cursor: pointer;
-  top: 24px;
+  top: 28px;
   left: 24px;
   z-index: 6;
   @include phone {
@@ -575,6 +580,7 @@ import favoriteStore from "../stores/favoriteStore.js";
 import { mapState, mapActions } from "pinia";
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
 import { Toast } from "../utils/toast.js";
+
 export default {
   data() {
     return {
@@ -585,6 +591,7 @@ export default {
       deleteAllModalCart: null,
       paddingRight: 0,
       loadingItem: "",
+      splitIndexProductsOffsetTop: null,
     };
   },
   components: {
@@ -599,6 +606,22 @@ export default {
       "decreaseNum",
     ]),
     ...mapActions(favoriteStore, ["removeFavorite"]),
+    onSplitIndexProducts(splitIndexProducts) {
+      this.splitIndexProductsOffsetTop =
+        splitIndexProducts.offsetTop - this.getHeaderHeight();
+      this.checkHeaderBackground();
+    },
+    getHeaderHeight() {
+      const header = this.$refs.header;
+      return header ? header.clientHeight : 0;
+    },
+    checkHeaderBackground() {
+      const scrollTop =
+        window.pageYOffset || document.documentElement.scrollTop;
+      const isHeaderBackgroundVisible =
+        scrollTop >= this.splitIndexProductsOffsetTop;
+      this.isHeaderBackgroundVisible = isHeaderBackgroundVisible;
+    },
     openDeleteAllModalFavorites() {
       this.$refs.deleteAllModalFavorites.show();
     },
@@ -700,7 +723,11 @@ export default {
       deep: true,
     },
   },
+  beforeUnmount() {
+    window.removeEventListener("scroll", this.checkHeaderBackground);
+  },
   mounted() {
+    window.addEventListener("scroll", this.checkHeaderBackground);
     this.getCartList();
     this.deleteAllModalFavorites = new Modal(
       this.$refs.deleteAllModalFavorites.$el
@@ -733,6 +760,16 @@ export default {
       "-=1"
     );
     this.navMotion.reverse();
+    this.$router.beforeEach((to, from, next) => {
+      const header = document.querySelector(".header");
+      if (to.name === "index") {
+        header.classList.add("bg-transparent");
+      } else {
+        header.classList.remove("bg-transparent");
+        header.classList.add("bg-secondary-light");
+      }
+      next();
+    });
   },
 };
 </script>

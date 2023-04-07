@@ -502,7 +502,6 @@ export default {
 
   methods: {
     ...mapActions(cartStore, ["getCartList"]),
-
     videoLoaded() {
       this.isLoading = true;
       setTimeout(() => {
@@ -547,6 +546,7 @@ export default {
   },
   mounted() {
     // 啟動影片載入
+    this.$emit("split-index-products", this.$refs.splitIndexProducts);
     const splitIndexAbout = this.$refs.splitIndexAbout;
     const splitIndexProducts = this.$refs.splitIndexProducts;
     const splitIndexProductsCh = this.$refs.splitIndexProductsCh;
@@ -803,6 +803,7 @@ export default {
         yPercent: "-50",
       }
     );
+
     this.getCartList();
     this.getProductList();
     this.getArticleList();
