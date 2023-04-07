@@ -617,6 +617,9 @@ export default {
       return header ? header.clientHeight : 0;
     },
     checkHeaderBackground() {
+      if (this.$route.path !== "/") {
+        return;
+      }
       const scrollTop =
         window.pageYOffset || document.documentElement.scrollTop;
       const isHeaderBackgroundVisible =

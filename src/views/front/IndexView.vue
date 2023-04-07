@@ -490,6 +490,7 @@ import SplitType from "split-type";
 import "swiper/css";
 
 export default {
+  emits: ["split-index-products"],
   data() {
     return {
       isOpen: false,
@@ -545,7 +546,6 @@ export default {
     ...mapState(cartStore, ["cartList"]),
   },
   mounted() {
-    // 啟動影片載入
     this.$emit("split-index-products", this.$refs.splitIndexProducts);
     const splitIndexAbout = this.$refs.splitIndexAbout;
     const splitIndexProducts = this.$refs.splitIndexProducts;
