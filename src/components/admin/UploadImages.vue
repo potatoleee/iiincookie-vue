@@ -22,8 +22,6 @@
 
 <script>
 import { Toast } from "../../utils/toast.js";
-import loadingStore from "../../stores/loadingStore.js";
-import { mapState } from "pinia";
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
 export default {
   data() {
@@ -67,9 +65,6 @@ export default {
           this.isLoading = false;
         });
     },
-  },
-  computed: {
-    ...mapState(loadingStore, ["isLoading"]),
   },
 };
 </script>

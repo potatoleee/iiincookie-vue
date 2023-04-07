@@ -1,4 +1,5 @@
 <template>
+  <LoadingComponent :isLoading="isLoading"></LoadingComponent>
   <div class="title my-10 my-lg-15">
     <span
       class="title-sub fs-10xl fw-light font-english text-secondary text-opacity-50 d-block text-end"
@@ -216,7 +217,7 @@
 
 <script>
 import cartStore from "../../stores/cartStore.js";
-import loadingStore from "../../stores/loadingStore.js";
+import LoadingComponent from "../../components/LoadingComponent.vue";
 import { mapActions, mapState } from "pinia";
 import { Toast } from "../../utils/toast.js";
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
@@ -227,7 +228,11 @@ export default {
       orderInfo: {},
       orderUser: {},
       orderProducts: [],
+      isLoading: false,
     };
+  },
+  components: {
+    LoadingComponent,
   },
   methods: {
     ...mapActions(cartStore, ["getCartList"]),
@@ -235,20 +240,16 @@ export default {
       const date = new Date(timestamp * 1000);
       return date.toLocaleString();
     },
-
     getOrder() {
       this.orderId = this.$route.params.id;
-      this.isLoading = false;
+      this.isLoading = true;
       this.$http
         .get(`${VITE_APP_URL}/api/${VITE_APP_PATH}/order/${this.orderId}`)
         .then((res) => {
-          this.isLoading = true;
-          console.log(res);
+          this.isLoading = false;
           this.orderInfo = res.data.order;
           this.orderUser = res.data.order.user;
           this.orderProducts = res.data.order.products;
-          console.log(this.orderInfo);
-          console.log(this.orderProducts);
         })
         .catch((error) => {
           Toast.fire({
@@ -260,7 +261,6 @@ export default {
   },
   computed: {
     ...mapState(cartStore, ["cartList", "totalQty"]),
-    ...mapState(loadingStore, ["isLoading"]),
   },
   mounted() {
     this.getCartList();

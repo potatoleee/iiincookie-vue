@@ -52,107 +52,11 @@
 </template>
 
 <script>
-import cartStore from "../../stores/cartStore.js";
-import favoriteStore from "../../stores/favoriteStore.js";
-
 import { gsap, ScrollTrigger } from "gsap/all";
 import SplitType from "split-type";
 gsap.registerPlugin(SplitType);
-import { mapState, mapActions } from "pinia";
-const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
 
 export default {
-  data() {
-    return {
-      productList: [],
-      page: {},
-      selectCategoryList: [],
-      selectCategory: "",
-      nowCategory: "",
-      allProducts: [],
-    };
-  },
-
-  methods: {
-    getProductList(page = 1) {
-      this.isLoading = true;
-      this.$http
-        .get(`${VITE_APP_URL}/api/${VITE_APP_PATH}/products/?page=${page}`)
-        .then((res) => {
-          this.productList = res.data.products;
-          this.page = res.data.pagination;
-          console.log(this.page);
-          console.log(res.data);
-        })
-        .catch((error) => {
-          alert(error.data.message);
-        })
-        .finally(() => {
-          this.isLoading = false;
-        });
-    },
-    getAllProducts() {
-      this.isLoading = true;
-      this.$http
-        .get(`${VITE_APP_URL}/api/${VITE_APP_PATH}/products/all`)
-        .then((res) => {
-          console.log(res.data.products);
-          this.allProducts = res.data.products;
-        })
-        .catch((error) => {
-          alert(error.data.message);
-        })
-        .finally(() => {
-          this.isLoading = false;
-        });
-    },
-
-    getCategory(category, page = 1) {
-      this.isLoading = true;
-      this.$http
-        .get(
-          `${VITE_APP_URL}/api/${VITE_APP_PATH}/products?page=${page}&category=${category}`
-        )
-        .then((res) => {
-          console.log("相似類別全部", res.data.products);
-
-          this.selectCategoryList = res.data.products;
-          this.page = res.data.pagination;
-          this.nowCategory = this.page.category;
-          console.log(this.nowCategory);
-          console.log(this.page);
-          console.log(this.page.category);
-          console.log(res);
-          this.$router.push(`./products?page=${page}&category=${category}`);
-        })
-        .catch((error) => {
-          alert(error.data.message);
-        })
-        .finally(() => {
-          this.isLoading = false;
-        });
-    },
-    ...mapActions(cartStore, ["addToCart"]),
-    ...mapActions(favoriteStore, [
-      "removeFavorite",
-      "toggleFavorite",
-      "isFavorite",
-    ]),
-  },
-  computed: {
-    ...mapState(favoriteStore, ["myFavoriteList"]),
-    // ...mapState(productsStore, ["sortProducts"]),
-    filterProduct() {
-      return this.productList.filter((item) => {
-        return item.title.match(this.search);
-      });
-    },
-    categoryProducts() {
-      return this.allProducts.filter((item) =>
-        item.category.match(this.selectCategory)
-      );
-    },
-  },
   mounted() {
     const splitAbout = this.$refs.splitAbout;
     const splitAboutCh = this.$refs.splitAboutCh;

@@ -190,7 +190,6 @@
 
 <script>
 import cartStore from "../../stores/cartStore.js";
-
 import { mapActions, mapState } from "pinia";
 import { Toast } from "../../utils/toast.js";
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
@@ -210,30 +209,15 @@ export default {
       const date = new Date(timestamp * 1000);
       return date.toLocaleString();
     },
-    getAllOrder() {
-      this.$http
-        .get(`${VITE_APP_URL}/api/${VITE_APP_PATH}/orders`)
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((error) => {
-          Toast.fire({
-            icon: "error",
-            title: `${error.response.data.message}`,
-          });
-        });
-    },
+
     getOrder() {
       this.orderId = this.$route.params.id;
       this.$http
         .get(`${VITE_APP_URL}/api/${VITE_APP_PATH}/order/${this.orderId}`)
         .then((res) => {
-          console.log(res);
           this.orderInfo = res.data.order;
           this.orderUser = res.data.order.user;
           this.orderProducts = res.data.order.products;
-          console.log(this.orderInfo);
-          console.log(this.orderProducts);
         })
         .catch((error) => {
           Toast.fire({
@@ -251,7 +235,7 @@ export default {
             icon: "success",
             title: `${res.data.message}`,
           });
-          console.log(res);
+
           this.$router.push(`/complete/${this.orderId}`);
         })
         .catch((error) => {
@@ -266,7 +250,6 @@ export default {
     ...mapState(cartStore, ["cartList", "totalQty"]),
   },
   mounted() {
-    this.getAllOrder();
     this.getCartList();
     this.getOrder();
   },

@@ -84,9 +84,9 @@
         <div>
           <p>收藏品項｜{{ myFavoriteList.length }}項</p>
         </div>
-        <RouterLink to="/cart">
+        <RouterLink to="/products">
           <button class="btn btn-primary text-light" @click="toggleFavorites">
-            購物車
+            更多商品
           </button>
         </RouterLink>
       </div>
@@ -396,7 +396,7 @@
   height: 100vh;
   width: 100vw;
   background-color: rgba(27, 24, 23, 0.5);
-  z-index: 3;
+  z-index: 4;
   transform: translateX(-100%);
   transition: all 0.3s;
   &.open {
@@ -766,11 +766,10 @@ export default {
     this.navMotion.reverse();
     this.$router.beforeEach((to, from, next) => {
       const header = document.querySelector(".header");
-      if (to.name === "index") {
+      if (header && to.name === "index") {
         header.classList.add("bg-transparent");
-      } else {
+      } else if (header) {
         header.classList.remove("bg-transparent");
-        header.classList.add("bg-secondary-light");
       }
       next();
     });

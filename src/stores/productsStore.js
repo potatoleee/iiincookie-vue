@@ -16,7 +16,6 @@ export default defineStore("productsStore", {
         .then((res) => {
           this.productList = res.data.products;
           this.page = res.data.pagination;
-          console.log(this.page);
         })
         .catch((error) => {
           alert(error.data.message);

@@ -15,7 +15,7 @@ const favoriteStore = defineStore("favoriteStore", {
       // 如果找不到相符資料，就將資料新增一筆進去
       if (favoriteIndex === -1) {
         this.myFavoriteList.push(product);
-        console.log("加到我得最愛");
+
         Toast.fire({
           icon: "success",
           title: "加入我的最愛",
@@ -23,7 +23,7 @@ const favoriteStore = defineStore("favoriteStore", {
       } else {
         // 如果有找到相符資料，就將資料刪除一筆
         this.myFavoriteList.splice(favoriteIndex, 1);
-        console.log("重複刪除");
+
         Toast.fire({
           icon: "success",
           title: "移除我的最愛",
@@ -40,7 +40,6 @@ const favoriteStore = defineStore("favoriteStore", {
         "myFavoriteList",
         JSON.stringify(this.myFavoriteList)
       );
-      console.log("移除產品");
     },
 
     isFavorite(item) {

@@ -184,7 +184,7 @@
 
 <script>
 import cartStore from "../../stores/cartStore.js";
-import loadingStore from "../../stores/loadingStore.js";
+
 import LoadingComponent from "../../components/LoadingComponent.vue";
 import { mapActions, mapState } from "pinia";
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
@@ -202,7 +202,7 @@ export default {
         message: "",
       },
       orderId: "",
-      isLoading: true,
+      isLoading: false,
     };
   },
   components: {
@@ -241,7 +241,6 @@ export default {
   },
   computed: {
     ...mapState(cartStore, ["cartList", "totalQty"]),
-    ...mapState(loadingStore, ["isLoading"]),
   },
   mounted() {
     this.getCartList();
