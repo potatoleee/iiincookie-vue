@@ -322,6 +322,7 @@ export default {
             res.data.products.reverse(),
             this.product.id
           );
+          console.log(this.productList);
         })
         .catch((error) => {
           alert(error.data.message);
