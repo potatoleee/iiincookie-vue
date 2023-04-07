@@ -1,5 +1,10 @@
 <template>
-  <LoadingComponent :isLoading="isLoading"></LoadingComponent>
+  <VueLoading v-model:active="isLoading"></VueLoading>
+  <DeleteAllModal
+    ref="deleteAllModalCart"
+    :message="'請問你要刪除購物車中全部商品嗎？'"
+    @deleteConfirm="deleteAllCartItem"
+  ></DeleteAllModal>
   <div class="title my-10 my-lg-15">
     <span
       class="title-sub fs-10xl fw-light font-english text-secondary text-opacity-50 d-block text-end"
@@ -72,7 +77,7 @@
                 v-if="cartList.carts?.length > 0"
                 class="py-2 px-8 rounded-pill fs-sm bg-secondary-light py-2 px-6 rounded-pill d-inline-block btn btn-outline-dark hover-text-primary hover-border-primary"
                 type="button"
-                @click="deleteAllCartItem()"
+                @click="openDeleteAllModalCart()"
               >
                 清空購物車
               </button>
@@ -203,7 +208,7 @@
 
 <script>
 import cartStore from "../../stores/cartStore.js";
-import LoadingComponent from "../../components/LoadingComponent.vue";
+import DeleteAllModal from "../../components/DeleteAllModal.vue";
 import { gsap } from "gsap/all";
 import SplitType from "split-type";
 gsap.registerPlugin(SplitType);
@@ -222,17 +227,39 @@ export default {
     };
   },
   components: {
-    LoadingComponent,
+    DeleteAllModal,
   },
+
   methods: {
     ...mapActions(cartStore, [
       "getCartList",
       "deleteCartItem",
       "updateCartItem",
-      "deleteAllCartItem",
+      // "deleteAllCartItem",
       "addNum",
       "decreaseNum",
     ]),
+    openDeleteAllModalCart() {
+      this.$refs.deleteAllModalCart.show();
+    },
+    deleteAllCartItem() {
+      this.$http
+        .delete(`${VITE_APP_URL}/api/${VITE_APP_PATH}/carts`)
+        .then(() => {
+          Toast.fire({
+            icon: "success",
+            title: "已刪除全部品項",
+          });
+          this.$refs.deleteAllModalCart.hide();
+          this.getCartList();
+        })
+        .catch((error) => {
+          Toast.fire({
+            icon: "error",
+            title: `${error.response.data.message}`,
+          });
+        });
+    },
     useCoupon() {
       const data = {
         code: this.couponCode,

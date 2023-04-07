@@ -1,5 +1,5 @@
 <template>
-  <LoadingComponent :isLoading="isLoading"></LoadingComponent>
+  <VueLoading v-model:active="isLoading"></VueLoading>
   <div class="title my-10 my-lg-15">
     <span
       class="title-sub fs-10xl fw-light font-english text-secondary text-opacity-50 d-block text-end"
@@ -120,7 +120,7 @@
 <script>
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
 import { Toast } from "../../utils/toast.js";
-import LoadingComponent from "../../components/LoadingComponent.vue";
+
 import { gsap } from "gsap/all";
 import SplitType from "split-type";
 gsap.registerPlugin(SplitType);
@@ -134,9 +134,7 @@ export default {
       isLoading: true,
     };
   },
-  components: {
-    LoadingComponent,
-  },
+
   methods: {
     formatDate(timestamp) {
       const date = new Date(timestamp * 1000);

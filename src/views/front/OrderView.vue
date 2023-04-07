@@ -1,5 +1,5 @@
 <template>
-  <LoadingComponent :isLoading="isLoading"></LoadingComponent>
+  <VueLoading v-model:active="isLoading"></VueLoading>
   <div class="title my-10 my-lg-15">
     <span
       class="title-sub fs-10xl fw-light font-english text-secondary text-opacity-50 d-block text-end"
@@ -185,7 +185,6 @@
 <script>
 import cartStore from "../../stores/cartStore.js";
 
-import LoadingComponent from "../../components/LoadingComponent.vue";
 import { mapActions, mapState } from "pinia";
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
 import { Toast } from "../../utils/toast.js";
@@ -205,9 +204,7 @@ export default {
       isLoading: false,
     };
   },
-  components: {
-    LoadingComponent,
-  },
+
   methods: {
     ...mapActions(cartStore, ["getCartList"]),
     isPhone(value) {

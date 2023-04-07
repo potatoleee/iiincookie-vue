@@ -1,5 +1,12 @@
 <template>
-  <LoadingComponent :isLoading="isLoading"></LoadingComponent>
+  <div class="loading-overlay" :class="{ active: isLoading }">
+    <img
+      ref="logo"
+      class="loading-logo"
+      src="../../assets/images/logo.svg"
+      alt="餅乾生產餡"
+    />
+  </div>
   <!-- 影片區 end-->
   <div class="video-wrap">
     <p
@@ -479,7 +486,7 @@
 <script>
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
 import { mapState, mapActions } from "pinia";
-import LoadingComponent from "../../components/LoadingComponent.vue";
+
 import cartStore from "../../stores/cartStore.js";
 import { gsap, ScrollTrigger } from "gsap/all";
 gsap.registerPlugin(SplitType, ScrollTrigger);
@@ -504,10 +511,31 @@ export default {
   methods: {
     ...mapActions(cartStore, ["getCartList"]),
     videoLoaded() {
-      this.isLoading = true;
-      setTimeout(() => {
-        this.isLoading = false;
-      }, 1500);
+      document.body.style.overflow = "hidden";
+      const tl = gsap.timeline({ delay: 0.5 }); // 延遲1.5秒後開始
+      tl.to(".loading-logo", {
+        duration: 0.4,
+        x: "-10%",
+        ease: "power2.inOut",
+      })
+        .to(".loading-logo", {
+          duration: 0.6,
+          x: "100%",
+          opacity: 0,
+          ease: "power2.inOut",
+        })
+        .to(".loading-overlay", {
+          duration: 0.5,
+          opacity: 0,
+          x: "100%",
+          ease: "power2.inOut",
+          onComplete: () => {
+            gsap.set(".loading-overlay", {
+              visibility: "hidden",
+            });
+            document.body.style.overflow = "";
+          },
+        });
     },
     formatDate(timestamp) {
       const date = new Date(timestamp * 1000);
@@ -540,7 +568,6 @@ export default {
   components: {
     Swiper,
     SwiperSlide,
-    LoadingComponent,
   },
   computed: {
     ...mapState(cartStore, ["cartList"]),

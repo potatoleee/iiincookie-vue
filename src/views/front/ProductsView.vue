@@ -1,6 +1,5 @@
 <template>
-  <LoadingComponent :isLoading="isLoading"></LoadingComponent>
-
+  <VueLoading v-model:active="isLoading"></VueLoading>
   <div class="title my-10 my-lg-15">
     <span
       class="title-sub fs-10xl fw-light font-english text-secondary text-opacity-50 d-block text-end"
@@ -178,7 +177,6 @@
 </style>
 
 <script>
-import LoadingComponent from "../../components/LoadingComponent.vue";
 import cartStore from "../../stores/cartStore.js";
 import favoriteStore from "../../stores/favoriteStore.js";
 import { gsap, ScrollTrigger } from "gsap/all";
@@ -328,9 +326,6 @@ export default {
   },
   updated() {
     ScrollTrigger.refresh(); //必須要加這個trigger才會正確
-  },
-  components: {
-    LoadingComponent,
   },
 };
 </script>
