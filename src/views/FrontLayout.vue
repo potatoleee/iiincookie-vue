@@ -592,6 +592,7 @@ export default {
       paddingRight: 0,
       loadingItem: "",
       splitIndexProductsOffsetTop: null,
+      isHeaderBackgroundVisible: false,
     };
   },
   components: {
