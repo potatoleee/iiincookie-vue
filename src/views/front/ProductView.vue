@@ -178,14 +178,14 @@
       <p class="font-english fs-2xl fs-lg-3xl">Other products</p>
       <p class="fw-medium font-serifTc fs-lg fs-lg-xl">其他商品</p>
     </div>
-    <div class="mb-16" ref="productSwiper">
+    <div class="mb-16">
       <swiper
+        ref="productSwiper"
         :slides-per-view="1"
         :autoplay="{
           delay: 2500,
           disableOnInteraction: false,
         }"
-        :loop="true"
         :space-between="50"
         :modules="modules"
         :breakpoints="{
@@ -393,7 +393,7 @@ export default {
 
     this.$nextTick(() => {
       // 當路由頁面渲染完成後，手動調用輪播組件的 update 方法
-
+      console.log(this.$refs.productSwiper);
       gsap.fromTo(
         splitProductDetailCh.querySelectorAll(".char"),
         {
