@@ -180,6 +180,7 @@
     </div>
     <div class="mb-16">
       <swiper
+        ref="carousel"
         :slides-per-view="1"
         :autoplay="{
           delay: 2500,
@@ -451,6 +452,8 @@ export default {
         width: "0%",
         ease: "power3.inOut",
       });
+      // 當路由頁面渲染完成後，手動調用輪播組件的 update 方法
+      this.$refs.carousel.update();
     });
     this.routeID = this.$route.params.id;
     console.log(this.routeID);
