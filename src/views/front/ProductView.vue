@@ -178,7 +178,7 @@
       <p class="font-english fs-2xl fs-lg-3xl">Other products</p>
       <p class="fw-medium font-serifTc fs-lg fs-lg-xl">其他商品</p>
     </div>
-    <div class="mb-16">
+    <div class="mb-16" ref="productSwiper">
       <swiper
         :slides-per-view="1"
         :autoplay="{
@@ -268,12 +268,10 @@
 <script>
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Autoplay } from "swiper";
-
+import "swiper/css";
 import { gsap } from "gsap/all";
 import SplitType from "split-type";
 gsap.registerPlugin(SplitType);
-import "swiper/css";
-
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
 import cartStore from "../../stores/cartStore.js";
 import favoriteStore from "../../stores/favoriteStore.js";
@@ -304,6 +302,7 @@ export default {
       const top = productDetail.getBoundingClientRect().top;
       this.showAddToCartBtn = top <= 0;
     },
+
     getProduct(id) {
       this.$http
         .get(`${VITE_APP_URL}/api/${VITE_APP_PATH}/product/${id}`)
@@ -311,9 +310,15 @@ export default {
           this.product = res.data.product;
           this.images = this.product.imagesUrl;
           this.activeIndex = 0;
+          this.filteredProductList = this.productList.filter(
+            (product) => product.id !== this.routeID
+          );
           console.log("新的輪播陣列", this.filteredProductList);
 
           this.getProductList();
+        })
+        .catch((error) => {
+          alert(error.data.message);
         });
     },
     getProductList() {
@@ -323,6 +328,7 @@ export default {
         .then((res) => {
           this.productList = res.data.products;
           console.log(this.productList);
+          console.log("輪播陣列", this.filteredProductList);
         })
         .catch((error) => {
           alert(error.data.message);
@@ -425,6 +431,7 @@ export default {
         ease: "power3.inOut",
       });
     });
+
     this.routeID = this.$route.params.id;
     this.getProduct(this.routeID);
     window.addEventListener("scroll", this.handleScroll);
