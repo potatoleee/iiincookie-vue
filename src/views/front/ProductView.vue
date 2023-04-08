@@ -180,7 +180,6 @@
     </div>
     <div class="mb-16">
       <swiper
-        ref="carousel"
         :slides-per-view="1"
         :autoplay="{
           delay: 2500,
@@ -200,7 +199,7 @@
           },
         }"
       >
-        <swiper-slide v-for="product in filteredProducts" :key="product.id">
+        <swiper-slide v-for="product in filteredProductList" :key="product.id">
           <RouterLink :to="`/product/${product.id}`" class="mb-7 imgHover">
             <img :src="product.imageUrl" :alt="product.title" />
           </RouterLink>
@@ -287,11 +286,11 @@ export default {
       images: [], //小圖片娶回來的陣列
       qty: 1, //定義購物車數量
       productList: [],
+      filteredProductList: [],
       modules: [Autoplay],
       routeID: "",
       isLoading: true,
       showAddToCartBtn: false, // 是否顯示加入購物車按鈕
-      carouselProducts: [],
     };
   },
   components: {
@@ -312,6 +311,8 @@ export default {
           this.product = res.data.product;
           this.images = this.product.imagesUrl;
           this.activeIndex = 0;
+          console.log("新的輪播陣列", this.filteredProductList);
+
           this.getProductList();
         });
     },
@@ -321,7 +322,6 @@ export default {
         .get(`${VITE_APP_URL}/api/${VITE_APP_PATH}/products/all`)
         .then((res) => {
           this.productList = res.data.products;
-
           console.log(this.productList);
         })
         .catch((error) => {
@@ -331,45 +331,7 @@ export default {
           this.isLoading = false;
         });
     },
-    // getProductList() {
-    //   this.isLoading = true;
-    //   this.$http
-    //     .get(`${VITE_APP_URL}/api/${VITE_APP_PATH}/products/all`)
-    //     .then((res) => {
-    //       this.productList = this.filterCurrentProduct(
-    //         res.data.products.reverse(),
-    //         this.product.id
-    //       );
-    //       console.log(this.productList);
-    //     })
-    //     .catch((error) => {
-    //       alert(error.data.message);
-    //     })
-    //     .finally(() => {
-    //       this.isLoading = false;
-    //     });
-    // },
-    // 複製一個新的產品列表並過濾掉當前產品和已經在輪播中的產品
-    // getFilteredProducts() {
-    //   const products = [...this.productList];
-    //   return this.filterCurrentProduct(products, this.product.id).filter(
-    //     (product) => !this.carouselProducts.includes(product.id)
-    //   );
-    // },
-    getFilteredProducts() {
-      // 複製一個新的產品列表並過濾掉當前產品和已經在輪播中的產品
-      const products = [...this.productList];
-      const filteredProducts = this.filterCurrentProduct(
-        products,
-        this.product.id
-      );
-      return filteredProducts.filter(
-        (product) => !this.carouselProducts.includes(product.id)
-      );
-    },
-    filterCurrentProduct(products, currentProductId) {
-      return products.filter((product) => product.id !== currentProductId);
-    },
+
     switchImage(index) {
       // 當用戶點擊小圖時，切換至對應的大圖
       this.activeIndex = index;
@@ -382,29 +344,37 @@ export default {
     id() {
       return this.$route.params.id;
     },
-    updatedProductList() {
-      return this.productList;
-    },
-    //過濾輪播產品陣列
-    filteredProducts() {
-      const filteredProducts = this.filterCurrentProduct(
-        this.productList,
-        this.product.id
-      );
-      // 過濾掉輪播產品陣列中已經存在的產品
-      return filteredProducts.filter(
-        (product) => !this.carouselProducts.some((id) => id === product.id)
-      );
-    },
+    // filteredProductList() {
+    //   return this.productList.filter(
+    //     (product) => product.id !== this.$route.params.id
+    //   );
+    // },
   },
   watch: {
-    id(newID) {
-      this.routeID = newID;
-      if (this.$route.name === "product") {
-        this.getProduct(this.routeID);
-      }
+    "$route.params.id": {
+      handler(newID) {
+        this.routeID = newID;
+        if (this.$route.name === "product") {
+          this.getProduct(this.routeID);
+        }
+        this.getProductList();
+      },
+      immediate: true,
+    },
+    productList(newList) {
+      this.filteredProductList = newList.filter(
+        (product) => product.id !== this.routeID
+      );
     },
   },
+  // watch: {
+  //   id(newID) {
+  //     this.routeID = newID;
+  //     if (this.$route.name === "product") {
+  //       this.getProduct(this.routeID);
+  //     }
+  //   },
+  // },
   mounted() {
     const splitProductDetail = this.$refs.splitProductDetail;
     const splitProductDetailCh = this.$refs.splitProductDetailCh;
@@ -416,6 +386,8 @@ export default {
     });
 
     this.$nextTick(() => {
+      // 當路由頁面渲染完成後，手動調用輪播組件的 update 方法
+
       gsap.fromTo(
         splitProductDetailCh.querySelectorAll(".char"),
         {
@@ -452,11 +424,8 @@ export default {
         width: "0%",
         ease: "power3.inOut",
       });
-      // 當路由頁面渲染完成後，手動調用輪播組件的 update 方法
-      this.$refs.carousel.update();
     });
     this.routeID = this.$route.params.id;
-    console.log(this.routeID);
     this.getProduct(this.routeID);
     window.addEventListener("scroll", this.handleScroll);
   },
