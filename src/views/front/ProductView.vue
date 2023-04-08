@@ -319,10 +319,8 @@ export default {
       this.$http
         .get(`${VITE_APP_URL}/api/${VITE_APP_PATH}/products/all`)
         .then((res) => {
-          this.productList = this.filterCurrentProduct(
-            res.data.products.reverse(),
-            this.product.id
-          );
+          this.productList = res.data.products;
+
           console.log(this.productList);
         })
         .catch((error) => {
@@ -332,10 +330,39 @@ export default {
           this.isLoading = false;
         });
     },
+    // getProductList() {
+    //   this.isLoading = true;
+    //   this.$http
+    //     .get(`${VITE_APP_URL}/api/${VITE_APP_PATH}/products/all`)
+    //     .then((res) => {
+    //       this.productList = this.filterCurrentProduct(
+    //         res.data.products.reverse(),
+    //         this.product.id
+    //       );
+    //       console.log(this.productList);
+    //     })
+    //     .catch((error) => {
+    //       alert(error.data.message);
+    //     })
+    //     .finally(() => {
+    //       this.isLoading = false;
+    //     });
+    // },
     // 複製一個新的產品列表並過濾掉當前產品和已經在輪播中的產品
+    // getFilteredProducts() {
+    //   const products = [...this.productList];
+    //   return this.filterCurrentProduct(products, this.product.id).filter(
+    //     (product) => !this.carouselProducts.includes(product.id)
+    //   );
+    // },
     getFilteredProducts() {
+      // 複製一個新的產品列表並過濾掉當前產品和已經在輪播中的產品
       const products = [...this.productList];
-      return this.filterCurrentProduct(products, this.product.id).filter(
+      const filteredProducts = this.filterCurrentProduct(
+        products,
+        this.product.id
+      );
+      return filteredProducts.filter(
         (product) => !this.carouselProducts.includes(product.id)
       );
     },
@@ -354,6 +381,9 @@ export default {
     id() {
       return this.$route.params.id;
     },
+    updatedProductList() {
+      return this.productList;
+    },
     //過濾輪播產品陣列
     filteredProducts() {
       const filteredProducts = this.filterCurrentProduct(
@@ -362,7 +392,7 @@ export default {
       );
       // 過濾掉輪播產品陣列中已經存在的產品
       return filteredProducts.filter(
-        (product) => !this.carouselProducts.includes(product.id)
+        (product) => !this.carouselProducts.some((id) => id === product.id)
       );
     },
   },
@@ -423,6 +453,7 @@ export default {
       });
     });
     this.routeID = this.$route.params.id;
+    console.log(this.routeID);
     this.getProduct(this.routeID);
     window.addEventListener("scroll", this.handleScroll);
   },
