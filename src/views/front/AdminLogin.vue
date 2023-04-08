@@ -39,7 +39,7 @@
 <script>
 const { VITE_APP_URL } = import.meta.env;
 export default {
-  // 資料
+  emits: ["split-index-products"],
   data() {
     return {
       user: {
@@ -48,7 +48,6 @@ export default {
       },
     };
   },
-  //方法集
   methods: {
     //登入
     login() {

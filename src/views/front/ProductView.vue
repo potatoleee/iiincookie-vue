@@ -277,6 +277,7 @@ import cartStore from "../../stores/cartStore.js";
 import favoriteStore from "../../stores/favoriteStore.js";
 import { mapActions, mapState } from "pinia";
 export default {
+  emits: ["split-index-products"],
   data() {
     return {
       product: {},
@@ -310,11 +311,6 @@ export default {
           this.product = res.data.product;
           this.images = this.product.imagesUrl;
           this.activeIndex = 0;
-          this.filteredProductList = this.productList.filter(
-            (product) => product.id !== this.routeID
-          );
-          console.log("新的輪播陣列", this.filteredProductList);
-
           this.getProductList();
         })
         .catch((error) => {
@@ -326,9 +322,7 @@ export default {
       this.$http
         .get(`${VITE_APP_URL}/api/${VITE_APP_PATH}/products/all`)
         .then((res) => {
-          this.productList = res.data.products;
-          console.log(this.productList);
-          console.log("輪播陣列", this.filteredProductList);
+          this.productList = res.data.products.reverse();
         })
         .catch((error) => {
           alert(error.data.message);
@@ -350,22 +344,13 @@ export default {
     id() {
       return this.$route.params.id;
     },
-    // filteredProductList() {
-    //   return this.productList.filter(
-    //     (product) => product.id !== this.$route.params.id
-    //   );
-    // },
   },
   watch: {
-    "$route.params.id": {
-      handler(newID) {
-        this.routeID = newID;
-        if (this.$route.name === "product") {
-          this.getProduct(this.routeID);
-        }
-        this.getProductList();
-      },
-      immediate: true,
+    id(newID) {
+      this.routeID = newID;
+      if (this.$route.name === "product") {
+        this.getProduct(this.routeID);
+      }
     },
     productList(newList) {
       this.filteredProductList = newList.filter(
@@ -373,14 +358,6 @@ export default {
       );
     },
   },
-  // watch: {
-  //   id(newID) {
-  //     this.routeID = newID;
-  //     if (this.$route.name === "product") {
-  //       this.getProduct(this.routeID);
-  //     }
-  //   },
-  // },
   mounted() {
     const splitProductDetail = this.$refs.splitProductDetail;
     const splitProductDetailCh = this.$refs.splitProductDetailCh;
@@ -392,8 +369,7 @@ export default {
     });
 
     this.$nextTick(() => {
-      // 當路由頁面渲染完成後，手動調用輪播組件的 update 方法
-      console.log(this.$refs.productSwiper);
+      // 當路由頁面渲染完成後，手動調用輪播組件的 update 方
       gsap.fromTo(
         splitProductDetailCh.querySelectorAll(".char"),
         {

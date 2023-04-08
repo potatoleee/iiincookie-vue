@@ -400,7 +400,9 @@
 }
 .video-subTitle {
   top: -30px;
-  // width: 100%;
+  @include phone {
+    top: -21px;
+  }
 }
 .scroll-down {
   position: fixed;
@@ -512,7 +514,7 @@ export default {
     ...mapActions(cartStore, ["getCartList"]),
     videoLoaded() {
       document.body.style.overflow = "hidden";
-      const tl = gsap.timeline({ delay: 0.5 }); // 延遲1.5秒後開始
+      const tl = gsap.timeline({ delay: 0.3 });
       tl.to(".loading-logo", {
         duration: 0.4,
         x: "-10%",

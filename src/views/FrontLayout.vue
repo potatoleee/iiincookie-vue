@@ -430,7 +430,9 @@
     transform: translateX(0%);
   }
 }
-
+.header {
+  background: $secondary-light;
+}
 // 漢堡start
 .menu-btn {
   position: fixed;

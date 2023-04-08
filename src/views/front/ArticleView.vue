@@ -126,6 +126,7 @@ import SplitType from "split-type";
 gsap.registerPlugin(SplitType);
 
 export default {
+  emits: ["split-index-products"],
   data() {
     return {
       article: [],

@@ -92,6 +92,7 @@ gsap.registerPlugin(SplitType);
 import { Toast } from "../../utils/toast.js";
 
 export default {
+  emits: ["split-index-products"],
   data() {
     return {
       articlesList: [],
