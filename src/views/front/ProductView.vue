@@ -199,11 +199,7 @@
           },
         }"
       >
-        <swiper-slide
-          v-for="product in filteredProducts"
-          :key="product.id"
-          @slideChange="handleSwiperSlideChange"
-        >
+        <swiper-slide v-for="product in filteredProducts" :key="product.id">
           <RouterLink :to="`/product/${product.id}`" class="mb-7 imgHover">
             <img :src="product.imageUrl" :alt="product.title" />
           </RouterLink>
@@ -336,6 +332,13 @@ export default {
           this.isLoading = false;
         });
     },
+    // 複製一個新的產品列表並過濾掉當前產品和已經在輪播中的產品
+    getFilteredProducts() {
+      const products = [...this.productList];
+      return this.filterCurrentProduct(products, this.product.id).filter(
+        (product) => !this.carouselProducts.includes(product.id)
+      );
+    },
     filterCurrentProduct(products, currentProductId) {
       return products.filter((product) => product.id !== currentProductId);
     },
@@ -343,36 +346,7 @@ export default {
       // 當用戶點擊小圖時，切換至對應的大圖
       this.activeIndex = index;
     },
-    handleSwiperSlideChange(swiper) {
-      const lastIndex = swiper.previousIndex;
-      const currentIndex = swiper.activeIndex;
-      const diff = Math.abs(currentIndex - lastIndex);
 
-      if (diff === 1) {
-        // 移動一格時，更新輪播產品陣列
-        const newProduct =
-          this.filteredProducts[currentIndex % this.filteredProducts.length];
-        const lastProductIndex = this.carouselProducts.indexOf(
-          this.lastProduct
-        );
-        if (lastProductIndex >= 0) {
-          // 如果輪播產品陣列中已經存在上一個產品，則將其替換為新產品
-          this.carouselProducts.splice(lastProductIndex, 1, newProduct);
-        } else {
-          // 如果輪播產品陣列中不存在上一個產品，則將新產品加入輪播產品陣列
-          this.carouselProducts.shift();
-          this.carouselProducts.push(newProduct);
-        }
-        this.lastProduct = newProduct;
-      } else {
-        // 移動多格時，重建輪播產品陣列
-        this.carouselProducts = this.filteredProducts.slice(
-          currentIndex,
-          currentIndex + 4
-        );
-        this.lastProduct = this.carouselProducts[0];
-      }
-    },
     ...mapActions(cartStore, ["addToCart", "addNum", "decreaseNum"]),
   },
   computed: {
@@ -388,7 +362,7 @@ export default {
       );
       // 過濾掉輪播產品陣列中已經存在的產品
       return filteredProducts.filter(
-        (product) => !this.carouselProducts.includes(product)
+        (product) => !this.carouselProducts.includes(product.id)
       );
     },
   },
