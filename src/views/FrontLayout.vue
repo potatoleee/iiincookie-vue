@@ -216,7 +216,9 @@
     <div
       ref="headerNav"
       class="container-fluid d-flex w-100 justify-content-between align-items-center position-fixed top-0 left-0 z-3 py-7 px-7"
-      :class="{ 'bg-secondary-light': isHeaderBackgroundVisible }"
+      :class="
+        isHeaderBackgroundVisible ? 'bg-secondary-light' : 'bg-transparent'
+      "
     >
       <RouterLink to="/" exact native>
         <img class="logo" src="../assets/images/logo.svg" alt="餅乾生產餡" />
@@ -643,6 +645,7 @@ export default {
       });
       this.$refs.deleteAllModalFavorites.hide();
     },
+
     deleteAllCartItem() {
       this.$http
         .delete(`${VITE_APP_URL}/api/${VITE_APP_PATH}/carts`)
@@ -719,9 +722,11 @@ export default {
     $route: function (to) {
       const headerNav = this.$refs.headerNav;
       if (to.name === "index") {
+        console.log("現在首頁");
         headerNav.classList.remove("bg-secondary-light");
         headerNav.classList.add("bg-transparent");
       } else {
+        console.log("現在不是首頁");
         headerNav.classList.remove("bg-transparent");
         headerNav.classList.add("bg-secondary-light");
       }
@@ -742,14 +747,6 @@ export default {
     window.removeEventListener("scroll", this.checkHeaderBackground);
   },
   mounted() {
-    const headerNav = this.$refs.headerNav;
-    if (this.$route.name === "index") {
-      headerNav.classList.remove("bg-secondary-light");
-      headerNav.classList.add("bg-transparent");
-    } else {
-      headerNav.classList.remove("bg-transparent");
-      headerNav.classList.add("bg-secondary-light");
-    }
     window.addEventListener("scroll", this.checkHeaderBackground);
 
     this.getCartList();
