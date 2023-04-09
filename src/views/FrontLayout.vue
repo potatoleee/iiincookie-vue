@@ -742,6 +742,14 @@ export default {
     window.removeEventListener("scroll", this.checkHeaderBackground);
   },
   mounted() {
+    const headerNav = this.$refs.headerNav;
+    if (this.$route.name === "index") {
+      headerNav.classList.remove("bg-secondary-light");
+      headerNav.classList.add("bg-transparent");
+    } else {
+      headerNav.classList.remove("bg-transparent");
+      headerNav.classList.add("bg-secondary-light");
+    }
     window.addEventListener("scroll", this.checkHeaderBackground);
 
     this.getCartList();
