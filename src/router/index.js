@@ -7,7 +7,8 @@ const router = createRouter({
     if (
       to.fullPath.match("product") ||
       to.fullPath.match("article") ||
-      to.fullPath.match("about")
+      to.fullPath.match("about") ||
+      to.fullPath.match("cart")
     ) {
       return {
         top: 0,

@@ -214,7 +214,8 @@
   <header>
     <div class="menu-btn" @click="toggleMenu" :class="{ open: isOpen }"></div>
     <div
-      class="container-fluid d-flex w-100 justify-content-between align-items-center position-fixed top-0 left-0 z-3 py-7 px-7 header"
+      ref="headerNav"
+      class="container-fluid d-flex w-100 justify-content-between align-items-center position-fixed top-0 left-0 z-3 py-7 px-7"
       :class="{ 'bg-secondary-light': isHeaderBackgroundVisible }"
     >
       <RouterLink to="/" exact native>
@@ -430,9 +431,9 @@
     transform: translateX(0%);
   }
 }
-.header {
-  background: $secondary-light;
-}
+// .header {
+//   background: $secondary-light;
+// }
 // 漢堡start
 .menu-btn {
   position: fixed;
@@ -615,19 +616,17 @@ export default {
       this.checkHeaderBackground();
     },
     getHeaderHeight() {
-      const header = this.$refs.header;
-      return header ? header.clientHeight : 0;
+      const headerNav = this.$refs.headerNav;
+      return headerNav ? headerNav.clientHeight : 0;
     },
     checkHeaderBackground() {
-      if (this.$route.path !== "/") {
-        return;
-      }
       const scrollTop =
         window.pageYOffset || document.documentElement.scrollTop;
       const isHeaderBackgroundVisible =
         scrollTop >= this.splitIndexProductsOffsetTop;
       this.isHeaderBackgroundVisible = isHeaderBackgroundVisible;
     },
+
     openDeleteAllModalFavorites() {
       this.$refs.deleteAllModalFavorites.show();
     },
@@ -717,6 +716,16 @@ export default {
     },
   },
   watch: {
+    $route: function (to) {
+      const headerNav = this.$refs.headerNav;
+      if (to.name === "index") {
+        headerNav.classList.remove("bg-secondary-light");
+        headerNav.classList.add("bg-transparent");
+      } else {
+        headerNav.classList.remove("bg-transparent");
+        headerNav.classList.add("bg-secondary-light");
+      }
+    },
     // 因為是陣列，所以用深層監聽
     myFavoriteList: {
       handler() {
@@ -734,6 +743,7 @@ export default {
   },
   mounted() {
     window.addEventListener("scroll", this.checkHeaderBackground);
+
     this.getCartList();
     this.deleteAllModalFavorites = new Modal(
       this.$refs.deleteAllModalFavorites.$el
@@ -766,15 +776,6 @@ export default {
       "-=1"
     );
     this.navMotion.reverse();
-    this.$router.beforeEach((to, from, next) => {
-      const header = document.querySelector(".header");
-      if (header && to.name === "index") {
-        header.classList.add("bg-transparent");
-      } else if (header) {
-        header.classList.remove("bg-transparent");
-      }
-      next();
-    });
   },
 };
 </script>
