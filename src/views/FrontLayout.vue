@@ -628,6 +628,9 @@ export default {
         scrollTop >= this.splitIndexProductsOffsetTop;
       this.isHeaderBackgroundVisible = isHeaderBackgroundVisible;
     },
+    removeScrollListener() {
+      window.removeEventListener("scroll", this.checkHeaderBackground);
+    },
 
     openDeleteAllModalFavorites() {
       this.$refs.deleteAllModalFavorites.show();
@@ -722,11 +725,10 @@ export default {
     $route: function (to) {
       const headerNav = this.$refs.headerNav;
       if (to.name === "index") {
-        console.log("現在首頁");
         headerNav.classList.remove("bg-secondary-light");
         headerNav.classList.add("bg-transparent");
       } else {
-        console.log("現在不是首頁");
+        this.removeScrollListener(); //必須新增這一行其餘頁面才不會有本來的滾動事件，才能改變背景
         headerNav.classList.remove("bg-transparent");
         headerNav.classList.add("bg-secondary-light");
       }
@@ -747,6 +749,15 @@ export default {
     window.removeEventListener("scroll", this.checkHeaderBackground);
   },
   mounted() {
+    const headerNav = this.$refs.headerNav;
+    if (this.$route.name === "index") {
+      headerNav.classList.remove("bg-secondary-light");
+      headerNav.classList.add("bg-transparent");
+    } else {
+      this.removeScrollListener();
+      headerNav.classList.remove("bg-transparent");
+      headerNav.classList.add("bg-secondary-light");
+    }
     window.addEventListener("scroll", this.checkHeaderBackground);
 
     this.getCartList();
