@@ -488,7 +488,6 @@
 <script>
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
 import { mapState, mapActions } from "pinia";
-
 import cartStore from "../../stores/cartStore.js";
 import { gsap, ScrollTrigger } from "gsap/all";
 gsap.registerPlugin(SplitType, ScrollTrigger);
