@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { Toast } from "../utils/toast.js";
+import { Toast } from "@/utils/toast.js";
 const favoriteStore = defineStore("favoriteStore", {
   state: () => {
     return {
@@ -12,10 +12,9 @@ const favoriteStore = defineStore("favoriteStore", {
       const favoriteIndex = this.myFavoriteList.findIndex(
         (item) => item.id === product.id
       );
-      // 如果找不到相符資料，就將資料新增一筆進去
+      // 如果找不到相符資料會回傳-1，就將資料新增一筆進去
       if (favoriteIndex === -1) {
         this.myFavoriteList.push(product);
-
         Toast.fire({
           icon: "success",
           title: "加入我的最愛",

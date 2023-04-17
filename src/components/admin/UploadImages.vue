@@ -1,5 +1,5 @@
 <template>
-  <VueLoading v-model:active="isLoading"></VueLoading>
+  <VueLoading v-model:active="isLoading" />
 
   <div class="mt-4">
     <h2 class="fs-xl">圖片上傳區</h2>
@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { Toast } from "../../utils/toast.js";
+import { Toast } from "@/utils/toast.js";
 
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
 export default {
@@ -41,7 +41,10 @@ export default {
         file.name.lastIndexOf(".") + 1
       ); /* 得到檔案字尾名 */
       if (fileType !== "jpg" && fileType !== "JPG" && fileType !== "png") {
-        alert("上傳檔案只能是 jpg、png 格式!，請注意格式上傳呦");
+        Toast.fire({
+          icon: "error",
+          title: "上傳檔案只能是 jpg、png 格式!，請注意格式上傳呦",
+        });
         return;
       }
       const formData = new FormData();
@@ -55,15 +58,13 @@ export default {
             icon: "success",
             title: "圖片上傳成功",
           });
+          this.isLoading = false;
         })
         .catch((error) => {
           Toast.fire({
             icon: "error",
             title: `${error.response.data.message}`,
           });
-        })
-        .finally(() => {
-          this.isLoading = false;
         });
     },
   },

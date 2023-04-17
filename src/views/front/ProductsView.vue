@@ -1,6 +1,5 @@
-ｚ
 <template>
-  <VueLoading v-model:active="isLoading"></VueLoading>
+  <VueLoading v-model:active="isLoading" />
   <div class="title my-10 my-lg-15">
     <span
       class="title-sub fs-10xl fw-light font-english text-secondary text-opacity-50 d-block text-end"
@@ -147,7 +146,7 @@
 </template>
 
 <style lang="scss">
-@import "../../assets/style/all.scss";
+@import "@/assets/style/all.scss";
 .title {
   position: relative;
   &-sub {
@@ -185,6 +184,7 @@ import SplitType from "split-type";
 gsap.registerPlugin(SplitType, ScrollTrigger);
 import { mapState, mapActions } from "pinia";
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
+import { Toast } from "@/utils/toast.js";
 
 export default {
   emits: ["split-index-products"],
@@ -210,7 +210,10 @@ export default {
           this.isLoading = false;
         })
         .catch((error) => {
-          alert(error.data.message);
+          Toast.fire({
+            icon: "error",
+            title: `${error.response.data.message}`,
+          });
         });
     },
     getAllProducts() {
@@ -222,7 +225,10 @@ export default {
           this.isLoading = false;
         })
         .catch((error) => {
-          alert(error.data.message);
+          Toast.fire({
+            icon: "error",
+            title: `${error.response.data.message}`,
+          });
         });
     },
 
@@ -238,7 +244,10 @@ export default {
           this.$router.push(`./products?page=${page}&category=${category}`);
         })
         .catch((error) => {
-          alert(error.data.message);
+          Toast.fire({
+            icon: "error",
+            title: `${error.response.data.message}`,
+          });
         });
     },
     ...mapActions(cartStore, ["addToCart"]),

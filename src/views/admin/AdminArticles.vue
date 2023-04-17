@@ -1,4 +1,5 @@
 <template>
+  <VueLoading v-model:active="isLoading" />
   <h1 class="fs-2xl border-bottom border-secondary pb-2">文章管理</h1>
   <div class="text-end mt-4">
     <button
@@ -49,30 +50,27 @@
       </tr>
     </tbody>
   </table>
-  <PaginationComponent
-    :page-in="pagination"
-    @getPages="getArticleList"
-  ></PaginationComponent>
+  <PaginationComponent :page-in="pagination" @getPages="getArticleList" />
   <ArticleModal
     ref="articleModal"
     :innerTempArticle="tempArticle"
     :isNew="isNew"
     @update="getArticleList"
-  >
-  </ArticleModal>
+  />
+
   <DeleteModal
     :deleteItem="tempArticle"
     :deleteModalTitle="'文章'"
     @del-item="deleteArticle"
     ref="deleteModal"
-  ></DeleteModal>
+  />
 </template>
 
 <script>
-import ArticleModal from "../../components/admin/ArticleModal.vue";
-import DeleteModal from "../../components/admin/DeleteModal.vue";
-import PaginationComponent from "../../components/PaginationComponent.vue";
-import { Toast } from "../../utils/toast.js";
+import ArticleModal from "@/components/admin/ArticleModal.vue";
+import DeleteModal from "@/components/admin/DeleteModal.vue";
+import PaginationComponent from "@/components/PaginationComponent.vue";
+import { Toast } from "@/utils/toast.js";
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
 export default {
   data() {
@@ -82,10 +80,10 @@ export default {
       pagination: {},
       isNew: false,
       tempArticle: {},
+      isLoading: false,
     };
   },
   methods: {
-    //開啟modal
     openModal(state, article) {
       if (state === "new") {
         this.tempArticle = {
@@ -107,11 +105,13 @@ export default {
       }
     },
     getArticleList(currentPage = 1) {
+      this.isLoading = true;
       this.$http
         .get(
           `${VITE_APP_URL}/api/${VITE_APP_PATH}/admin/articles/?page=${currentPage}`
         )
         .then((res) => {
+          this.isLoading = false;
           this.pagination = res.data.pagination;
           this.articles = res.data.articles;
         })

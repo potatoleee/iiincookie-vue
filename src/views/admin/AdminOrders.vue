@@ -1,4 +1,5 @@
 <template>
+  <VueLoading v-model:active="isLoading" />
   <h1 class="fs-2xl border-bottom border-secondary pb-2">訂單管理</h1>
   <table class="table mt-4">
     <thead>
@@ -45,32 +46,27 @@
       </tr>
     </tbody>
   </table>
-  <PaginationComponent
-    :page-in="pagination"
-    @getPages="getOrderList"
-  ></PaginationComponent>
+  <PaginationComponent :page-in="pagination" @getPages="getOrderList" />
 
   <OrderModal
     :inner-temp-order="tempOrder"
     @orderConfirm="editOrderModal"
     ref="orderModal"
-  ></OrderModal>
+  />
 
-  <!-- 刪除 Modal start-->
   <DeleteModal
     :deleteItem="tempOrder"
     :deleteModalTitle="'訂單'"
     @del-item="deleteOrder"
     ref="deleteModal"
-  ></DeleteModal>
-  <!-- 刪除 Modal end-->
+  />
 </template>
 
 <script>
-import DeleteModal from "../../components/admin/DeleteModal.vue";
-import PaginationComponent from "../../components/PaginationComponent.vue";
-import OrderModal from "../../components/admin/OrderModal.vue";
-import { Toast } from "../../utils/toast.js";
+import DeleteModal from "@/components/admin/DeleteModal.vue";
+import PaginationComponent from "@/components/PaginationComponent.vue";
+import OrderModal from "@/components/admin/OrderModal.vue";
+import { Toast } from "@/utils/toast.js";
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
 export default {
   data() {
@@ -78,15 +74,18 @@ export default {
       pagination: {},
       orderData: [],
       tempOrder: {},
+      isLoading: false,
     };
   },
   methods: {
     getOrderList(currentPage = 1) {
+      this.isLoading = true;
       this.$http
         .get(
           `${VITE_APP_URL}/api/${VITE_APP_PATH}/admin/orders/?page=${currentPage}`
         )
         .then((res) => {
+          this.isLoading = false;
           this.orderData = res.data.orders;
           this.pagination = res.data.pagination;
         })

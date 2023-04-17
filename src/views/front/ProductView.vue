@@ -1,5 +1,5 @@
 <template>
-  <VueLoading v-model:active="isLoading"></VueLoading>
+  <VueLoading v-model:active="isLoading" />
   <div class="title my-10 my-lg-15">
     <span
       class="title-sub fs-10xl fw-light font-english text-secondary text-opacity-50 d-block text-end"
@@ -74,6 +74,7 @@
                   class="count border border-secondary-dark d-flex justify-content-between w-100"
                 >
                   <button
+                    type="button"
                     class="btn rounded-0"
                     @click="qty--"
                     :disabled="qty === 1"
@@ -87,7 +88,7 @@
                     v-model="qty"
                     readonly
                   />
-                  <button class="btn rounded-0" @click="qty++">
+                  <button type="button" class="btn rounded-0" @click="qty++">
                     <i class="bi bi-plus-lg"></i>
                   </button>
                 </div>
@@ -276,6 +277,7 @@ const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
 import cartStore from "@/stores/cartStore.js";
 import favoriteStore from "@/stores/favoriteStore.js";
 import { mapActions, mapState } from "pinia";
+import { Toast } from "@/utils/toast.js";
 export default {
   emits: ["split-index-products"],
   data() {
@@ -305,6 +307,7 @@ export default {
     },
 
     getProduct(id) {
+      this.isLoading = true;
       this.$http
         .get(`${VITE_APP_URL}/api/${VITE_APP_PATH}/product/${id}`)
         .then((res) => {
@@ -312,9 +315,13 @@ export default {
           this.images = this.product.imagesUrl;
           this.activeIndex = 0;
           this.getProductList();
+          this.isLoading = false;
         })
         .catch((error) => {
-          alert(error.data.message);
+          Toast.fire({
+            icon: "error",
+            title: `${error.response.data.message}`,
+          });
         });
     },
     getProductList() {
@@ -323,12 +330,13 @@ export default {
         .get(`${VITE_APP_URL}/api/${VITE_APP_PATH}/products/all`)
         .then((res) => {
           this.productList = res.data.products.reverse();
+          this.isLoading = false;
         })
         .catch((error) => {
-          alert(error.data.message);
-        })
-        .finally(() => {
-          this.isLoading = false;
+          Toast.fire({
+            icon: "error",
+            title: `${error.response.data.message}`,
+          });
         });
     },
 
@@ -346,16 +354,6 @@ export default {
     },
   },
   watch: {
-    // "$route.params.id": {
-    //   handler(newID) {
-    //     this.routeID = newID;
-    //     if (this.$route.name === "product") {
-    //       this.getProduct(this.routeID);
-    //     }
-    //     this.getProductList();
-    //   },
-    //   immediate: true,
-    // },
     id(newID) {
       this.routeID = newID;
       if (this.$route.name === "product") {

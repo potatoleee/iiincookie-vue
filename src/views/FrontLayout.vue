@@ -26,6 +26,7 @@
           </div>
 
           <button
+            type="button"
             v-if="myFavoriteList.length > 0"
             class="btn btn-outline-dark py-1 px-2 text-opacity-50 border-opacity-50"
             @click="openDeleteAllModalFavorites"
@@ -45,7 +46,11 @@
       >
         <p>目前尚無任何收藏項目</p>
         <RouterLink to="/products">
-          <button class="btn btn-primary text-light" @click="toggleFavorites">
+          <button
+            type="button"
+            class="btn btn-primary text-light"
+            @click="toggleFavorites"
+          >
             去看看好吃的！
           </button>
         </RouterLink>
@@ -55,7 +60,18 @@
           <div
             class="d-flex py-7 gap-3 border-bottom border-dark border-opacity-40"
           >
-            <img class="w-20n" :src="favorite.imageUrl" :alt="favorite.title" />
+            <RouterLink
+              :to="`/product/${favorite.id}`"
+              :style="{ display: 'contents' }"
+              @click="toggleFavorites"
+            >
+              <img
+                class="w-20n"
+                :src="favorite.imageUrl"
+                :alt="favorite.title"
+              />
+            </RouterLink>
+
             <div class="w-100 d-flex flex-column justify-content-between">
               <div class="d-flex justify-content-between align-items-center">
                 <p class="fs-md-lg font-serifTc">{{ favorite.title }}</p>
@@ -84,7 +100,11 @@
           <p>收藏品項｜{{ myFavoriteList.length }}項</p>
         </div>
         <RouterLink to="/products">
-          <button class="btn btn-primary text-light" @click="toggleFavorites">
+          <button
+            type="button"
+            class="btn btn-primary text-light"
+            @click="toggleFavorites"
+          >
             更多商品
           </button>
         </RouterLink>
@@ -112,6 +132,7 @@
           </div>
 
           <button
+            type="button"
             v-if="totalQty > 0"
             class="btn btn-outline-dark py-1 px-2 text-opacity-50 border-opacity-50"
             @click="openDeleteAllModalCart"
@@ -131,7 +152,11 @@
       >
         <p>目前購物車上無產品</p>
         <RouterLink to="/products">
-          <button class="btn btn-primary text-light" @click="toggleCart">
+          <button
+            type="button"
+            class="btn btn-primary text-light"
+            @click="toggleCart"
+          >
             去看看好吃的！
           </button>
         </RouterLink>
@@ -146,6 +171,7 @@
               :src="cartItem.product.imageUrl"
               :alt="cartItem.product.title"
             />
+
             <div class="w-100 d-flex flex-column justify-content-between">
               <div
                 class="d-flex justify-content-between align-items-start font-serifTc fs-md-lg"
@@ -164,6 +190,7 @@
                   class="count d-flex justify-content-between border border-dark border-opacity-40"
                 >
                   <button
+                    type="button"
                     @click="decreaseNum(cartItem)"
                     class="btn rounded-0 py-1 px-2"
                     :class="{
@@ -180,6 +207,7 @@
                     readonly
                   />
                   <button
+                    type="button"
                     class="btn rounded-0 py-1 px-2"
                     @click="addNum(cartItem)"
                   >
@@ -200,7 +228,11 @@
           <p>NT$ {{ cartList.total }}</p>
         </div>
         <RouterLink to="/cart">
-          <button class="btn btn-primary text-light" @click="toggleCart">
+          <button
+            type="button"
+            class="btn btn-primary text-light"
+            @click="toggleCart"
+          >
             前往結帳
           </button>
         </RouterLink>
@@ -294,11 +326,10 @@
   </header>
   <!-- 導覽列 -->
 
-  <!-- 主要內容 -->
   <main class="mb-16">
     <RouterView @split-index-products="onSplitIndexProducts" />
   </main>
-  <!-- 主要內容 -->
+
   <!-- footer -->
   <footer
     class="footer mt-auto bg-secondary-dark container-fluid py-12 px-7 pt-lg-15 position-relative"
@@ -346,11 +377,10 @@
     </div>
   </footer>
   <!-- footer -->
-  <!-- </div> -->
 </template>
 
 <style lang="scss">
-@import "../assets/style/all.scss";
+@import "@/assets/style/all.scss";
 
 .scroll-top {
   position: absolute;

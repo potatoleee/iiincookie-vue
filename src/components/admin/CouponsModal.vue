@@ -133,7 +133,7 @@
 
 <script>
 import { Modal } from "bootstrap";
-import { Toast } from "../../utils/toast.js";
+import { Toast } from "@/utils/toast.js";
 
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
 export default {

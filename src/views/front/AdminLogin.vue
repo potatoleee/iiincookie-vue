@@ -49,7 +49,7 @@
 
 <script>
 const { VITE_APP_URL } = import.meta.env;
-import { Toast } from "../../utils/toast.js";
+import { Toast } from "@/utils/toast.js";
 export default {
   emits: ["split-index-products"],
   data() {

@@ -1,5 +1,5 @@
 <template>
-  <VueLoading v-model:active="isLoading"></VueLoading>
+  <VueLoading v-model:active="isLoading" />
   <div class="title my-10 my-lg-15">
     <span
       class="title-sub fs-10xl fw-light font-english text-secondary text-opacity-50 d-block text-end"
@@ -216,10 +216,9 @@
 </template>
 
 <script>
-import cartStore from "../../stores/cartStore.js";
-
 import { mapActions, mapState } from "pinia";
-import { Toast } from "../../utils/toast.js";
+import cartStore from "@/stores/cartStore.js";
+import { Toast } from "@/utils/toast.js";
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
 export default {
   emits: ["split-index-products"],

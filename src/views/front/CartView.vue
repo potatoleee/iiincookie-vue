@@ -1,10 +1,10 @@
 <template>
-  <VueLoading v-model:active="isLoading"></VueLoading>
+  <VueLoading v-model:active="isLoading" />
   <DeleteAllModal
     ref="deleteAllModalCart"
     :message="'請問你要刪除購物車中全部商品嗎？'"
     @deleteConfirm="deleteAllCartItem"
-  ></DeleteAllModal>
+  />
   <div class="title my-10 my-lg-15">
     <span
       class="title-sub fs-10xl fw-light font-english text-secondary text-opacity-50 d-block text-end"
@@ -26,7 +26,7 @@
 
     <RouterLink
       to="/products"
-      class="py-2 px-17 rounded-pill d-md-inline-block btn bg-secondary-light btn-outline-dark hover-text-primary hover-border-primary font-english d-none"
+      class="py-2 px-md-17 px-13 rounded-pill d-md-inline-block btn bg-secondary-light btn-outline-dark hover-text-primary hover-border-primary"
     >
       來去逛逛吧！
       <i class="bi bi-arrow-up-right fs-xs ms-2"></i>
@@ -110,6 +110,7 @@
                         class="count d-flex justify-content-between border border-dark border-opacity-40"
                       >
                         <button
+                          type="button"
                           @click="decreaseNum(cartItem)"
                           class="btn rounded-0"
                           :class="{
@@ -125,7 +126,11 @@
                           v-model="cartItem.qty"
                           readonly
                         />
-                        <button class="btn rounded-0" @click="addNum(cartItem)">
+                        <button
+                          type="button"
+                          class="btn rounded-0"
+                          @click="addNum(cartItem)"
+                        >
                           <i class="bi bi-plus-lg"></i>
                         </button>
                       </div>
@@ -211,14 +216,14 @@
 </template>
 
 <script>
-import cartStore from "../../stores/cartStore.js";
-import DeleteAllModal from "../../components/DeleteAllModal.vue";
+import cartStore from "@/stores/cartStore.js";
+import DeleteAllModal from "@/components/DeleteAllModal.vue";
 import { gsap } from "gsap/all";
 import SplitType from "split-type";
 gsap.registerPlugin(SplitType);
 import { mapActions, mapState } from "pinia";
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
-import { Toast } from "../../utils/toast.js";
+import { Toast } from "@/utils/toast.js";
 export default {
   emits: ["split-index-products"],
   data() {
@@ -240,7 +245,6 @@ export default {
       "getCartList",
       "deleteCartItem",
       "updateCartItem",
-      // "deleteAllCartItem",
       "addNum",
       "decreaseNum",
     ]),

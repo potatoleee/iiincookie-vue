@@ -2,7 +2,7 @@
 @import "./assets/style/all.scss";
 </style>
 <template>
-  <RouterView></RouterView>
+  <RouterView />
 </template>
 
 <script>

@@ -119,8 +119,7 @@
 
 <script>
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
-import { Toast } from "../../utils/toast.js";
-
+import { Toast } from "@/utils/toast.js";
 import { gsap } from "gsap/all";
 import SplitType from "split-type";
 gsap.registerPlugin(SplitType);

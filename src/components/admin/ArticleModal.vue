@@ -178,8 +178,8 @@
 <script>
 import { Modal } from "bootstrap";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import UploadImages from "../../components/admin/UploadImages.vue";
-import { Toast } from "../../utils/toast.js";
+import UploadImages from "@/components/admin/UploadImages.vue";
+import { Toast } from "@/utils/toast.js";
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
 export default {
   props: ["isNew", "innerTempArticle"],
@@ -208,7 +208,6 @@ export default {
     };
   },
   methods: {
-    //確認按鈕
     confirm() {
       //初始為新增
       let http = "post";

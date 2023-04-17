@@ -1,5 +1,5 @@
 <template>
-  <VueLoading v-model:active="isLoading"></VueLoading>
+  <VueLoading v-model:active="isLoading" />
   <div class="title my-10 my-lg-15">
     <span
       class="title-sub fs-10xl fw-light font-english text-secondary text-opacity-50 d-block text-end"
@@ -81,7 +81,7 @@
         </div>
       </div>
       <!-- 購物車 start -->
-      <!-- 金額 start-->
+      <!-- 寄送資訊 start-->
       <div class="col-lg-5">
         <div class="p-lg-7 rounded-2 shadow-lg-lg">
           <p
@@ -178,19 +178,18 @@
             </div>
           </VForm>
         </div>
-
         <!-- 總額 end-->
       </div>
-      <!-- 金額 end-->
+      <!-- 寄送資訊 end-->
     </div>
   </div>
 </template>
 
 <script>
-import cartStore from "../../stores/cartStore.js";
 import { mapActions, mapState } from "pinia";
+import cartStore from "@/stores/cartStore.js";
+import { Toast } from "@/utils/toast.js";
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
-import { Toast } from "../../utils/toast.js";
 export default {
   emits: ["split-index-products"],
   data() {

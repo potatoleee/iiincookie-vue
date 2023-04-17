@@ -365,7 +365,7 @@
 </template>
 
 <style lang="scss">
-@import "../../assets/style/all.scss";
+@import "@/assets/style/all.scss";
 
 .swiper-slide img {
   display: block;
@@ -488,12 +488,12 @@
 <script>
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
 import { mapState, mapActions } from "pinia";
-import cartStore from "../../stores/cartStore.js";
+import cartStore from "@/stores/cartStore.js";
 import { gsap, ScrollTrigger } from "gsap/all";
 gsap.registerPlugin(SplitType, ScrollTrigger);
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Autoplay } from "swiper";
-import { Toast } from "../../utils/toast.js";
+import { Toast } from "@/utils/toast.js";
 import SplitType from "split-type";
 import "swiper/css";
 
@@ -549,7 +549,10 @@ export default {
           this.productList = res.data.products.reverse();
         })
         .catch((error) => {
-          alert(error.data.message);
+          Toast.fire({
+            icon: "error",
+            title: `${error.response.data.message}`,
+          });
         });
     },
     getArticleList() {

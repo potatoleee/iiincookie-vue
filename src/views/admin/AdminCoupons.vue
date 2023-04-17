@@ -1,4 +1,5 @@
 <template>
+  <VueLoading v-model:active="isLoading" />
   <h1 class="fs-2xl border-bottom border-secondary pb-2">優惠券管理</h1>
   <div class="text-end mt-4">
     <button
@@ -51,30 +52,27 @@
       </tr>
     </tbody>
   </table>
-  <PaginationComponent
-    :page-in="pagination"
-    @getPages="getCouponList"
-  ></PaginationComponent>
+  <PaginationComponent :page-in="pagination" @getPages="getCouponList" />
   <CouponsModal
     ref="couponsModal"
     :innerTempCoupon="tempCoupon"
     :isNew="isNew"
     @update="getCouponList"
-  ></CouponsModal>
+  />
 
   <DeleteModal
     :deleteItem="tempCoupon"
     :deleteModalTitle="'優惠券'"
     @del-item="deleteCoupon"
     ref="deleteModal"
-  ></DeleteModal>
+  />
 </template>
 
 <script>
-import CouponsModal from "../../components/admin/CouponsModal.vue";
-import DeleteModal from "../../components/admin/DeleteModal.vue";
-import PaginationComponent from "../../components/PaginationComponent.vue";
-import { Toast } from "../../utils/toast.js";
+import CouponsModal from "@/components/admin/CouponsModal.vue";
+import DeleteModal from "@/components/admin/DeleteModal.vue";
+import PaginationComponent from "@/components/PaginationComponent.vue";
+import { Toast } from "@/utils/toast.js";
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
 export default {
   data() {
@@ -88,10 +86,10 @@ export default {
         percent: 100,
         code: "",
       },
+      isLoading: false,
     };
   },
   methods: {
-    //開啟modal
     openModal(state, coupon) {
       if (state === "new") {
         this.tempCoupon = {
@@ -110,13 +108,15 @@ export default {
         this.isNew = false;
       }
     },
-    //取得優惠券列表
+
     getCouponList(currentPage = 1) {
+      this.isLoading = true;
       this.$http
         .get(
           `${VITE_APP_URL}/api/${VITE_APP_PATH}/admin/coupons/?page=${currentPage}`
         )
         .then((res) => {
+          this.isLoading = false;
           this.pagination = res.data.pagination;
           this.coupons = res.data.coupons;
         })

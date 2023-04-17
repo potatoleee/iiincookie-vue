@@ -1,4 +1,5 @@
 <template>
+  <VueLoading v-model:active="isLoading" />
   <h1 class="fs-2xl border-bottom border-secondary pb-2">產品管理</h1>
   <div>
     <div class="text-end mt-4">
@@ -52,38 +53,29 @@
         </tr>
       </tbody>
     </table>
-    <PaginationComponent
-      :page-in="pagination"
-      @getPages="getProductList"
-    ></PaginationComponent>
+    <PaginationComponent :page-in="pagination" @getPages="getProductList" />
   </div>
 
-  <!-- 新增or編輯 Modal start-->
   <ProductModal
     :inner-temp-data="tempData"
     @update="getProductList"
     :is-new="isNew"
     ref="editProductModal"
-  >
-  </ProductModal>
+  />
 
-  <!-- 新增or編輯 Modal end-->
-
-  <!-- 刪除 Modal start-->
   <DeleteModal
     :deleteItem="tempData"
     :deleteModalTitle="'產品'"
     @del-item="deleteProduct"
     ref="deleteModal"
-  ></DeleteModal>
-  <!-- 刪除 Modal end-->
+  />
 </template>
 
 <script>
-import DeleteModal from "../../components/admin/DeleteModal.vue";
-import ProductModal from "../../components/admin/ProductModal.vue";
-import PaginationComponent from "../../components/PaginationComponent.vue";
-import { Toast } from "../../utils/toast.js";
+import DeleteModal from "@/components/admin/DeleteModal.vue";
+import ProductModal from "@/components/admin/ProductModal.vue";
+import PaginationComponent from "@/components/PaginationComponent.vue";
+import { Toast } from "@/utils/toast.js";
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
 export default {
   data() {
@@ -93,23 +85,22 @@ export default {
       pagination: {},
       isNew: false, //判斷是否為新增or編輯
       tempData: {
-        //暫存各產品modal的資料
         imagesUrl: [],
         flavor: "",
         is_enabled: 1,
       },
+      isLoading: false,
     };
   },
   methods: {
-    //取得後台產品列表
     getProductList(currentPage = 1) {
-      // this.isLoading = true;
+      this.isLoading = true;
       this.$http
         .get(
           `${VITE_APP_URL}/api/${VITE_APP_PATH}/admin/products/?page=${currentPage}`
         )
         .then((res) => {
-          // this.isLoading = false;
+          this.isLoading = false;
           this.pagination = res.data.pagination;
           this.products = res.data.products;
         })

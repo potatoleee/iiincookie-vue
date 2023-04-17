@@ -189,9 +189,9 @@
 </template>
 
 <script>
-import cartStore from "../../stores/cartStore.js";
+import cartStore from "@/stores/cartStore.js";
 import { mapActions, mapState } from "pinia";
-import { Toast } from "../../utils/toast.js";
+import { Toast } from "@/utils/toast.js";
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
 export default {
   emits: ["split-index-products"],

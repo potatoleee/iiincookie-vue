@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import axios from "axios";
-import { Toast } from "../utils/toast.js";
+import { Toast } from "@/utils/toast.js";
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
 const cartStore = defineStore("cartStore", {
   state: () => {
@@ -25,7 +25,7 @@ const cartStore = defineStore("cartStore", {
             title: `${res.data.message}`,
           });
           this.getCartList();
-          this.loadingItem = ""; //清空loading暫存
+          this.loadingItem = "";
         })
         .catch((error) => {
           Toast.fire({
@@ -45,11 +45,13 @@ const cartStore = defineStore("cartStore", {
           });
         })
         .catch((error) => {
-          alert(error.response.data.message);
+          Toast.fire({
+            icon: "error",
+            title: `${error.response.data.message}`,
+          });
         });
     },
     updateCartItem(cartItem) {
-      //購物車的id 產品的id
       const data = {
         product_id: cartItem.product_id,
         qty: cartItem.qty,
@@ -64,7 +66,10 @@ const cartStore = defineStore("cartStore", {
           this.loadingItem = "";
         })
         .catch((error) => {
-          alert(error.response.data.message);
+          Toast.fire({
+            icon: "error",
+            title: `${error.response.data.message}`,
+          });
         });
     },
     addNum(cartItem) {
@@ -82,7 +87,10 @@ const cartStore = defineStore("cartStore", {
           this.loadingItem = "";
         })
         .catch((error) => {
-          alert(error.response.data.message);
+          Toast.fire({
+            icon: "error",
+            title: `${error.response.data.message}`,
+          });
         });
     },
     decreaseNum(cartItem) {
@@ -100,7 +108,10 @@ const cartStore = defineStore("cartStore", {
           this.loadingItem = "";
         })
         .catch((error) => {
-          alert(error.response.data.message);
+          Toast.fire({
+            icon: "error",
+            title: `${error.response.data.message}`,
+          });
         });
     },
     deleteCartItem(cartItem) {

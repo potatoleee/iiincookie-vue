@@ -31,7 +31,7 @@
 
 <script>
 import { RouterView } from "vue-router";
-import { Toast } from "../utils/toast.js";
+import { Toast } from "@/utils/toast.js";
 const { VITE_APP_URL } = import.meta.env;
 export default {
   data() {

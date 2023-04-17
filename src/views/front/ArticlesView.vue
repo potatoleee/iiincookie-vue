@@ -89,7 +89,7 @@ const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
 import { gsap } from "gsap/all";
 import SplitType from "split-type";
 gsap.registerPlugin(SplitType);
-import { Toast } from "../../utils/toast.js";
+import { Toast } from "@/utils/toast.js";
 
 export default {
   emits: ["split-index-products"],
