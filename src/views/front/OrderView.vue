@@ -103,11 +103,8 @@
                 placeholder="請輸入 Email"
                 rules="email|required"
                 v-model="orderData.user.email"
-              ></VField>
-              <ErrorMessage
-                name="email"
-                class="invalid-feedback"
-              ></ErrorMessage>
+              />
+              <ErrorMessage name="email" class="invalid-feedback" />
             </div>
 
             <div class="mb-3">
@@ -123,8 +120,8 @@
                 placeholder="請輸入姓名"
                 rules="required"
                 v-model="orderData.user.name"
-              ></VField>
-              <ErrorMessage name="姓名" class="invalid-feedback"></ErrorMessage>
+              />
+              <ErrorMessage name="姓名" class="invalid-feedback" />
             </div>
 
             <div class="mb-3">
@@ -140,8 +137,8 @@
                 placeholder="請輸入電話"
                 :rules="isPhone"
                 v-model="orderData.user.tel"
-              ></VField>
-              <ErrorMessage name="電話" class="invalid-feedback"></ErrorMessage>
+              />
+              <ErrorMessage name="電話" class="invalid-feedback" />
             </div>
 
             <div class="mb-3">
@@ -157,8 +154,8 @@
                 placeholder="請輸入地址"
                 rules="required"
                 v-model="orderData.user.address"
-              ></VField>
-              <ErrorMessage name="地址" class="invalid-feedback"></ErrorMessage>
+              />
+              <ErrorMessage name="地址" class="invalid-feedback" />
             </div>
 
             <div class="mb-3">

@@ -23,7 +23,7 @@
         </div>
         <VForm ref="form" v-slot="{ errors }" @submit="confirm">
           <div class="modal-body">
-            <UploadImages></UploadImages>
+            <UploadImages />
             <div class="row">
               <div class="mb-3 col-md-12">
                 <label for="article_image" class="form-label"
@@ -38,11 +38,8 @@
                   rules="required"
                   placeholder="請輸入文章圖片網址"
                   v-model="tempArticle.image"
-                ></VField>
-                <ErrorMessage
-                  name="圖片網址"
-                  class="invalid-feedback"
-                ></ErrorMessage>
+                />
+                <ErrorMessage name="圖片網址" class="invalid-feedback" />
               </div>
               <img
                 class="img-fluid"
@@ -62,11 +59,8 @@
                   rules="required"
                   placeholder="請輸入文章標題"
                   v-model="tempArticle.title"
-                ></VField>
-                <ErrorMessage
-                  name="文章標題"
-                  class="invalid-feedback"
-                ></ErrorMessage>
+                />
+                <ErrorMessage name="文章標題" class="invalid-feedback" />
               </div>
             </div>
             <div class="row">
@@ -95,11 +89,8 @@
                   rules="required"
                   placeholder="請輸入文章作者"
                   v-model="tempArticle.author"
-                ></VField>
-                <ErrorMessage
-                  name="文章作者"
-                  class="invalid-feedback"
-                ></ErrorMessage>
+                />
+                <ErrorMessage name="文章作者" class="invalid-feedback" />
               </div>
             </div>
 
@@ -115,12 +106,9 @@
                     v-model="tempArticle.content"
                     :config="editorConfig"
                     as="ckeditor"
-                  >
-                  </VField>
-                  <ErrorMessage
-                    name="文章內容"
-                    class="invalid-feedback"
-                  ></ErrorMessage>
+                  />
+
+                  <ErrorMessage name="文章內容" class="invalid-feedback" />
                 </div>
               </div>
             </div>
@@ -136,11 +124,8 @@
                   rules="required"
                   placeholder="請輸入文章標籤"
                   v-model="tempArticle.tag"
-                ></VField>
-                <ErrorMessage
-                  name="文章標籤"
-                  class="invalid-feedback"
-                ></ErrorMessage>
+                />
+                <ErrorMessage name="文章標籤" class="invalid-feedback" />
               </div>
             </div>
             <div class="form-check">

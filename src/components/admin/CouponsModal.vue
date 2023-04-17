@@ -36,11 +36,8 @@
                   placeholder="請輸入優惠券名稱"
                   v-model="tempCoupon.title"
                   rules="required"
-                ></VField>
-                <ErrorMessage
-                  name="優惠券名稱"
-                  class="invalid-feedback"
-                ></ErrorMessage>
+                />
+                <ErrorMessage name="優惠券名稱" class="invalid-feedback" />
               </div>
             </div>
             <div class="row">
@@ -55,12 +52,9 @@
                   rules="required"
                   placeholder="請輸入優惠券代碼"
                   v-model="tempCoupon.code"
-                >
-                </VField>
-                <ErrorMessage
-                  name="優惠券代碼"
-                  class="invalid-feedback"
-                ></ErrorMessage>
+                />
+
+                <ErrorMessage name="優惠券代碼" class="invalid-feedback" />
               </div>
             </div>
             <div class="row">
@@ -77,11 +71,8 @@
                   v-model.number="tempCoupon.percent"
                   min="1"
                   max="100"
-                ></VField>
-                <ErrorMessage
-                  name="優惠折扣"
-                  class="invalid-feedback"
-                ></ErrorMessage>
+                />
+                <ErrorMessage name="優惠折扣" class="invalid-feedback" />
               </div>
             </div>
             <div class="row">
@@ -134,8 +125,8 @@
 <script>
 import { Modal } from "bootstrap";
 import { Toast } from "@/utils/toast.js";
-
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
+
 export default {
   props: ["isNew", "innerTempCoupon"],
   data() {

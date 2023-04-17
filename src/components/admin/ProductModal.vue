@@ -26,7 +26,7 @@
             <div class="row">
               <div class="col-sm-4">
                 <!-- 主要圖片 start-->
-                <UploadImages></UploadImages>
+                <UploadImages />
                 <div class="mb-3">
                   <label for="imageUrl" class="form-label">主要圖片</label>
                   <VField
@@ -37,11 +37,8 @@
                     :class="{ 'is-invalid': errors['主要圖片'] }"
                     rules="required"
                     placeholder="請輸入圖片連結"
-                  ></VField>
-                  <ErrorMessage
-                    name="主要圖片"
-                    class="invalid-feedback"
-                  ></ErrorMessage>
+                  />
+                  <ErrorMessage name="主要圖片" class="invalid-feedback" />
 
                   <img
                     class="img-fluid"
@@ -119,11 +116,8 @@
                     rules="required"
                     placeholder="請輸入產品名稱"
                     v-model="tempData.title"
-                  ></VField>
-                  <ErrorMessage
-                    name="產品名稱"
-                    class="invalid-feedback"
-                  ></ErrorMessage>
+                  />
+                  <ErrorMessage name="產品名稱" class="invalid-feedback" />
                 </div>
 
                 <div class="row">
@@ -138,11 +132,8 @@
                       rules="required"
                       placeholder="請輸入分類"
                       v-model="tempData.category"
-                    ></VField>
-                    <ErrorMessage
-                      name="分類"
-                      class="invalid-feedback"
-                    ></ErrorMessage>
+                    />
+                    <ErrorMessage name="分類" class="invalid-feedback" />
                   </div>
                   <div class="mb-3 col-md-6">
                     <label for="price" class="form-label">單位</label>
@@ -155,11 +146,8 @@
                       rules="required"
                       placeholder="請輸入單位"
                       v-model="tempData.unit"
-                    ></VField>
-                    <ErrorMessage
-                      name="單位"
-                      class="invalid-feedback"
-                    ></ErrorMessage>
+                    />
+                    <ErrorMessage name="單位" class="invalid-feedback" />
                   </div>
                 </div>
 
@@ -176,11 +164,8 @@
                       rules="required"
                       placeholder="請輸入原價"
                       v-model.number="tempData.origin_price"
-                    ></VField>
-                    <ErrorMessage
-                      name="原價"
-                      class="invalid-feedback"
-                    ></ErrorMessage>
+                    />
+                    <ErrorMessage name="原價" class="invalid-feedback" />
                   </div>
                   <div class="mb-3 col-md-6">
                     <label for="price" class="form-label">售價</label>
@@ -194,11 +179,8 @@
                       rules="required"
                       placeholder="請輸入售價"
                       v-model.number="tempData.price"
-                    ></VField>
-                    <ErrorMessage
-                      name="售價"
-                      class="invalid-feedback"
-                    ></ErrorMessage>
+                    />
+                    <ErrorMessage name="售價" class="invalid-feedback" />
                   </div>
                 </div>
                 <div class="row">
@@ -213,11 +195,8 @@
                       rules="required"
                       placeholder="請輸入口味"
                       v-model.number="tempData.flavor"
-                    ></VField>
-                    <ErrorMessage
-                      name="口味"
-                      class="invalid-feedback"
-                    ></ErrorMessage>
+                    />
+                    <ErrorMessage name="口味" class="invalid-feedback" />
                   </div>
                 </div>
                 <div class="mb-3">
@@ -232,12 +211,8 @@
                     as="textarea"
                     placeholder="請輸入產品描述"
                     v-model="tempData.description"
-                  >
-                  </VField>
-                  <ErrorMessage
-                    name="產品描述"
-                    class="invalid-feedback"
-                  ></ErrorMessage>
+                  />
+                  <ErrorMessage name="產品描述" class="invalid-feedback" />
                 </div>
                 <div class="mb-3">
                   <label for="content" class="form-label">說明內容</label>
@@ -251,12 +226,8 @@
                     as="textarea"
                     placeholder="請輸入說明內容"
                     v-model="tempData.content"
-                  >
-                  </VField>
-                  <ErrorMessage
-                    name="說明內容"
-                    class="invalid-feedback"
-                  ></ErrorMessage>
+                  />
+                  <ErrorMessage name="說明內容" class="invalid-feedback" />
                 </div>
                 <div class="mb-3">
                   <div class="form-check">

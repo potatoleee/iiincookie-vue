@@ -263,7 +263,7 @@
             >{{ myFavoriteList.length }}</span
           >
         </div>
-        <!-- 購物車icon -->
+
         <div
           v-if="!$route.meta.hideCartIcon"
           class="position-relative cursor-pointer"
@@ -297,7 +297,7 @@
               <p class="fs-2xl font-serifTc fw-medium">關於我們</p>
             </li>
           </RouterLink>
-          <RouterLink to="/products" class="menu-item-2">
+          <RouterLink to="/products">
             <li
               @mouseenter="toggleShow('bg2')"
               @mouseleave="toggleShow('bg2')"
@@ -309,7 +309,7 @@
               <p class="fs-2xl font-serifTc fw-medium">產品ㄧ覽</p>
             </li>
           </RouterLink>
-          <RouterLink to="/articles" class="menu-item-3">
+          <RouterLink to="/articles">
             <li
               @mouseenter="toggleShow('bg3')"
               @mouseleave="toggleShow('bg3')"
