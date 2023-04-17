@@ -1,15 +1,14 @@
 <template>
-  <!-- 我的最愛視窗 -->
   <DeleteAllModal
     ref="deleteAllModalFavorites"
     :message="'請問你要刪除收藏列表中全部商品嗎？'"
     @deleteConfirm="clearFavorites"
-  ></DeleteAllModal>
+  />
   <DeleteAllModal
     ref="deleteAllModalCart"
     :message="'請問你要刪除購物車中全部商品嗎？'"
     @deleteConfirm="deleteAllCartItem"
-  ></DeleteAllModal>
+  />
   <!-- 我的最愛 start-->
   <div
     class="offCanvas-cart w-100 w-md-80 w-lg-50"
@@ -297,7 +296,7 @@
 
   <!-- 主要內容 -->
   <main class="mb-16">
-    <RouterView @split-index-products="onSplitIndexProducts"></RouterView>
+    <RouterView @split-index-products="onSplitIndexProducts" />
   </main>
   <!-- 主要內容 -->
   <!-- footer -->
@@ -433,10 +432,7 @@
     transform: translateX(0%);
   }
 }
-// .header {
-//   background: $secondary-light;
-// }
-// 漢堡start
+
 .menu-btn {
   position: fixed;
   width: 28px;
@@ -482,7 +478,6 @@
     }
   }
 }
-// 漢堡end
 
 .menu {
   position: fixed;
@@ -577,14 +572,14 @@
 </style>
 
 <script>
-import DeleteAllModal from "../components/DeleteAllModal.vue";
+import DeleteAllModal from "@/components/DeleteAllModal.vue";
 import gsap from "gsap";
 import { Modal } from "bootstrap";
-import cartStore from "../stores/cartStore.js";
-import favoriteStore from "../stores/favoriteStore.js";
+import cartStore from "@/stores/cartStore.js";
+import favoriteStore from "@/stores/favoriteStore.js";
 import { mapState, mapActions } from "pinia";
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
-import { Toast } from "../utils/toast.js";
+import { Toast } from "@/utils/toast.js";
 
 export default {
   data() {

@@ -273,8 +273,8 @@ import { gsap } from "gsap/all";
 import SplitType from "split-type";
 gsap.registerPlugin(SplitType);
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
-import cartStore from "../../stores/cartStore.js";
-import favoriteStore from "../../stores/favoriteStore.js";
+import cartStore from "@/stores/cartStore.js";
+import favoriteStore from "@/stores/favoriteStore.js";
 import { mapActions, mapState } from "pinia";
 export default {
   emits: ["split-index-products"],
@@ -346,6 +346,16 @@ export default {
     },
   },
   watch: {
+    // "$route.params.id": {
+    //   handler(newID) {
+    //     this.routeID = newID;
+    //     if (this.$route.name === "product") {
+    //       this.getProduct(this.routeID);
+    //     }
+    //     this.getProductList();
+    //   },
+    //   immediate: true,
+    // },
     id(newID) {
       this.routeID = newID;
       if (this.$route.name === "product") {

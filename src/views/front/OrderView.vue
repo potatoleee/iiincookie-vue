@@ -57,7 +57,11 @@
               <div
                 class="d-flex py-7 gap-3 border-bottom border-dark border-opacity-10"
               >
-                <img class="w-20n" :src="cartItem.product.imageUrl" alt="" />
+                <img
+                  class="w-20n"
+                  :src="cartItem.product.imageUrl"
+                  :alt="cartItem.product.title"
+                />
                 <div class="w-100 d-flex flex-column justify-content-between">
                   <div class="d-flex justify-content-between align-items-start">
                     <p>{{ cartItem.product.title }}</p>
@@ -184,7 +188,6 @@
 
 <script>
 import cartStore from "../../stores/cartStore.js";
-
 import { mapActions, mapState } from "pinia";
 const { VITE_APP_URL, VITE_APP_PATH } = import.meta.env;
 import { Toast } from "../../utils/toast.js";

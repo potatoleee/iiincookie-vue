@@ -43,7 +43,11 @@
                     class="invalid-feedback"
                   ></ErrorMessage>
 
-                  <img class="img-fluid" :src="tempData.imageUrl" />
+                  <img
+                    class="img-fluid"
+                    :src="tempData.imageUrl"
+                    :alt="tempData.title"
+                  />
                 </div>
                 <!-- 主要圖片 end-->
                 <!-- 次要圖片 start -->
@@ -64,7 +68,7 @@
                         placeholder="請輸入圖片連結"
                       />
                     </div>
-                    <img class="img-fluid" :src="image" alt="" />
+                    <img class="img-fluid" :src="image" :alt="tempData.title" />
                   </div>
                   <!-- 前面判斷陣列為空的時後 後面 tempData.imagesUrl[tempData.imagesUrl.length - 1] 的原因是因為當長度1時 會得到 tempData.imagesUrl[0] 再來長度為2時 tempData.imagesUrl[1]第二筆-->
                   <div

@@ -14,7 +14,7 @@
     <!-- 左側導覽列 -->
     <!-- 主要內榮-->
     <div class="dashboard-content p-7 px-10">
-      <RouterView v-if="check"></RouterView>
+      <RouterView v-if="check" />
     </div>
     <!-- 主要內榮-->
   </div>
@@ -41,15 +41,23 @@ export default {
   },
   methods: {
     logout() {
-      this.$http.post(`${VITE_APP_URL}/logout`).then(() => {
-        document.cookie = `hexToken=; expires=${new Date()};`; //cookie清除
+      this.$http
+        .post(`${VITE_APP_URL}/logout`)
+        .then(() => {
+          document.cookie = `hexToken=; expires=${new Date()};`; //cookie清除
 
-        Toast.fire({
-          icon: "success",
-          title: "token 已清除 已登出",
+          Toast.fire({
+            icon: "success",
+            title: "token 已清除 已登出",
+          });
+          this.$router.push("/login");
+        })
+        .catch((error) => {
+          Toast.fire({
+            icon: "error",
+            title: `${error.response.data.message}`,
+          });
         });
-        this.$router.push("/login");
-      });
     },
     //登入驗證
     checkAdmin() {

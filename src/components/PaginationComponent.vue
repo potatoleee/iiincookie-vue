@@ -13,7 +13,10 @@
       </li>
       <li
         class="page-item"
-        :class="{ active: pages === pageIn.current_page }"
+        :class="{
+          active: pages === pageIn.current_page,
+          disabled: pages === pageIn.current_page,
+        }"
         v-for="pages in pageIn.total_pages"
         :key="pages + 'pages'"
       >

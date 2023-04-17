@@ -70,7 +70,7 @@
             </table>
           </div>
           <div class="text-end">
-            <p>總計：NT$ {{ tempOrder.total }}</p>
+            <p>總計：NT$ {{ Math.round(tempOrder.total) }}</p>
           </div>
           <!-- 訂購品項 -->
         </div>

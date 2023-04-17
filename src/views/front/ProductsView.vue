@@ -1,3 +1,4 @@
+ｚ
 <template>
   <VueLoading v-model:active="isLoading"></VueLoading>
   <div class="title my-10 my-lg-15">
@@ -177,8 +178,8 @@
 </style>
 
 <script>
-import cartStore from "../../stores/cartStore.js";
-import favoriteStore from "../../stores/favoriteStore.js";
+import cartStore from "@/stores/cartStore.js";
+import favoriteStore from "@/stores/favoriteStore.js";
 import { gsap, ScrollTrigger } from "gsap/all";
 import SplitType from "split-type";
 gsap.registerPlugin(SplitType, ScrollTrigger);

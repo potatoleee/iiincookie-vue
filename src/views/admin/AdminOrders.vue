@@ -19,7 +19,7 @@
           {{ order.user.name }}
           {{ order.user.email }}
         </td>
-        <td>NT${{ order.total }}</td>
+        <td>NT${{ Math.round(order.total) }}</td>
         <td>
           <span v-if="order.is_paid" class="text-success">已付款</span>
           <span v-else>未付款</span>

@@ -44,7 +44,11 @@
                   class="invalid-feedback"
                 ></ErrorMessage>
               </div>
-              <img class="img-fluid" :src="tempArticle.image" />
+              <img
+                class="img-fluid"
+                :src="tempArticle.image"
+                :alt="tempArticle.title"
+              />
             </div>
             <div class="row">
               <div class="mb-3 col-md-12">

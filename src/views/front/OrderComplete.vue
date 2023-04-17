@@ -93,7 +93,7 @@
                 <img
                   class="w-20n"
                   :src="orderProduct.product.imageUrl"
-                  alt=""
+                  :alt="orderProduct.product.title"
                 />
                 <div class="w-100 d-flex flex-column justify-content-between">
                   <div class="d-flex justify-content-between align-items-start">
