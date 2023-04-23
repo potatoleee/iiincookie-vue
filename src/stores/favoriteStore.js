@@ -40,7 +40,7 @@ const favoriteStore = defineStore("favoriteStore", {
         JSON.stringify(this.myFavoriteList)
       );
     },
-
+    //判斷index用
     isFavorite(item) {
       return this.myFavoriteList.some((element) => element.id === item.id);
     },

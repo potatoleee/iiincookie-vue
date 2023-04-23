@@ -638,15 +638,18 @@ export default {
     ]),
     ...mapActions(favoriteStore, ["removeFavorite"]),
     onSplitIndexProducts(splitIndexProducts) {
+      //splitIndexProducts與導覽列之間的距離
       this.splitIndexProductsOffsetTop =
         splitIndexProducts.offsetTop - this.getHeaderHeight();
       this.checkHeaderBackground();
     },
     getHeaderHeight() {
+      //計算導覽列的高度
       const headerNav = this.$refs.headerNav;
       return headerNav ? headerNav.clientHeight : 0;
     },
     checkHeaderBackground() {
+      //計算頁面頂部跟導覽列的距離
       const scrollTop =
         window.pageYOffset || document.documentElement.scrollTop;
       const isHeaderBackgroundVisible =
